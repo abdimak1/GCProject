@@ -3,16 +3,16 @@ import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Avatar } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
+import { Typography } from "@mui/material";
+import DashboardIcon from '@mui/icons-material/Dashboard';
+import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import EmailOutlinedIcon from "@mui/icons-material/EmailOutlined";
-import BallotOutlinedIcon from "@mui/icons-material/BallotOutlined";
-import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import EventRepeatOutlinedIcon from "@mui/icons-material/EventRepeatOutlined";
+import PersonIcon from '@mui/icons-material/Person';
 import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
 import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
-import CommentBankOutlinedIcon from "@mui/icons-material/CommentBankOutlined";
-import DraftsOutlinedIcon from "@mui/icons-material/DraftsOutlined";
-import ArchiveOutlinedIcon from "@mui/icons-material/ArchiveOutlined";
+import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
+import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
+import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import "./SideBar.css";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -49,77 +49,96 @@ export default function MySidebar() {
         {!isCollapsed && (
           <div className="side_profiles">
             <Avatar className="profile_avatar"></Avatar>
-            <h4 className="user_name">Abdiyu Urgesa</h4>
+            <h4 className="user_name">Admin</h4>
           </div>
         )}
         <div className="sideLinks">
           <Item
             title="dashboard"
             to="/dashboard"
-            icon={<EmailOutlinedIcon />}
+            icon={<DashboardIcon />}
             selected={true}
             setSelected={setSelected}
           />
+          <Typography
+            variant="h6"
+            color="#a3a3a3"
+            sx={{ m: "15px 0 5px 20px" }}
+          >
+            Data
+          </Typography>
           <Item
-            title="users"
-            to="/users"
-            icon={<BallotOutlinedIcon />}
+            title="Manage users"
+            to="/manageusers"
+            icon={<GroupAddIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          
+          <Typography
+            variant="h6"
+            color="#a3a3a3"
+            sx={{ m: "15px 0 5px 20px" }}
+          >
+            Users
+          </Typography>
+          <Item
+            title="Regional"
+            to="/regional"
+            icon={<PersonIcon />}
             selected={selected}
             setSelected={setSelected}
           />
           <Item
-            title="Providers"
-            to="/myapplication/log"
-            icon={<CalendarMonthOutlinedIcon />}
+            title="Zonal"
+            to="/zonal"
+            icon={<PersonIcon />}
             selected={selected}
             setSelected={setSelected}
           />
           <Item
-            title="Appointments"
-            to="/myapplication/log"
-            icon={<EventRepeatOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
-
-          <Item
-            title="Topics"
-            to="/myapplication/log"
-            icon={<CurrencyExchangeOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
-
-          <Item
-            title="Payments"
-            to="/myapplication/log"
-            icon={<PaidOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
-
-          <Item
-            title="Correspondence"
-            to="/myapplication/log"
-            icon={<CommentBankOutlinedIcon />}
-            selected={selected}
-            setSelected={setSelected}
-          />
-
-          <Item
-            title="Draft Applications"
-            to="/myapplication/log"
-            icon={<DraftsOutlinedIcon />}
+            title="Woreda"
+            to="/woreda"
+            icon={<PersonIcon />}
             selected={selected}
             setSelected={setSelected}
           />
           <Item
-            title="Archive Applications"
-            to="/myapplication/log"
-            icon={<ArchiveOutlinedIcon />}
+            title="Kebele"
+            to="/kebele"
+            icon={<PersonIcon />}
             selected={selected}
             setSelected={setSelected}
           />
+          <Typography
+            variant="h6"
+            color="#a3a3a3"
+            sx={{ m: "15px 0 5px 20px" }}
+          >
+            Charts
+          </Typography>
+          <Item
+            title="Bar Chart"
+            to="/bar"
+            icon={<BarChartOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <Item
+            title="Pie Chart"
+            to="/pie"
+            icon={<PieChartOutlineOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          <Item
+            title="Line Chart"
+            to="/line"
+            icon={<TimelineOutlinedIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
+          
         </div>
       </Menu>
     </Sidebar>
