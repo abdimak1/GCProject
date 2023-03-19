@@ -74,7 +74,13 @@ export default function MySidebar() {
             selected={selected}
             setSelected={setSelected}
           />
-          
+          <Item
+            title="users"
+            to="/users"
+            icon={<GroupAddIcon />}
+            selected={selected}
+            setSelected={setSelected}
+          />
           <Typography
             variant="h6"
             color="#a3a3a3"
