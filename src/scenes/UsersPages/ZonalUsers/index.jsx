@@ -1,15 +1,33 @@
 import { Box, Typography, useTheme } from "@mui/material";
+
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
-import { mockDataTeam } from "../../Data/mockData";
+import { tokens } from "../../../theme";
+import { mockDataTeam } from "../../../Data/mockData";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import Header from "../../components/Header";
-
-const Team = () => {
+import Header from "../../../components/Header";
+import { CircularProgress } from "@mui/material";
+import { fetchData } from "../../../config/apicalls/usersapi";
+import { useEffect, useState } from "react";
+import { Button } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+const ZonalUsers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [mockdata, setMockdata] = useState();
+
+  useEffect(() => {
+    fetchData().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setMockdata(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+  }, []);
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
@@ -41,27 +59,32 @@ const Team = () => {
       flex: 1,
       renderCell: ({ row: { access } }) => {
         return (
-          <Box
-            width="60%"
-            m="0 auto"
-            p="5px"
-            display="flex"
-            justifyContent="center"
-            backgroundColor={
-              access === "admin"
-                ? colors.greenAccent[600]
-                : access === "manager"
-                ? colors.greenAccent[700]
-                : colors.greenAccent[700]
-            }
-            borderRadius="4px"
-          >
-            {access === "admin" && <AdminPanelSettingsOutlinedIcon />}
-            {access === "manager" && <SecurityOutlinedIcon />}
-            {access === "user" && <LockOpenOutlinedIcon />}
-            <Typography color={colors.grey[100]} sx={{ ml: "5px" }}>
-              {access}
-            </Typography>
+          <Box display="flex" p="55px">
+            <Box
+              width="60%"
+              m="0 15px 0 0 "
+              p="5px"
+              display="flex"
+              justifyContent="center"
+              backgroundColor={colors.greenAccent[600]}
+              borderRadius="4px"
+            >
+              <Button variant="text">Update</Button>
+            </Box>
+
+            <Box
+              width="60%"
+              m="0 auto"
+              pl={"10px"}
+              display="flex"
+              justifyContent="center"
+              backgroundColor={colors.greenAccent[600]}
+              borderRadius="4px"
+            >
+              <Button variant="text">
+                <Delete></Delete>
+              </Button>
+            </Box>
           </Box>
         );
       },
@@ -70,7 +93,7 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="TEAM" subtitle="Managing the Team Members" />
+      <Header title="Kebele users" subtitle="List of kebele users" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -100,10 +123,13 @@ const Team = () => {
           },
         }}
       >
-        <DataGrid checkboxSelection rows={mockDataTeam} columns={columns} />
+        {!mockdata && <CircularProgress color="success" />}
+        {mockdata && (
+          <DataGrid checkboxSelection rows={mockdata} columns={columns} />
+        )}{" "}
       </Box>
     </Box>
   );
 };
 
-export default Team;
+export default ZonalUsers;
