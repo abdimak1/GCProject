@@ -30,9 +30,12 @@ const Team = () => {
       }
     });
   }, []);
+  const delhandlerv =(x)=>{
+    console.log("deleted",x)
+  }
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    // { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
@@ -57,10 +60,10 @@ const Team = () => {
       flex: 1,
     },
     {
-      field: "accessLevel",
+      field: "id",
       headerName: "Access Level",
       flex: 1,
-      renderCell: ({ row: { access } }) => {
+      renderCell: (params) => {
         return (
           <Box display="flex" p="55px">
             <Box
@@ -75,7 +78,6 @@ const Team = () => {
             >
               <Button variant="text">Update</Button>
             </Box>
-          
             <Box
               width="60%"
               m="0 auto"
@@ -85,7 +87,8 @@ const Team = () => {
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button variant="text">
+              <Button onClick={()=>delhandlerv(params.row.id)}
+               variant="text">
                 <Delete></Delete>
               </Button>
             </Box>

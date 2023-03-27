@@ -10,12 +10,7 @@ import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
 import { fetchData } from "../../../config/apicalls/usersapi";
 import { useEffect, useState } from "react";
-import {
-  Button,
-  
-
-
-} from "@mui/material";
+import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 const KebeleUsers = () => {
   const theme = useTheme();
@@ -66,7 +61,6 @@ const KebeleUsers = () => {
         return (
           <Box display="flex" p="55px">
             <Box
-            
               width="60%"
               m="0 15px 0 0 "
               p="5px"
@@ -77,7 +71,7 @@ const KebeleUsers = () => {
             >
               <Button variant="text">Update</Button>
             </Box>
-          
+
             <Box
               width="60%"
               m="0 auto"
