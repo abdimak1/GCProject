@@ -11,13 +11,15 @@ import { CircularProgress } from "@mui/material";
 import { fetchData } from "../../../config/apicalls/usersapi";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
-
+import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+
 const Regionalusers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
-
+  const navigate = useNavigate();
   useEffect(() => {
     fetchData().then((res) => {
       if (res.success && res.data) {
@@ -95,6 +97,22 @@ const Regionalusers = () => {
   return (
     <Box m="20px">
       <Header title="Kebele users" subtitle="List of kebele users" />
+      <Box display="flex" justifyContent="end" mt="20px">
+        <Button
+          onClick={() => {
+            navigate("/createregionalaccount");
+          }}
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+          }}
+        >
+          <AddOutlinedIcon sx={{ mr: "10px" }} />
+          Add Business User
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"

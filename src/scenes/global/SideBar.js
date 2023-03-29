@@ -1,24 +1,19 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { Box, IconButton, Typography, useTheme } from "@mui/material";
 import { ProSidebar, Menu, MenuItem } from "react-pro-sidebar";
 import { Link } from "react-router-dom";
 import React from "react";
 import "react-pro-sidebar/dist/css/styles.css";
-// import { Sidebar, Menu, MenuItem } from "react-pro-sidebar";
-import { Avatar } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PersonIcon from "@mui/icons-material/Person";
-import PaidOutlinedIcon from "@mui/icons-material/PaidOutlined";
-import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
-// import "./SideBar.css";
 import { tokens } from "../../theme";
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AuthContext from "../../config/context/authContext";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -39,6 +34,7 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const SideBar = () => {
+  const outhctx = useContext(AuthContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
@@ -104,16 +100,18 @@ const SideBar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                  Admin
+                 {outhctx.codeName ? outhctx.codeName :"username"}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  Federal Account
+                  {outhctx.role ? outhctx.role : "role "}
                 </Typography>
               </Box>
             </Box>
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
+            {outhctx.role === "Federal" ?
+            <>
             <Item
               title="dashboard"
               to="/dashboard"
@@ -205,6 +203,8 @@ const SideBar = () => {
               selected={selected}
               setSelected={setSelected}
             />
+            </>:<></>
+          }
           </Box>
         </Menu>
       </ProSidebar>

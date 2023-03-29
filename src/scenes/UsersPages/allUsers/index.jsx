@@ -15,6 +15,7 @@ import { fetchData } from "../../../config/apicalls/usersapi";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
 import { Update } from "@mui/icons-material";
+
 const Team = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -30,9 +31,11 @@ const Team = () => {
       }
     });
   }, []);
-  const delhandlerv =(x)=>{
-    console.log("deleted",x)
-  }
+  // const delhandlerv =(x)=>{
+  //   console.log("deleted",x)
+  //   // api call as an argument id=x
+  //   setMockdata(res.data)
+  // }
 
   const columns = [
     // { field: "id", headerName: "ID" },
@@ -63,7 +66,7 @@ const Team = () => {
       field: "id",
       headerName: "Access Level",
       flex: 1,
-      renderCell: (params) => {
+      renderCell: ({ row: {id} }) => {
         return (
           <Box display="flex" p="55px">
             <Box
@@ -87,7 +90,7 @@ const Team = () => {
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button onClick={()=>delhandlerv(params.row.id)}
+              <Button
                variant="text">
                 <Delete></Delete>
               </Button>

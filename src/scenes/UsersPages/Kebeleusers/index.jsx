@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-
+import {Link} from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import { mockDataTeam } from "../../../Data/mockData";
@@ -12,10 +12,13 @@ import { fetchData } from "../../../config/apicalls/usersapi";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { useNavigate } from "react-router-dom";
 const KebeleUsers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchData().then((res) => {
@@ -94,6 +97,23 @@ const KebeleUsers = () => {
   return (
     <Box m="20px">
       <Header title="Kebele users" subtitle="List of kebele users" />
+      <Box display="flex" justifyContent="end" mt="20px" >
+        <Button
+          onClick={() => {
+            navigate("/create");
+          }}
+          sx={{
+            backgroundColor: colors.blueAccent[700],
+            color: colors.grey[100],
+            fontSize: "14px",
+            fontWeight: "bold",
+            
+          }}
+        >
+          <AddOutlinedIcon sx={{ mr: "10px" }} />
+          Add Business User
+        </Button>
+      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
