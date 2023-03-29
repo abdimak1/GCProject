@@ -24,7 +24,7 @@ const Team = () => {
   useEffect(() => {
     fetchData().then((res) => {
       if (res.success && res.data) {
-        console.log(res.data);
+        console.log("abdu added",res.data);
         setMockdata(res.data);
       } else {
         console.log(res.error);
