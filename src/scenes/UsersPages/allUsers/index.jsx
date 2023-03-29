@@ -11,7 +11,7 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../../components/Header";
-import { fetchData } from "../../../config/apicalls/usersapi";
+import { get_all_regions } from "../../../config/apicalls/regionApiCall";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
 import { Update } from "@mui/icons-material";
@@ -22,7 +22,7 @@ const Team = () => {
   const [mockdata, setMockdata] = useState();
 
   useEffect(() => {
-    fetchData().then((res) => {
+    get_all_regions().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setMockdata(res.data);
@@ -38,67 +38,150 @@ const Team = () => {
   // }
 
   const columns = [
-    // { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID" },
     {
-      field: "name",
-      headerName: "Name",
+      field: "Region_name",
+      headerName: "Region Name",
       flex: 1,
       cellClassName: "name-column--cell",
     },
     {
-      field: "address",
-      headerName: "Address",
+      field: "created_by",
+      headerName: "Created by",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "phone",
-      headerName: "Phone Number",
-      flex: 1,
+      field: "user",
+      headerName: "Email",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : (params) => params.row?.user?.email,
+      disableColumnFilter: true,
     },
     {
-      field: "website",
-      headerName: "Website",
-      flex: 1,
-    },
-    {
-      field: "id",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: {id} }) => {
-        return (
-          <Box display="flex" p="55px">
-            <Box
-            
-              width="60%"
-              m="0 15px 0 0 "
-              p="5px"
-              display="flex"
-              justifyContent="center"
-              backgroundColor={colors.greenAccent[600]}
-              borderRadius="4px"
-            >
-              <Button variant="text">Update</Button>
-            </Box>
-            <Box
-              width="60%"
-              m="0 auto"
-              pl={"10px"}
-              display="flex"
-              justifyContent="center"
-              backgroundColor={colors.greenAccent[600]}
-              borderRadius="4px"
-            >
-              <Button
-               variant="text">
-                <Delete></Delete>
-              </Button>
-            </Box>
-          </Box>
-        );
+      field: "user1",
+      
+      headerName: "Middle name",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : ({ id }) => {
+        const item = mockdata.find(item => item.id === id);
+        return item.user.userprofile.Mname;
       },
+      disableColumnFilter: true,
+      
     },
+    {
+      field: "user2",
+      
+      headerName: "First name",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : ({ id }) => {
+        const item = mockdata.find(item => item.id === id);
+        return item.user.userprofile.fname;
+      },
+      disableColumnFilter: true,
+      
+    },
+    {
+      field: "user4",
+      
+      headerName: "Last Name",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : ({ id }) => {
+        const item = mockdata.find(item => item.id === id);
+        return item.user.userprofile.lname;
+      },
+      disableColumnFilter: true,
+      
+    },
+    {
+      field: "user5",
+      
+      headerName: "Phone Number",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : ({ id }) => {
+        const item = mockdata.find(item => item.id === id);
+        return item.user.userprofile.phone;
+      },
+      disableColumnFilter: true,
+      
+    },
+    {
+      field: "user6",
+      
+      headerName: "Profile Pic",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : ({ id }) => {
+        const item = mockdata.find(item => item.id === id);
+        return item.user.userprofile.profile;
+      },
+      disableColumnFilter: true,
+      
+    },
+    {
+      field: "user7",
+      
+      headerName: "Sex",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter : ({ id }) => {
+        const item = mockdata.find(item => item.id === id);
+        return item.user.userprofile.sex;
+      },
+      disableColumnFilter: true,
+      
+    },
+    // {
+    //   field: "id",
+    //   headerName: "Access Level",
+    //   flex: 1,
+    //   renderCell: ({ row: {id} }) => {
+    //     return (
+    //       <Box display="flex" p="55px">
+    //         <Box
+            
+    //           width="60%"
+    //           m="0 15px 0 0 "
+    //           p="5px"
+    //           display="flex"
+    //           justifyContent="center"
+    //           backgroundColor={colors.greenAccent[600]}
+    //           borderRadius="4px"
+    //         >
+    //           <Button variant="text">Update</Button>
+    //         </Box>
+    //         <Box
+    //           width="60%"
+    //           m="0 auto"
+    //           pl={"10px"}
+    //           display="flex"
+    //           justifyContent="center"
+    //           backgroundColor={colors.greenAccent[600]}
+    //           borderRadius="4px"
+    //         >
+    //           <Button
+    //            variant="text">
+    //             <Delete></Delete>
+    //           </Button>
+    //         </Box>
+    //       </Box>
+    //     );
+    //   },
+    // },
   ];
 
   return (

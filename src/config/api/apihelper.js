@@ -3,7 +3,7 @@ import axios from "axios";
 const baseUrl = "https://jsonplaceholder.typicode.com";
 
 const axiosinstance = axios.create({
-  baseURL: "https://jsonplaceholder.typicode.com",
+  baseURL: "https://farmarender.onrender.com",
   // baseURL:"http://localhost:4000",
 });
 

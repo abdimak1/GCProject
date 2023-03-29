@@ -7,17 +7,27 @@ import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from '@mui/material/MenuItem';
+import { create_region } from "../../../config/apicalls/regionApiCall";
 const CreateregionalUser = () => {
   const [arr, setArr] = useState([]);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
 
   const handleFormSubmit = (values) => {
+    console.log(values)
+      create_region().then((res) => {
+        if (res.success && res.data) {
+          console.log(res.data);
+        } else {
+          console.log(res.error);
+        }
+      });
     const obj = {values};
     console.log(obj);
     setArr(arr => [...arr, obj]);
     arr.push(obj)
   };
+
 
   return (
     <Box m="20px">
@@ -114,8 +124,8 @@ const CreateregionalUser = () => {
              
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
-              <Button type="submit" color="secondary" variant="contained">
-                Create New User
+              <Button onClick={handleFormSubmit} color="secondary" variant="contained">
+                Create  User
               </Button>
             </Box>
           </form>
