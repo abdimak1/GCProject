@@ -1,21 +1,18 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { Box, IconButton, useTheme } from "@mui/material";
-import { useContext } from "react";
 import { ColorModeContext, tokens } from "../../theme";
-import InputBase from "@mui/material/InputBase";
 import LightModeOutlinedIcon from "@mui/icons-material/LightModeOutlined";
 import DarkModeOutlinedIcon from "@mui/icons-material/DarkModeOutlined";
 import NotificationsOutlinedIcon from "@mui/icons-material/NotificationsOutlined";
-import SettingsOutlinedIcon from "@mui/icons-material/SettingsOutlined";
 import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import SearchIcon from "@mui/icons-material/Search";
 import logo from "../../assets/logo.png";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
-import KebeleUsers from "../UsersPages/Kebeleusers";
-import { Router, Routes, Route } from "react-router-dom";
-import { Link } from "@mui/material";
+import AuthContext from "../../config/context/authContext";
 const Topbar = () => {
+  const authctx = useContext(AuthContext);
+  console.log(authctx);
+
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);

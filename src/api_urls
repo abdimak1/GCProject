@@ -1,0 +1,25 @@
+  path('', views.getRoutes, name="routes"),
+    path('user/<str:pk>/delete/', views.deleteUser, name="delete-user"),
+
+
+
+    path('federals/', federal_view.getFederals, name="get-all-federals"),
+    path('federal/create', federal_view.createFederal,
+         name="create-federal"),
+    path('federal/<str:pk>', federal_view.getFederal, name="get-one-federal"),
+    path('federal/<str:pk>/update/', federal_view.updatFederal, name="update-federal"),
+
+
+     path('regions/', region_view.getRegions, name="get-all-federals"),
+    path('region/create', region_view.createRegion,
+         name="create-region"),
+    path('region/<str:pk>', region_view.getRegion, name="get-one-region"),
+    path('region/<str:pk>/update/', region_view.updatRegion, name="update-region"),
+
+
+
+    path('privates/', privatesector_view.getPrivateSectors, name="get-all-privates"),
+    path('privates/create', privatesector_view.createPrivateSector,
+         name="create-private-sector"),
+    path('private/<str:pk>', privatesector_view.getprivateSector, name="get-one-private"),
+    path('private/<str:pk>/update/', privatesector_view.updatePrivateSector, name="update-private"),
