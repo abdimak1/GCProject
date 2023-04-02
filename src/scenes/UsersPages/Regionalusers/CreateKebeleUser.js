@@ -7,11 +7,7 @@ import { useState } from "react";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormControl from "@mui/material/FormControl";
-import FormLabel from "@mui/material/FormLabel";
+import SimpleSnackbar from "../../global/snackbar";
 import { MuiTelInput } from "mui-tel-input";
 
 import { create_region } from "../../../config/apicalls/regionApiCall";
@@ -19,50 +15,82 @@ const CreateregionalUser = () => {
   const [arr, setArr] = useState([]);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [value, setValue] = useState("");
+  const [phonen, setphonen] = useState("");
+  const [snak, setsnak] = useState({
+    severity: "",
+    message: "",
+    open: false,
+  });
 
-  const handlehange = (newValue, info) => {
-    setValue(newValue);
+  const handleClose = () => {
+    setsnak({
+      open: false,
+      severity: "",
+      message: "",
+    });
   };
 
+  // const handlehange = (newValue, info) => {
+  //   setValue(newValue);
+  // };
+
   const handleFormSubmit = (values) => {
-    console.log(values);
-    create_region().then((res) => {
+    create_region(values, phonen).then((res) => {
       if (res.success && res.data) {
+        setsnak({
+          severity: "success",
+          message: "successfully created!",
+          open: true,
+        });
         console.log(res.data);
       } else {
+        setsnak({
+          severity: "error",
+          message: " not successfully created!",
+          open: true,
+        });
         console.log(res.error);
       }
     });
-    const obj = { values };
-    console.log(obj);
-    setArr((arr) => [...arr, obj]);
-    arr.push(obj);
+    // const obj = { values };
+    // console.log(obj);
+    // setArr((arr) => [...arr, obj]);
+    // arr.push(obj);
   };
   const phoneRegExp =
-  /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
 
-const checkoutSchema = yup.object().shape({
-  firstName: yup.string().required("required"),
-  lastName: yup.string().required("required"),
-  middlename: yup.string().required("required"),
-  email: yup.string().email("invalid email").required("required"),
-  // phone: yup
-  //   .string()
-  //   // .matches(phoneRegExp, "Phone number is not valid")
-  //   // .required("required"),
- 
-});
-const initialValues = {
-  firstName: "",
-  lastName: "",
-  middlename:"",
-  email: "",
-
-
-};
+  const checkoutSchema = yup.object().shape({
+    firstName: yup.string().required("required"),
+    lastName: yup.string().required("required"),
+    middleName: yup.string().required("required"),
+    email: yup.string().email("invalid email").required("required"),
+    region: yup.string().required("required"),
+    userName: yup.string().required("required"),
+    sex: yup.string().required("required"),
+    passWord: yup
+      .string()
+      .required("Password is required")
+      .min(6, "Password must be at least 6 characters"),
+  });
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    userName: "",
+    email: "",
+    region: "",
+    sex: "",
+    passWord: "",
+  };
   return (
     <Box m="20px">
+      <SimpleSnackbar
+        open={snak.open}
+        severity={snak.severity}
+        message={snak.message}
+        onClose={handleClose}
+      />
       <Header title="CREATE ACCOUNT" subtitle="Create a New Account Profile" />
 
       <Formik
@@ -107,10 +135,10 @@ const initialValues = {
                 label="Middle Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.middlename}
-                name="middlename"
-                error={!!touched.middlename && !!errors.middlename}
-                helperText={touched.middlename && errors.middlename}
+                value={values.middleName}
+                name="middleName"
+                error={!!touched.middleName && !!errors.middleName}
+                helperText={touched.middleName && errors.middleName}
                 sx={{ gridColumn: "span 1" }}
               />
               <TextField
@@ -130,6 +158,32 @@ const initialValues = {
                 fullWidth
                 variant="filled"
                 type="text"
+                label="User Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.userName}
+                name="userName"
+                error={!!touched.userName && !!errors.userName}
+                helperText={touched.userName && errors.userName}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Password"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.passWord}
+                name="passWord"
+                error={!!touched.passWord && !!errors.passWord}
+                helperText={touched.passWord && errors.passWord}
+                sx={{ gridColumn: "span 4" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
                 label="Email"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -139,8 +193,23 @@ const initialValues = {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
+              <InputLabel>Gender</InputLabel>
+              <Select
+                fullWidth
+                variant="filled"
+                type="text"
+                onBlur={handleBlur}
+                value={values.sex}
+                label="Sex"
+                onChange={handleChange}
+                sx={{ gridColumn: "span 4" }}
+                name="sex"
+              >
+                <MenuItem value={"MSex"}>Male</MenuItem>
+                <MenuItem value={"FSex"}>Female</MenuItem>
+              </Select>
 
-              {/* <InputLabel>Region</InputLabel>
+              <InputLabel>Region</InputLabel>
               <Select
                 fullWidth
                 variant="filled"
@@ -152,47 +221,21 @@ const initialValues = {
                 sx={{ gridColumn: "span 4" }}
                 name="region"
               >
-                <MenuItem value={30}>Oromia</MenuItem>
-              </Select> */}
-              {/* <Box>
+                <MenuItem value={"Oromiya"}>Oromia</MenuItem>
+                <MenuItem value={"Amhara"}>amhara</MenuItem>
+                <MenuItem value={"Zujm"}>zumbara</MenuItem>
+              </Select>
+              <Box>
                 <MuiTelInput
                   onBlur={handleBlur}
                   fullWidth
                   label="phone number"
                   defaultCountry="ET"
-                  value={values.phone}
-                  onChange={handlehange}
+                  value={phonen}
+                  onChange={(e) => setphonen(e)}
                   sx={{ gridColumn: "span 2" }}
                 />
-              </Box> */}
-
-              {/* <FormControl>
-                <FormLabel id="demo-row-radio-buttons-group-label">
-                  Gender
-                </FormLabel>
-                <RadioGroup
-                  color="red"
-                  sx={{
-                    " &.MuiFormLabel-root": {
-                      color: "magenta",
-                    },
-                  }}
-                  row
-                  aria-labelledby="demo-row-radio-buttons-group-label"
-                  name="row-radio-buttons-group"
-                >
-                  <FormControlLabel
-                    value="female"
-                    control={<Radio />}
-                    label="Female"
-                  />
-                  <FormControlLabel
-                    value="male"
-                    control={<Radio />}
-                    label="Male"
-                  />
-                </RadioGroup>
-              </FormControl> */}
+              </Box>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
@@ -205,7 +248,5 @@ const initialValues = {
     </Box>
   );
 };
-
-
 
 export default CreateregionalUser;

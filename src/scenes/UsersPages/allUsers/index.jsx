@@ -70,7 +70,7 @@ const Team = () => {
       align: "left",
       valueGetter : ({ id }) => {
         const item = mockdata.find(item => item.id === id);
-        return item.user.userprofile.Mname;
+        return item.user?.userprofile?.Mname;
       },
       disableColumnFilter: true,
       
@@ -84,7 +84,7 @@ const Team = () => {
       align: "left",
       valueGetter : ({ id }) => {
         const item = mockdata.find(item => item.id === id);
-        return item.user.userprofile.fname;
+        return item.user?.userprofile?.fname;
       },
       disableColumnFilter: true,
       
@@ -98,7 +98,7 @@ const Team = () => {
       align: "left",
       valueGetter : ({ id }) => {
         const item = mockdata.find(item => item.id === id);
-        return item.user.userprofile.lname;
+        return item.user?.userprofile?.lname;
       },
       disableColumnFilter: true,
       
@@ -112,7 +112,7 @@ const Team = () => {
       align: "left",
       valueGetter : ({ id }) => {
         const item = mockdata.find(item => item.id === id);
-        return item.user.userprofile.phone;
+        return item.user?.userprofile?.phone;
       },
       disableColumnFilter: true,
       
@@ -126,7 +126,7 @@ const Team = () => {
       align: "left",
       valueGetter : ({ id }) => {
         const item = mockdata.find(item => item.id === id);
-        return item.user.userprofile.profile;
+        return item.user?.userprofile?.profile;
       },
       disableColumnFilter: true,
       
@@ -140,7 +140,7 @@ const Team = () => {
       align: "left",
       valueGetter : ({ id }) => {
         const item = mockdata.find(item => item.id === id);
-        return item.user.userprofile.sex;
+        return item.user?.userprofile?.sex;
       },
       disableColumnFilter: true,
       
@@ -216,10 +216,10 @@ const Team = () => {
           },
         }}
       >
-        {/* {!mockdata && <CircularProgress color="success" />}
+        {!mockdata && <CircularProgress color="success" />}
         {mockdata && (
-          <DataGrid checkboxSelection rows={mockdata} columns={columns} /> */}
-        {/* )} */}
+          <DataGrid checkboxSelection rows={mockdata} columns={columns} /> 
+         )} 
       </Box>
     </Box>
   );
