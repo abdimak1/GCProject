@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { BrowserRouter, Routes, Route, Form } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import SideBar from "./scenes/global/SideBar";
@@ -14,25 +14,31 @@ import Regionalusers from "./scenes/UsersPages/Regionalusers";
 import WoredaUsers from "./scenes/UsersPages/WoredaUsers";
 import ZonalUsers from "./scenes/UsersPages/ZonalUsers";
 import Formuser from "./scenes/newuser";
+import Login from "./scenes/Login";
+import PrivateRoutes from "./config/context/PrivateRoutes";
+import AuthContext from "./config/context/authContext";
+
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
+  const authctx=useContext(AuthContext)
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          <SideBar isSidebar={isSidebar} />
+         {authctx.isLoggedIn && <SideBar isSidebar={isSidebar} />}
 
           <main className="content">
-            <Topbar setIsSidebar={setIsSidebar} />
+            {authctx.isLoggedIn&&<Topbar setIsSidebar={setIsSidebar} />}
 
 
             <Routes>
+            <Route element={<Login/>} path="/login"/>
+            <Route element={<PrivateRoutes />}>
               {/* <Route path="/" element={<Dashboard />} /> */}
               <Route path="/users" element={<FullFeaturedCrudGrid />} />
-              
               <Route path="/kebeleUsers" element={<KebeleUsers />} />
               <Route path="/regional" element={<Regionalusers />} />
               <Route path="/woreda" element={<WoredaUsers />} />
@@ -42,7 +48,9 @@ function App() {
               <Route path="/createworedaaccount" element= {<CreateworedaUser/>}/>
               <Route path="/createzonalaccount" element= {<CreatezoneUser/>}/>
               <Route path = "/manageusers" element = {<Formuser/>} />
+             {/* <Route path = "*" element = {<div>Page not Found!!</div>} /> */}
 
+          </Route>
 
         
 
