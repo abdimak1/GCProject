@@ -97,7 +97,7 @@ const ZonalUsers = () => {
 
   return (
     <Box m="20px">
-      <Header title="Kebele users" subtitle="List of kebele users" />
+      <Header title="Zonal users" subtitle="List of kebele users" />
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
           onClick={() => {

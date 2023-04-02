@@ -4,18 +4,31 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import { useState } from "react";
-
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import { MuiTelInput } from "mui-tel-input";
 
 const CreatekebeleUser = () => {
   const [arr, setArr] = useState([]);
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [value, setValue] = useState("");
+
+  const handlehange = (newValue, info) => {
+    setValue(newValue);
+  };
 
   const handleFormSubmit = (values) => {
-    const obj = {values};
+    const obj = { values };
     console.log(obj);
-    setArr(arr => [...arr, obj]);
-    arr.push(obj)
+    setArr((arr) => [...arr, obj]);
+    arr.push(obj);
   };
 
   return (
@@ -55,7 +68,20 @@ const CreatekebeleUser = () => {
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
                 helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Middle Name"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.middlename}
+                name="middlename"
+                error={!!touched.middlename && !!errors.middlename}
+                helperText={touched.middlename && errors.middlename}
+                sx={{ gridColumn: "span 1" }}
               />
               <TextField
                 fullWidth
@@ -68,7 +94,7 @@ const CreatekebeleUser = () => {
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
+                sx={{ gridColumn: "span 1" }}
               />
               <TextField
                 fullWidth
@@ -83,45 +109,60 @@ const CreatekebeleUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 4" }}
               />
-              <TextField
+
+              <InputLabel>Region</InputLabel>
+              <Select
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Contact Number"
                 onBlur={handleBlur}
+                value={values.region}
+                label="Region"
                 onChange={handleChange}
-                value={values.contact}
-                name="contact"
-                error={!!touched.contact && !!errors.contact}
-                helperText={touched.contact && errors.contact}
                 sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 1"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address1}
-                name="address1"
-                error={!!touched.address1 && !!errors.address1}
-                helperText={touched.address1 && errors.address1}
-                sx={{ gridColumn: "span 4" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Address 2"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.address2}
-                name="address2"
-                error={!!touched.address2 && !!errors.address2}
-                helperText={touched.address2 && errors.address2}
-                sx={{ gridColumn: "span 4" }}
-              />
+                name="region"
+              >
+                <MenuItem value={30}>Oromia</MenuItem>
+              </Select>
+              <Box>
+                <MuiTelInput
+                  onBlur={handleBlur}
+                  fullWidth
+                  label="phone number"
+                  defaultCountry="ET"
+                  value={value}
+                  onChange={handlehange}
+                  sx={{ gridColumn: "span 2" }}
+                />
+              </Box>
+
+              <FormControl>
+                <FormLabel id="demo-row-radio-buttons-group-label">
+                  Gender
+                </FormLabel>
+                <RadioGroup
+                  color="red"
+                  sx={{
+                    " &.MuiFormLabel-root": {
+                      color: "magenta",
+                    },
+                  }}
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
+                >
+                  <FormControlLabel
+                    value="female"
+                    control={<Radio />}
+                    label="Female"
+                  />
+                  <FormControlLabel
+                    value="male"
+                    control={<Radio />}
+                    label="Male"
+                  />
+                </RadioGroup>
+              </FormControl>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">

@@ -24,7 +24,7 @@ export const get_all_regions = async () => {
         "sex":"male",
         "profile":"pic",
         "region_name":"dasenech",
-        "username":"abdi",
+        "username":"abdu",
         "email":"assegfa@gmail.com",
         "password":"afasdga@15g",
         "created_by":"1"

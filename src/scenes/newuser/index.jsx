@@ -13,6 +13,7 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormControl from "@mui/material/FormControl";
 import FormLabel from "@mui/material/FormLabel";
 import { MuiTelInput } from "mui-tel-input";
+import { pink } from "@mui/material/colors";
 const Formuser = () => {
   const [arr, setArr] = useState([]);
   const isNonMobile = useMediaQuery("(min-width:600px)");
@@ -58,6 +59,7 @@ const Formuser = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
+             
               <TextField
                 fullWidth
                 variant="filled"
@@ -97,9 +99,20 @@ const Formuser = () => {
                 helperText={touched.lastName && errors.lastName}
                 sx={{ gridColumn: "span 1" }}
               />
-              <span>
-                <br />
-              </span>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Email"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.email}
+                name="email"
+                error={!!touched.email && !!errors.email}
+                helperText={touched.email && errors.email}
+                sx={{ gridColumn: "span 4" }}
+              />
+
               <InputLabel>Region</InputLabel>
               <Select
                 fullWidth
@@ -114,29 +127,32 @@ const Formuser = () => {
               >
                 <MenuItem value={30}>Oromia</MenuItem>
               </Select>
-              <MuiTelInput
-                onBlur={handleBlur}
-                fullWidth
-                label="phone number"
-                defaultCountry="ET"
-                value={value}
-                onChange={handlehange}
-                sx={{ gridColumn: "span 2" }}
-              />
-              {/* <FormControl sx={{ gridColumn: "span 4", color: "" }}>
-                <FormLabel id="demo-radio-buttons-group-label">
+              <Box>
+                <MuiTelInput
+                  onBlur={handleBlur}
+                  fullWidth
+                  label="phone number"
+                  defaultCountry="ET"
+                  value={value}
+                  onChange={handlehange}
+                  sx={{ gridColumn: "span 2" }}
+                />
+              </Box>
+
+              <FormControl>
+                <FormLabel id="demo-row-radio-buttons-group-label">
                   Gender
                 </FormLabel>
                 <RadioGroup
+                  color="red"
                   sx={{
-                    color:"#2596be",
-                    "&.Mui-checked": {
-                      color: "#2596be",
+                    " &.MuiFormLabel-root": {
+                      color: "magenta",
                     },
                   }}
-                  aria-labelledby="demo-radio-buttons-group-label"
-                  defaultValue="female"
-                  name="radio-buttons-group"
+                  row
+                  aria-labelledby="demo-row-radio-buttons-group-label"
+                  name="row-radio-buttons-group"
                 >
                   <FormControlLabel
                     value="female"
@@ -149,7 +165,17 @@ const Formuser = () => {
                     label="Male"
                   />
                 </RadioGroup>
-              </FormControl> */}
+              </FormControl>
+            </Box>
+
+            <InputLabel
+            sx={{margin:2}}>Profile picture</InputLabel>  
+            <Box sx={{ p: 2 }}>      
+                  
+              <Button variant="contained" component="label">
+              Upload File
+              <input type="file" hidden />
+            </Button>
             </Box>
             <Box display="flex" justifyContent="end" mt="20px">
               <Button type="submit" color="secondary" variant="contained">
