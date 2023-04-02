@@ -14,19 +14,29 @@ export const get_all_regions = async () => {
     }
   };
 
-  export const create_region = async () => {
+  export const create_region = async (val,phonen) => {
+    console.log(val,phonen)
+    // try {
+    //   const response = await api.post("/region/create",{
+    //     "fname":val.firstName,
+    //     "Mname":val.middleName,
+    //     "lname":val.lastName,
+    //     "phone":phonen,
+    //     "sex":val.sex,
+    //     "profile":"pic",
+    //     "region_name":val.region,
+    //     "username":val.useName,
+    //     "email":val.email,
+    //     "password":`ufuyfuf8998@123`,
+    //     "created_by":"1"
+    //   });
     try {
       const response = await api.post("/region/create",{
-        "fname":"abel",
-        "Mname":"assefa",
-        "lname":"dibaba",
-        "phone":"0941134055",
-        "sex":"male",
-        "profile":"pic",
-        "region_name":"dasenech",
+        
+        "region_name":"kmkmkmkmk",
         "username":"abdu",
-        "email":"assegfa@gmail.com",
-        "password":"afasdga@15g",
+        "email":"asljdbfa@gmail.com",
+        "password":"mmsdjbaiubab@123djf",
         "created_by":"1"
       });
       return { success: true, data: response.data };
