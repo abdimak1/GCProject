@@ -40,7 +40,7 @@ const SideBar = () => {
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  return (
+  return ( 
     <Box
       sx={{
         "& .pro-sidebar-inner": {
@@ -60,6 +60,7 @@ const SideBar = () => {
         },
       }}
     >
+
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
