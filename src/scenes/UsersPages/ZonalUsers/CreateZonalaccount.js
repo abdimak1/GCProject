@@ -218,7 +218,6 @@ const CreatekebeleUser = () => {
                 sx={{ gridColumn: "span 4" }}
                 name="region"
               >
-                <MenuItem value={""}></MenuItem>
                 <MenuItem value={"01"}>woreda 01</MenuItem>
                 <MenuItem value={"02"}>woreda 02</MenuItem>
                 <MenuItem value={"03"}>woreda 03</MenuItem>
