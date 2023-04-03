@@ -35,7 +35,6 @@ const Login = () => {
       .required("Required"),
     password: Yup.string().required("Required"),
   });
-
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
@@ -43,7 +42,7 @@ const Login = () => {
           <Avatar style={avatarStyle}>
             <LockOutlinedIcon />
           </Avatar>
-          <h2>FARMASSIST</h2>
+          <h2>FARMASIST</h2>
         </Grid>
         <Formik
           initialValues={initialValues}
