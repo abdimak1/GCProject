@@ -42,7 +42,7 @@ const Login = () => {
           <Avatar style={avatarStyle}>
             <LockOutlinedIcon />
           </Avatar>
-          <h2>FARMASIST</h2>
+          <h2>FARMASSIST</h2>
         </Grid>
         <Formik
           initialValues={initialValues}
