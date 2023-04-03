@@ -101,7 +101,7 @@ const KebeleUsers = () => {
       <Box display="flex" justifyContent="end" mt="20px" >
         <Button
           onClick={() => {
-            navigate("/create");
+            navigate("/createkebeleaccount");
           }}
           sx={{
             backgroundColor: colors.blueAccent[700],

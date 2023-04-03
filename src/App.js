@@ -4,9 +4,9 @@ import Topbar from "./scenes/global/Topbar";
 import SideBar from "./scenes/global/SideBar";
 import FullFeaturedCrudGrid from "./scenes/UsersPages/allUsers";
 import CreatekebeleUser from "./scenes/UsersPages/Kebeleusers/CreateKebeleUser";
-import CreateregionalUser from "./scenes/UsersPages/Regionalusers/CreateKebeleUser";
-import CreateworedaUser from "./scenes/UsersPages/WoredaUsers/CreateKebeleUser";
-import CreatezoneUser from "./scenes/UsersPages/ZonalUsers/CreateKebeleUser";
+import CreateregionalUser from "./scenes/UsersPages/Regionalusers/CreateRegionalUser";
+import CreateworedaUser from "./scenes/UsersPages/WoredaUsers/CreateWoredaUser"
+import CreatezoneUser from "./scenes/UsersPages/ZonalUsers/CreateZonalaccount";
 import KebeleUsers from "./scenes/UsersPages/Kebeleusers";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
@@ -37,7 +37,7 @@ function App() {
               <Route path="/regional" element={<Regionalusers />} />
               <Route path="/woreda" element={<WoredaUsers />} />
               <Route path="/zonal" element={<ZonalUsers />} />
-              <Route path="/create" element={<CreatekebeleUser />} />
+              <Route path="/createkebeleaccount" element={<CreatekebeleUser />} />
               <Route path="/createregionalaccount" element= {<CreateregionalUser/>}/>
               <Route path="/createworedaaccount" element= {<CreateworedaUser/>}/>
               <Route path="/createzonalaccount" element= {<CreatezoneUser/>}/>

@@ -10,7 +10,7 @@ import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
 import { MuiTelInput } from "mui-tel-input";
 
-import { create_kebele } from "../../../config/apicalls/kebeleApiCalls";
+import { create_zone } from "../../../config/apicalls/zonalApiCalls";
 const CreatekebeleUser = () => {
   const [arr, setArr] = useState([]);
 
@@ -32,7 +32,7 @@ const CreatekebeleUser = () => {
 
 
   const handleFormSubmit = (values) => {
-    create_kebele(values, phonen).then((res) => {
+    create_zone(values, phonen).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -204,6 +204,24 @@ const CreatekebeleUser = () => {
               >
                 <MenuItem value={"M"}>Male</MenuItem>
                 <MenuItem value={"F"}>Female</MenuItem>
+              </Select>
+
+              <InputLabel>Woreda</InputLabel>
+              <Select
+                fullWidth
+                variant="filled"
+                type="text"
+                onBlur={handleBlur}
+                value={values.region}
+                label="Region"
+                onChange={handleChange}
+                sx={{ gridColumn: "span 4" }}
+                name="region"
+              >
+                <MenuItem value={""}></MenuItem>
+                <MenuItem value={"01"}>woreda 01</MenuItem>
+                <MenuItem value={"02"}>woreda 02</MenuItem>
+                <MenuItem value={"03"}>woreda 03</MenuItem>
               </Select>
 
               
