@@ -13,7 +13,7 @@ import { MuiTelInput } from "mui-tel-input";
 import { create_woreda } from "../../../config/apicalls/woredaApiCalls";
 
 const CreatekebeleUser = () => {
-  const [arr, setArr] = useState([]);
+  
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [phonen, setphonen] = useState("");
@@ -50,13 +50,9 @@ const CreatekebeleUser = () => {
         console.log(res.error);
       }
     });
-    // const obj = { values };
-    // console.log(obj);
-    // setArr((arr) => [...arr, obj]);
-    // arr.push(obj);
+  
   };
-  const phoneRegExp =
-    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+ 
 
   const checkoutSchema = yup.object().shape({
     firstName: yup.string().required("required"),
@@ -207,7 +203,7 @@ const CreatekebeleUser = () => {
                 <MenuItem value={"F"}>Female</MenuItem>
               </Select>
 
-              <InputLabel>kebele</InputLabel>
+              <InputLabel>Select kebele</InputLabel>
               <Select
                 fullWidth
                 variant="filled"

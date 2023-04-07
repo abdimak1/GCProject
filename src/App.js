@@ -17,7 +17,7 @@ import Formuser from "./scenes/newuser";
 import Login from "./scenes/Login";
 import PrivateRoutes from "./config/context/PrivateRoutes";
 import AuthContext from "./config/context/authContext";
-
+import Dashboard from "@mui/icons-material/Dashboard";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);

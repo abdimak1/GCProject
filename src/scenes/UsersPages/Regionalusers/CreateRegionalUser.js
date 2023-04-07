@@ -12,7 +12,7 @@ import { MuiTelInput } from "mui-tel-input";
 
 import { create_region } from "../../../config/apicalls/regionApiCall";
 const CreateregionalUser = () => {
-  const [arr, setArr] = useState([]);
+  
 
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [phonen, setphonen] = useState("");
@@ -57,8 +57,7 @@ const CreateregionalUser = () => {
     // setArr((arr) => [...arr, obj]);
     // arr.push(obj);
   };
-  const phoneRegExp =
-    /^((\+[1-9]{1,4}[ -]?)|(\([0-9]{2,3}\)[ -]?)|([0-9]{2,4})[ -]?)*?[0-9]{3,4}[ -]?[0-9]{3,4}$/;
+ 
 
   const checkoutSchema = yup.object().shape({
     firstName: yup.string().required("required"),
@@ -209,7 +208,7 @@ const CreateregionalUser = () => {
                 <MenuItem value={"FSex"}>Female</MenuItem>
               </Select>
 
-              <InputLabel>Region</InputLabel>
+              <InputLabel>Select zone</InputLabel>
               <Select
                 fullWidth
                 variant="filled"
@@ -221,9 +220,9 @@ const CreateregionalUser = () => {
                 sx={{ gridColumn: "span 4" }}
                 name="region"
               >
-                <MenuItem value={"Oromiya"}>Oromia</MenuItem>
-                <MenuItem value={"Amhara"}>amhara</MenuItem>
-                <MenuItem value={"Zujm"}>zumbara</MenuItem>
+                <MenuItem value={"arsi zone"}>arsi zone</MenuItem>
+                <MenuItem value={"meserak shewa zone"}>meserak shewa zone</MenuItem>
+            
               </Select>
               <Box>
                 <MuiTelInput

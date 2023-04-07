@@ -7,13 +7,12 @@ import Button from "@mui/material/Button";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-
 const Login = () => {
   const paperStyle = {
     padding: 20,
-    height: "70vh",
-    width: 280,
-    margin: "20px auto",
+    height: "60vh",
+    width: 300,
+    margin: "100px auto",
   };
   const avatarStyle = { backgroundColor: "green" };
   const btnstyle = { margin: "8px 0" };

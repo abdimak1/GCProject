@@ -16,7 +16,7 @@ const Topbar = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
-  const Menus = ["Profile", "Logout"];
+  // const Menus = ["Profile", "Logout"];
   const [anchorEl, setAnchorEl] = useState(null);
 
   const handleClose = () => {
