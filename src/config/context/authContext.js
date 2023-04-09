@@ -1,55 +1,45 @@
-import React, { useState } from "react";
+import { createContext, useState, useEffect } from "react";
+import jwt_decode from "jwt-decode";
+const AuthContext = createContext();
 
-const AuthContext = React.createContext({
-  token: localStorage.getItem("authTokens"),
-  isLoggedIn: true,
-  role: "",
-  codeName: "",
-  login: (token) => {},
-  logout: () => {},
-});
+export default AuthContext;
 
-export const AuthContextProvider = (props) => {
-  const intialToken = localStorage.getItem("authTokens");
-  const intialRole = localStorage.getItem("userRole");
-  const intialCodeName = localStorage.getItem("codeName");
-  const [token, setToken] = useState(intialToken);
-  const [role, setRole] = useState(intialRole);
-  const [codeName, setCodeName] = useState(intialCodeName);
+export const AuthProvider = ({ children }) => {
+  let [authTokens, setAuthTokens] = useState(() =>
+    localStorage.getItem("authTokens")
+      ? JSON.parse(localStorage.getItem("authTokens"))
+      : null
+  );
+  const IslogedIn = !!authTokens;
+  const [role, setRole] = useState(localStorage.getItem("role"));
+  const [username, setUsername] = useState(localStorage.getItem("username"));
 
-  const userIsLoggedIn = !!token;
-
-  const loginHandler = (token, role, codeName) => {
-    setToken(token);
-    setRole(role);
-    setCodeName(codeName);
-    localStorage.setItem("authTokens", token);
-    localStorage.setItem("userRole", role);
-    localStorage.setItem("codeName", codeName);
+  let loginUser = (token) => {
+    const user = jwt_decode(token?.access);
+    setAuthTokens(token);
+    setRole(user.role);
+    setUsername(user.username);
+    localStorage.setItem("authTokens", JSON.stringify(token));
+    localStorage.setItem("role", user.role);
+    localStorage.setItem("username", user.username);
   };
 
-  const logoutHandler = () => {
-    setToken(null);
-    setRole(null);
+  let logoutUser = () => {
+    setAuthTokens(null);
     localStorage.removeItem("authTokens");
-    localStorage.removeItem("userRole");
-    localStorage.removeItem("codeName");
   };
 
-  const contextValue = {
-    token: token,
+  let contextData = {
+    authTokens: authTokens,
     role: role,
-    codeName: codeName,
-    isLoggedIn: userIsLoggedIn,
-    login: loginHandler,
-    logout: logoutHandler,
+    username: username,
+    isLogedin: IslogedIn,
+    setAuthTokens: setAuthTokens,
+    loginUser: loginUser,
+    logoutUser: logoutUser,
   };
 
   return (
-    <AuthContext.Provider value={contextValue}>
-      {props.children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextData}>{children}</AuthContext.Provider>
   );
 };
-
-export default AuthContext;

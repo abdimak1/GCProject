@@ -5,7 +5,7 @@ import SideBar from "./scenes/global/SideBar";
 import FullFeaturedCrudGrid from "./scenes/UsersPages/allUsers";
 import CreatekebeleUser from "./scenes/UsersPages/Kebeleusers/CreateKebeleUser";
 import CreateregionalUser from "./scenes/UsersPages/Regionalusers/CreateRegionalUser";
-import CreateworedaUser from "./scenes/UsersPages/WoredaUsers/CreateWoredaUser"
+import CreateworedaUser from "./scenes/UsersPages/WoredaUsers/CreateWoredaUser";
 import CreatezoneUser from "./scenes/UsersPages/ZonalUsers/CreateZonalaccount";
 import KebeleUsers from "./scenes/UsersPages/Kebeleusers";
 import { CssBaseline, ThemeProvider } from "@mui/material";
@@ -21,40 +21,46 @@ import Dashboard from "@mui/icons-material/Dashboard";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const authctx=useContext(AuthContext)
+  const authctx = useContext(AuthContext);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-         {authctx.isLoggedIn && <SideBar isSidebar={isSidebar} />}
+          {authctx.isLoggedIn && <SideBar isSidebar={isSidebar} />}
 
           <main className="content">
-            {authctx.isLoggedIn&&<Topbar setIsSidebar={setIsSidebar} />}
-
+            {authctx.isLoggedIn && <Topbar setIsSidebar={setIsSidebar} />}
 
             <Routes>
-            <Route element={<Login/>} path="/login"/>
-            <Route element={<PrivateRoutes />}>
-              {/* <Route path="/" element={<Dashboard />} /> */}
-              <Route path="/users" element={<FullFeaturedCrudGrid />} />
-              <Route path="/kebeleUsers" element={<KebeleUsers />} />
-              <Route path="/regional" element={<Regionalusers />} />
-              <Route path="/woreda" element={<WoredaUsers />} />
-              <Route path="/zonal" element={<ZonalUsers />} />
-              <Route path="/createkebeleaccount" element={<CreatekebeleUser />} />
-              <Route path="/createregionalaccount" element= {<CreateregionalUser/>}/>
-              <Route path="/createworedaaccount" element= {<CreateworedaUser/>}/>
-              <Route path="/createzonalaccount" element= {<CreatezoneUser/>}/>
-              <Route path = "/manageusers" element = {<Formuser/>} />
-             {/* <Route path = "*" element = {<div>Page not Found!!</div>} /> */}
-
-          </Route>
-
-        
-
-
+              <Route element={<Login />} path="/" />
+              <Route element={<PrivateRoutes />}>
+                {/* <Route path="/" element={<Dashboard />} /> */}
+                <Route path="/users" element={<FullFeaturedCrudGrid />} />
+                <Route path="/kebeleUsers" element={<KebeleUsers />} />
+                <Route path="/regional" element={<Regionalusers />} />
+                <Route path="/woreda" element={<WoredaUsers />} />
+                <Route path="/zonal" element={<ZonalUsers />} />
+                <Route
+                  path="/createkebeleaccount"
+                  element={<CreatekebeleUser />}
+                />
+                <Route
+                  path="/createregionalaccount"
+                  element={<CreateregionalUser />}
+                />
+                <Route
+                  path="/createworedaaccount"
+                  element={<CreateworedaUser />}
+                />
+                <Route
+                  path="/createzonalaccount"
+                  element={<CreatezoneUser />}
+                />
+                <Route path="/manageusers" element={<Formuser />} />
+                {/* <Route path = "*" element = {<div>Page not Found!!</div>} /> */}
+              </Route>
             </Routes>
           </main>
         </div>

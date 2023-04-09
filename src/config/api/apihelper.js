@@ -1,17 +1,42 @@
 import axios from "axios";
+import jwt_decode from "jwt-decode";
+import dayjs from "dayjs";
 
-const baseUrl = "https://jsonplaceholder.typicode.com";
+const baseURL = "http://127.0.0.1:8000";
 
-const axiosinstance = axios.create({
-  baseURL: "https://farmarender.onrender.com",
-  // baseURL:"http://localhost:4000",
+let authTokens = localStorage.getItem("authTokens")
+  ? JSON.parse(localStorage.getItem("authTokens"))
+  : null;
+
+const axiosInstance = axios.create({
+  baseURL,
+  headers: { Authorization: `Bearer ${authTokens?.access}` },
 });
 
-// axiosinstance.defaults.headers["Authorization"] = Bearer ${auth.getToken()};
-axiosinstance.interceptors.request.use(function (config) {
-  const token = localStorage.getItem("authTokens");
-  config.headers.Authorization = token ? `Bearer ${token}` : "";
-  return config;
+axiosInstance.interceptors.request.use(async (req) => {
+  console.log("interceptor running", authTokens);
+  if (!authTokens) {
+    authTokens = localStorage.getItem("authTokens")
+      ? JSON.parse(localStorage.getItem("authTokens"))
+      : null;
+    req.headers.Authorization = `Bearer ${authTokens?.access}`;
+  }
+
+  if (authTokens) {
+    console.log(" running", authTokens);
+    const user = jwt_decode(authTokens?.access);
+    const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
+    if (!isExpired) return req;
+
+    const response = await axios.post(`${baseURL}/api/token/refresh/`, {
+      refresh: authTokens?.refresh,
+    });
+
+    localStorage.setItem("authTokens", JSON.stringify(response.data));
+    req.headers.Authorization = `Bearer ${response.data.access}`;
+    return req;
+  }
+  return req;
 });
 
-export  {axiosinstance,baseUrl};
+export default axiosInstance;

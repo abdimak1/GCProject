@@ -4,7 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
-import { fetchData } from "../../../config/apicalls/usersapi";
+// import { fetchData } from "../../../config/apicalls/usersapi";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -18,14 +18,14 @@ const ZonalUsers = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData().then((res) => {
-      if (res.success && res.data) {
-        console.log(res.data);
-        setMockdata(res.data);
-      } else {
-        console.log(res.error);
-      }
-    });
+    // fetchData().then((res) => {
+    //   if (res.success && res.data) {
+    //     console.log(res.data);
+    //     setMockdata(res.data);
+    //   } else {
+    //     console.log(res.error);
+    //   }
+    // });
   }, []);
 
   const columns = [

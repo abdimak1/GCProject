@@ -2,55 +2,58 @@ import React from "react";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import * as Yup from "yup";
+import { useContext } from "react";
+import AuthContext from "../../config/context/authContext";
+import { login_user } from "../../config/apicalls/usersapi";
 const Login = () => {
+  const { loginUser } = useContext(AuthContext);
+  const initialValues = { username: "", password: "" };
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required("Required"),
+    password: Yup.string().required("Required"),
+  });
   const paperStyle = {
     padding: 20,
     height: "60vh",
     width: 300,
     margin: "100px auto",
   };
-  const avatarStyle = { backgroundColor: "green" };
-  const btnstyle = { margin: "8px 0" };
-  const initialValues = { username: "", password: "" };
 
-  const onSubmit = (values, props) => {
-    console.log(values);
-    setTimeout(() => {
-      props.resetForm();
-      props.setSubmitting(false);
-    }, 2000);
-
-    console.log(props);
+  const SubmitHandler = (values) => {
+    login_user(values.username, values.password).then((res) => {
+      if (res.success && res.data) {
+        loginUser(res.data);
+        console.log("success");
+      } else {
+        console.log(res.error);
+        console.log("erroer");
+      }
+    });
   };
 
-  const validationSchema = Yup.object().shape({
-    username: Yup.string()
-      .email("please enter valid email")
-      .required("Required"),
-    password: Yup.string().required("Required"),
-  });
   return (
     <Grid>
       <Paper elevation={10} style={paperStyle}>
         <Grid align="center">
-          <Avatar style={avatarStyle}>
-            <LockOutlinedIcon />
-          </Avatar>
           <h2>FARMASSIST</h2>
         </Grid>
         <Formik
           initialValues={initialValues}
-          onSubmit={onSubmit}
+          onSubmit={SubmitHandler}
           validationSchema={validationSchema}
         >
-          {(props) => (
-            <Form>
-              {console.log(props)}
+          {({
+            values,
+            errors,
+            touched,
+            handleBlur,
+            handleChange,
+            handleSubmit,
+          }) => (
+            <form onSubmit={handleSubmit}>
               <div
                 style={{
                   display: "flex",
@@ -58,40 +61,42 @@ const Login = () => {
                   gap: "25px",
                 }}
               >
-                <Field
-                  as={TextField}
+                <TextField
                   label="Username"
                   name="username"
                   placeholder="Enter Username"
                   variant="standard"
                   fullWidth
-                  required
-                  helperText={<ErrorMessage name="username" />}
+                  value={values.username}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.username && !!errors.username}
+                  helperText={touched.username && errors.username}
                 />
 
-                <Field
-                  as={TextField}
+                <TextField
                   label="Password"
                   name="password"
                   placeholder="Enter Password"
+                  value={values.password}
                   type="password"
                   variant="standard"
                   fullWidth
-                  required
-                  helperText={<ErrorMessage name="password" />}
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  error={!!touched.password && !!errors.password}
+                  helperText={touched.password && errors.password}
                 />
                 <Button
                   type="submit"
                   color="primary"
                   variant="contained"
-                  disabled={props.isSubmitting}
-                  style={btnstyle}
                   fullWidth
                 >
-                  {props.isSubmitting ? "Loading" : "Sign in"}
+                  Submit
                 </Button>
               </div>
-            </Form>
+            </form>
           )}
         </Formik>
       </Paper>

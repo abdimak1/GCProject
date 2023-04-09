@@ -1,14 +1,13 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import {Link} from "@mui/material";
+import { Link } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-import { mockDataTeam } from "../../../Data/mockData";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+// import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
+// import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
+// import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
-import { fetchData } from "../../../config/apicalls/usersapi";
+// import { fetchData } from "../../../config/apicalls/usersapi";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -22,14 +21,14 @@ const KebeleUsers = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchData().then((res) => {
-      if (res.success && res.data) {
-        console.log(res.data);
-        setMockdata(res.data);
-      } else {
-        console.log(res.error);
-      }
-    });
+    // fetchData().then((res) => {
+    //   if (res.success && res.data) {
+    //     console.log(res.data);
+    //     setMockdata(res.data);
+    //   } else {
+    //     console.log(res.error);
+    //   }
+    // });
   }, []);
 
   const columns = [
@@ -98,7 +97,7 @@ const KebeleUsers = () => {
   return (
     <Box m="20px">
       <Header title="Kebele users" subtitle="List of kebele users" />
-      <Box display="flex" justifyContent="end" mt="20px" >
+      <Box display="flex" justifyContent="end" mt="20px">
         <Button
           onClick={() => {
             navigate("/createkebeleaccount");
@@ -108,7 +107,6 @@ const KebeleUsers = () => {
             color: colors.grey[100],
             fontSize: "14px",
             fontWeight: "bold",
-            
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
