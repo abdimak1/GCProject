@@ -31,6 +31,10 @@ const Login = () => {
         navigate("/users");
       } else {
         console.log(res.error);
+// <<<<<<< HEAD
+//         console.log("error");
+// =======
+// >>>>>>> f135751d99d0dca4af0c5c5136ccc250ed36263d
       }
     });
   };
