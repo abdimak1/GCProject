@@ -7,16 +7,14 @@ import {
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
+
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
-import { Update } from "@mui/icons-material";
+
 import { get_resources } from "../../config/apicalls/resourceApiCall";
 
-const Resources = () => {
+const MyResources = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resources, setresources] = useState();
@@ -53,8 +51,8 @@ const Resources = () => {
       align: "left",
     },
     {
-      field: "amount",
-      headerName: "Amount",
+      field: "created_at",
+      headerName: "Created_at",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -64,6 +62,15 @@ const Resources = () => {
     {
       field: "amount",
       headerName: "Amount",
+      type: "number",
+      headerAlign: "left",
+      align: "left",
+      valueGetter: (params) => params.row?.user?.email,
+      disableColumnFilter: true,
+    },
+    {
+      field: "price_perKilo",
+      headerName: "Price",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -133,4 +140,4 @@ const Resources = () => {
   );
 };
 
-export default Resources;
+export default MyResources;

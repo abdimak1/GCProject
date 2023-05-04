@@ -19,7 +19,7 @@ import PrivateRoutes from "./config/context/PrivateRoutes";
 import AuthContext from "./config/context/authContext";
 import Dashboard from "@mui/icons-material/Dashboard";
 import { useLocation } from "react-router-dom";
-import Resources from "./scenes/MyResources";
+import MyResources from "./scenes/MyResources";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -72,7 +72,7 @@ function App() {
                   element={<CreatezoneUser />}
                 />
                 <Route path="/manageusers" element={<Formuser />} />
-                <Route path="/resources" element={<Resources />} />
+                <Route path="/resources" element={<MyResources />} />
                 <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>
             </Routes>

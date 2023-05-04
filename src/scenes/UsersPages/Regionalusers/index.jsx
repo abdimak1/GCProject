@@ -19,7 +19,7 @@ const Regionalusers = () => {
     get_all_regions().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
-        // setMockdata(res.data);
+        setMockdata(res.data);
       } else {
         console.log(res.error);
       }

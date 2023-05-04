@@ -7,7 +7,7 @@ import { tokens } from "../../../theme";
 // import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
-// import { fetchData } from "../../../config/apicalls/usersapi";
+import { get_all_regions } from "../../../config/apicalls/regionApiCall"; 
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -21,14 +21,14 @@ const KebeleUsers = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // fetchData().then((res) => {
-    //   if (res.success && res.data) {
-    //     console.log(res.data);
-    //     setMockdata(res.data);
-    //   } else {
-    //     console.log(res.error);
-    //   }
-    // });
+    get_all_regions().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setMockdata(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
   }, []);
 
   const columns = [
