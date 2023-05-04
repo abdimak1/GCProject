@@ -12,7 +12,7 @@ import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
 import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import { tokens } from "../../theme";
-import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AuthContext from "../../config/context/authContext";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -34,13 +34,13 @@ const Item = ({ title, to, icon, selected, setSelected }) => {
 };
 
 const SideBar = () => {
-  const outhctx = useContext(AuthContext);
+  const authctx = useContext(AuthContext);
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
 
-  return ( 
+  return (
     <Box
       sx={{
         "& .pro-sidebar-inner": {
@@ -60,7 +60,6 @@ const SideBar = () => {
         },
       }}
     >
-
       <ProSidebar collapsed={isCollapsed}>
         <Menu iconShape="square">
           {/* LOGO AND MENU ICON */}
@@ -92,7 +91,7 @@ const SideBar = () => {
           {!isCollapsed && (
             <Box mb="25px">
               <Box display="flex" justifyContent="center" alignItems="center">
-              <AdminPanelSettingsIcon/>
+                <AdminPanelSettingsIcon />
               </Box>
               <Box textAlign="center">
                 <Typography
@@ -101,111 +100,141 @@ const SideBar = () => {
                   fontWeight="bold"
                   sx={{ m: "10px 0 0 0" }}
                 >
-                 {outhctx.codeName ? outhctx.codeName :"username"}
+                  {authctx.username ? authctx.username : "username"}
                 </Typography>
                 <Typography variant="h5" color={colors.greenAccent[500]}>
-                  {outhctx.role ? outhctx.role : "role "}
+                  {authctx.role ? authctx.role : "role "}
                 </Typography>
               </Box>
             </Box>
           )}
 
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-            {outhctx.role === "Federal" ?
+            {/* {authctx.role === "federal" ? ( */}
             <>
-            <Item
-              title="dashboard"
-              to="/dashboard"
-              icon={<DashboardIcon />}
-              selected={true}
-              setSelected={setSelected}
-            />
-            <Typography
-              variant="h6"
-              color="#a3a3a3"
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Data
-            </Typography>
-            <Item
-              title="Manage users"
-              to="/manageusers"
-              icon={<GroupAddIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="users"
-              to="/users"
-              icon={<GroupAddIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Typography
-              variant="h6"
-              color="#a3a3a3"
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Users
-            </Typography>
-            <Item
-              title="Regional"
-              to="/regional"
-              icon={<PersonIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Zonal"
-              to="/zonal"
-              icon={<PersonIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Woreda"
-              to="/woreda"
-              icon={<PersonIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Kebele"
-              to="/kebeleUsers"
-              icon={<PersonIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Typography
-              variant="h6"
-              color="#a3a3a3"
-              sx={{ m: "15px 0 5px 20px" }}
-            >
-              Charts
-            </Typography>
-            <Item
-              title="Bar Chart"
-              to="/bar"
-              icon={<BarChartOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Pie Chart"
-              to="/pie"
-              icon={<PieChartOutlineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            <Item
-              title="Line Chart"
-              to="/line"
-              icon={<TimelineOutlinedIcon />}
-              selected={selected}
-              setSelected={setSelected}
-            />
-            </>:<></>
-          }
+              <Item
+                title="dashboard"
+                to="/dashboard"
+                icon={<DashboardIcon />}
+                selected={true}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color="#a3a3a3"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Data
+              </Typography>
+              <Item
+                title="Manage users"
+                to="/manageusers"
+                icon={<GroupAddIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="users"
+                to="/users"
+                icon={<GroupAddIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color="#a3a3a3"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Users
+              </Typography>
+              <Item
+                title="Regional"
+                to="/regional"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Zonal"
+                to="/zonal"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Woreda"
+                to="/woreda"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Kebele"
+                to="/kebeleUsers"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color="#a3a3a3"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Resource
+              </Typography>
+              <Item
+                title="Resource"
+                to="/resources"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Sent Recource"
+                to="/resources/sent"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Recieved Resource"
+                to="/resources/recieved"
+                icon={<PersonIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Typography
+                variant="h6"
+                color="#a3a3a3"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Charts
+              </Typography>
+              <Item
+                title="Bar Chart"
+                to="/bar"
+                icon={<BarChartOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Pie Chart"
+                to="/pie"
+                icon={<PieChartOutlineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+              <Item
+                title="Line Chart"
+                to="/line"
+                icon={<TimelineOutlinedIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
+            </>
+            {/* ) : (
+              <></>
+            )} */}
           </Box>
         </Menu>
       </ProSidebar>

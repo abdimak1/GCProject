@@ -14,7 +14,6 @@ const axiosInstance = axios.create({
 });
 
 axiosInstance.interceptors.request.use(async (req) => {
-  console.log("interceptor running", authTokens);
   if (!authTokens) {
     authTokens = localStorage.getItem("authTokens")
       ? JSON.parse(localStorage.getItem("authTokens"))
@@ -23,7 +22,6 @@ axiosInstance.interceptors.request.use(async (req) => {
   }
 
   if (authTokens) {
-    console.log(" running", authTokens);
     const user = jwt_decode(authTokens?.access);
     const isExpired = dayjs.unix(user.exp).diff(dayjs()) < 1;
     if (!isExpired) return req;

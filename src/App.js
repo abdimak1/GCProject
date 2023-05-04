@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Form } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import SideBar from "./scenes/global/SideBar";
@@ -18,20 +18,33 @@ import Login from "./scenes/Login";
 import PrivateRoutes from "./config/context/PrivateRoutes";
 import AuthContext from "./config/context/authContext";
 import Dashboard from "@mui/icons-material/Dashboard";
+import { useLocation } from "react-router-dom";
+import Resources from "./scenes/MyResources";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
   const authctx = useContext(AuthContext);
+  const location = useLocation();
+  const [showside, setshowside] = useState(true);
+  useEffect(() => {
+    if (location.pathname === "/") {
+      setshowside(false);
+    } else {
+      setshowside(true);
+    }
+  }, [location.pathname]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <div className="app">
-          {authctx.isLoggedIn && <SideBar isSidebar={isSidebar} />}
+          {showside && authctx.isLogedin && <SideBar isSidebar={isSidebar} />}
 
           <main className="content">
-            {authctx.isLoggedIn && <Topbar setIsSidebar={setIsSidebar} />}
+            {showside && authctx.isLogedin && (
+              <Topbar setIsSidebar={setIsSidebar} />
+            )}
 
             <Routes>
               <Route element={<Login />} path="/" />
@@ -59,7 +72,8 @@ function App() {
                   element={<CreatezoneUser />}
                 />
                 <Route path="/manageusers" element={<Formuser />} />
-                {/* <Route path = "*" element = {<div>Page not Found!!</div>} /> */}
+                <Route path="/resources" element={<Resources />} />
+                <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>
             </Routes>
           </main>

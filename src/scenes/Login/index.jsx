@@ -8,7 +8,9 @@ import * as Yup from "yup";
 import { useContext } from "react";
 import AuthContext from "../../config/context/authContext";
 import { login_user } from "../../config/apicalls/usersapi";
+import { useNavigate } from "react-router-dom";
 const Login = () => {
+  const navigate = useNavigate();
   const { loginUser } = useContext(AuthContext);
   const initialValues = { username: "", password: "" };
   const validationSchema = Yup.object().shape({
@@ -18,7 +20,7 @@ const Login = () => {
   const paperStyle = {
     padding: 20,
     height: "60vh",
-    width: 300,
+    width: 400,
     margin: "100px auto",
   };
 
@@ -26,10 +28,13 @@ const Login = () => {
     login_user(values.username, values.password).then((res) => {
       if (res.success && res.data) {
         loginUser(res.data);
-        console.log("success");
+        navigate("/users");
       } else {
         console.log(res.error);
-        console.log("error");
+// <<<<<<< HEAD
+//         console.log("error");
+// =======
+// >>>>>>> f135751d99d0dca4af0c5c5136ccc250ed36263d
       }
     });
   };
