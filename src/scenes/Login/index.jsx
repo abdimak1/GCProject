@@ -29,7 +29,7 @@ const Login = () => {
         console.log("success");
       } else {
         console.log(res.error);
-        console.log("erroer");
+        console.log("error");
       }
     });
   };
