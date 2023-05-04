@@ -11,20 +11,21 @@ import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettin
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../../components/Header";
-import { get_all_regions } from "../../../config/apicalls/regionApiCall";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
 import { Update } from "@mui/icons-material";
+import { get_resources } from "../../config/apicalls/resourceApiCall";
 
-const Team = () => {
+const Resources = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
-  const [mockdata, setMockdata] = useState();
+  const [resources, setresources] = useState();
 
   useEffect(() => {
-    get_all_regions().then((res) => {
+    get_resources().then((res) => {
       if (res.success && res.data) {
-        setMockdata(res.data);
+        console.log(res.data);
+        setresources(res.data);
       } else {
         console.log(res.error);
       }
@@ -33,27 +34,27 @@ const Team = () => {
   // const delhandlerv =(x)=>{
   //   console.log("deleted",x)
   //   // api call as an argument id=x
-  //   setMockdata(res.data)
+  //   setresources(res.data)
   // }
 
   const columns = [
-    // { field: "id", headerName: "ID" },
+    //   { field: "id", headerName: "ID" },
     {
-      field: "Region_name",
-      headerName: "Region Name",
+      field: "name",
+      headerName: "Name",
       flex: 2,
       cellClassName: "name-column--cell",
     },
     {
-      field: "created_by",
-      headerName: "Created by",
+      field: "type",
+      headerName: "Type",
       type: "number",
       headerAlign: "left",
       align: "left",
     },
     {
-      field: "user",
-      headerName: "Email",
+      field: "amount",
+      headerName: "Amount",
       type: "number",
       headerAlign: "left",
       align: "left",
@@ -61,83 +62,15 @@ const Team = () => {
       disableColumnFilter: true,
     },
     {
-      field: "user1",
-
-      headerName: "Middle name",
+      field: "amount",
+      headerName: "Amount",
       type: "number",
       headerAlign: "left",
       align: "left",
-      valueGetter: ({ id }) => {
-        const item = mockdata.find((item) => item.id === id);
-        return item.user?.userprofile?.Mname;
-      },
+      valueGetter: (params) => params.row?.user?.email,
       disableColumnFilter: true,
     },
-    {
-      field: "user2",
 
-      headerName: "First name",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      valueGetter: ({ id }) => {
-        const item = mockdata.find((item) => item.id === id);
-        return item.user?.userprofile?.fname;
-      },
-      disableColumnFilter: true,
-    },
-    {
-      field: "user4",
-
-      headerName: "Last Name",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      valueGetter: ({ id }) => {
-        const item = mockdata.find((item) => item.id === id);
-        return item.user?.userprofile?.lname;
-      },
-      disableColumnFilter: true,
-    },
-    {
-      field: "user5",
-
-      headerName: "Phone Number",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      valueGetter: ({ id }) => {
-        const item = mockdata.find((item) => item.id === id);
-        return item.user?.userprofile?.phone;
-      },
-      disableColumnFilter: true,
-    },
-    {
-      field: "user6",
-
-      headerName: "Profile Pic",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      valueGetter: ({ id }) => {
-        const item = mockdata.find((item) => item.id === id);
-        return item.user?.userprofile?.profile;
-      },
-      disableColumnFilter: true,
-    },
-    {
-      field: "user7",
-
-      headerName: "Sex",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      valueGetter: ({ id }) => {
-        const item = mockdata.find((item) => item.id === id);
-        return item.user?.userprofile?.sex;
-      },
-      disableColumnFilter: true,
-    },
     {
       field: "id",
       headerName: "Manage",
@@ -161,7 +94,7 @@ const Team = () => {
 
   return (
     <Box m="20px">
-      <Header title="All Users" subtitle="List of all users" />
+      <Header title="All Resource" subtitle="My Resources in Stock" />
       <Box
         m="40px 0 0 0"
         height="75vh"
@@ -191,13 +124,13 @@ const Team = () => {
           },
         }}
       >
-        {!mockdata && <CircularProgress color="success" />}
-        {mockdata && (
-          <DataGrid checkboxSelection rows={mockdata} columns={columns} />
+        {!resources && <CircularProgress color="success" />}
+        {resources && (
+          <DataGrid checkboxSelection rows={resources} columns={columns} />
         )}
       </Box>
     </Box>
   );
 };
 
-export default Team;
+export default Resources;
