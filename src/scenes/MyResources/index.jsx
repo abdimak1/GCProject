@@ -6,11 +6,11 @@ import {
   useTheme,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { tokens } from "../../../theme";
+import { tokens } from "../../theme";
 import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
 import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
 import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
-import Header from "../../../components/Header";
+import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
 import { Update } from "@mui/icons-material";
