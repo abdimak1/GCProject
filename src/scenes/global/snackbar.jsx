@@ -13,7 +13,7 @@ export default function SimpleSnackbar(props) {
           horizontal: "center",
         }}
       >
-        <Alert onClose={props.onClose} severity={props?.severity}>
+        <Alert onClose={props.onClose} severity={props?.severity?props?.severity:"error"}>
           {props.message}
         </Alert>
       </Snackbar>

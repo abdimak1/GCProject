@@ -27,7 +27,7 @@ export const create_region = async (val) => {
       region_name: val.region,
       username: val.userName,
       email: val.email,
-      password: val.password,
+      password: val.passWord,
     });
     // try {
     //   const response = await api.post("/region/create", {

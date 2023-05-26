@@ -112,7 +112,8 @@ const CreatekebeleUser = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-              <TextField
+             
+             <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -123,7 +124,7 @@ const CreatekebeleUser = () => {
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
                 helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 1" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -136,7 +137,7 @@ const CreatekebeleUser = () => {
                 name="middleName"
                 error={!!touched.middleName && !!errors.middleName}
                 helperText={touched.middleName && errors.middleName}
-                sx={{ gridColumn: "span 1" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -149,7 +150,7 @@ const CreatekebeleUser = () => {
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 1" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -162,7 +163,7 @@ const CreatekebeleUser = () => {
                 name="userName"
                 error={!!touched.userName && !!errors.userName}
                 helperText={touched.userName && errors.userName}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -175,7 +176,20 @@ const CreatekebeleUser = () => {
                 name="passWord"
                 error={!!touched.passWord && !!errors.passWord}
                 helperText={touched.passWord && errors.passWord}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="select kebele"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.region}
+                name="region"
+                error={!!touched.region && !!errors.region}
+                helperText={touched.region && errors.region}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -188,9 +202,8 @@ const CreatekebeleUser = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
               />
-              <InputLabel>Gender</InputLabel>
               <Select
                 fullWidth
                 variant="filled"
@@ -199,27 +212,29 @@ const CreatekebeleUser = () => {
                 value={values.sex}
                 label="Sex"
                 onChange={handleChange}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
                 name="sex"
+                error={!!touched.sex && !!errors.sex}
               >
-                <MenuItem value={"M"}>Male</MenuItem>
-                <MenuItem value={"F"}>Female</MenuItem>
+                <MenuItem value={"MSex"}>Male</MenuItem>
+                <MenuItem value={"FSex"}>Female</MenuItem>
               </Select>
 
-              
-              <Box>
-                <MuiTelInput
-                  onBlur={handleBlur}
-                  fullWidth
-                  label="phone number"
-                  defaultCountry="ET"
-                  value={phonen}
-                  onChange={(e) => setphonen(e)}
-                  sx={{ gridColumn: "span 2" }}
-                />
-              </Box>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Phone Number"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.phone}
+                name="phone"
+                error={!!touched.phone && !!errors.phone}
+                helperText={touched.phone && errors.phone}
+                sx={{ gridColumn: "span 2" }}
+              />
             </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
+            <Box display="flex" justifyContent="start" mt="30px">
               <Button type="submit" color="secondary" variant="contained">
                 Create New User
               </Button>

@@ -12,8 +12,6 @@ import { MuiTelInput } from "mui-tel-input";
 
 import { create_zone } from "../../../config/apicalls/zonalApiCalls";
 const CreatekebeleUser = () => {
- 
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [phonen, setphonen] = useState("");
   const [snak, setsnak] = useState({
@@ -29,7 +27,6 @@ const CreatekebeleUser = () => {
       message: "",
     });
   };
-
 
   const handleFormSubmit = (values) => {
     create_zone(values, phonen).then((res) => {
@@ -49,7 +46,6 @@ const CreatekebeleUser = () => {
         console.log(res.error);
       }
     });
- 
   };
 
   const checkoutSchema = yup.object().shape({
@@ -118,7 +114,7 @@ const CreatekebeleUser = () => {
                 name="firstName"
                 error={!!touched.firstName && !!errors.firstName}
                 helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 1" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -131,7 +127,7 @@ const CreatekebeleUser = () => {
                 name="middleName"
                 error={!!touched.middleName && !!errors.middleName}
                 helperText={touched.middleName && errors.middleName}
-                sx={{ gridColumn: "span 1" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -144,7 +140,7 @@ const CreatekebeleUser = () => {
                 name="lastName"
                 error={!!touched.lastName && !!errors.lastName}
                 helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 1" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -157,7 +153,7 @@ const CreatekebeleUser = () => {
                 name="userName"
                 error={!!touched.userName && !!errors.userName}
                 helperText={touched.userName && errors.userName}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -170,7 +166,20 @@ const CreatekebeleUser = () => {
                 name="passWord"
                 error={!!touched.passWord && !!errors.passWord}
                 helperText={touched.passWord && errors.passWord}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="selcet zone"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.region}
+                name="region"
+                error={!!touched.region && !!errors.region}
+                helperText={touched.region && errors.region}
+                sx={{ gridColumn: "span 2" }}
               />
               <TextField
                 fullWidth
@@ -183,9 +192,8 @@ const CreatekebeleUser = () => {
                 name="email"
                 error={!!touched.email && !!errors.email}
                 helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
               />
-              <InputLabel>Gender</InputLabel>
               <Select
                 fullWidth
                 variant="filled"
@@ -194,44 +202,29 @@ const CreatekebeleUser = () => {
                 value={values.sex}
                 label="Sex"
                 onChange={handleChange}
-                sx={{ gridColumn: "span 4" }}
+                sx={{ gridColumn: "span 2" }}
                 name="sex"
+                error={!!touched.sex && !!errors.sex}
               >
-                <MenuItem value={"M"}>Male</MenuItem>
-                <MenuItem value={"F"}>Female</MenuItem>
+                <MenuItem value={"MSex"}>Male</MenuItem>
+                <MenuItem value={"FSex"}>Female</MenuItem>
               </Select>
-
-              <InputLabel>Woreda</InputLabel>
-              <Select
+    
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
+                label="Phone Number"
                 onBlur={handleBlur}
-                value={values.region}
-                label="Region"
                 onChange={handleChange}
-                sx={{ gridColumn: "span 4" }}
-                name="region"
-              >
-                <MenuItem value={"01"}>woreda 01</MenuItem>
-                <MenuItem value={"02"}>woreda 02</MenuItem>
-                <MenuItem value={"03"}>woreda 03</MenuItem>
-              </Select>
-
-              
-              <Box>
-                <MuiTelInput
-                  onBlur={handleBlur}
-                  fullWidth
-                  label="phone number"
-                  defaultCountry="ET"
-                  value={phonen}
-                  onChange={(e) => setphonen(e)}
-                  sx={{ gridColumn: "span 2" }}
-                />
-              </Box>
+                value={values.phone}
+                name="phone"
+                error={!!touched.phone && !!errors.phone}
+                helperText={touched.phone && errors.phone}
+                sx={{ gridColumn: "span 2" }}
+              />
             </Box>
-            <Box display="flex" justifyContent="end" mt="20px">
+            <Box display="flex" justifyContent="start" mt="30px">
               <Button type="submit" color="secondary" variant="contained">
                 Create New User
               </Button>

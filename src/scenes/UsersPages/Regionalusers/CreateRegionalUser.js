@@ -8,9 +8,12 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-import { MuiTelInput } from "mui-tel-input";
-
+import FormControl from "@mui/material/FormControl";
+import Stack from "@mui/material/Stack";
+import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import { create_region } from "../../../config/apicalls/regionApiCall";
+import AlertDialogSlide from "../../global/dialogue";
+
 const CreateregionalUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
@@ -18,7 +21,7 @@ const CreateregionalUser = () => {
     message: "",
     open: false,
   });
-
+ 
   const handleClose = () => {
     setsnak({
       open: false,
@@ -26,6 +29,8 @@ const CreateregionalUser = () => {
       message: "",
     });
   };
+
+
 
   const handleFormSubmit = (values) => {
     console.log("function called");
@@ -46,10 +51,6 @@ const CreateregionalUser = () => {
         console.log(res.error);
       }
     });
-    // const obj = { values };
-    // console.log(obj);
-    // setArr((arr) => [...arr, obj]);
-    // arr.push(obj);
   };
 
   const checkoutSchema = yup.object().shape({
@@ -79,13 +80,14 @@ const CreateregionalUser = () => {
   };
   return (
     <Box m="20px">
-      {/* <SimpleSnackbar
+      <SimpleSnackbar
         open={snak.open}
         severity={snak.severity}
         message={snak.message}
         onClose={handleClose}
-      /> */}
-      <Header title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
+      />
+   
+      <Header  title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -178,7 +180,7 @@ const CreateregionalUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Region"
+                label="select Region"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.region}
@@ -200,21 +202,24 @@ const CreateregionalUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
               />
-              <Select
-                fullWidth
-                variant="filled"
-                type="text"
-                onBlur={handleBlur}
-                value={values.sex}
-                label="Sex"
-                onChange={handleChange}
-                sx={{ gridColumn: "span 2" }}
-                name="sex"
-                error={!!touched.sex && !!errors.sex}
-              >
-                <MenuItem value={"MSex"}>Male</MenuItem>
-                <MenuItem value={"FSex"}>Female</MenuItem>
-              </Select>
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.sex}
+                  label="Sex"
+                  name="sex"
+                  onChange={handleChange}
+                  error={!!touched.sex && !!errors.sex}
+                >
+                  <MenuItem value={"MSex"}>Male</MenuItem>
+                  <MenuItem value={"FSex"}>Female</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
@@ -228,6 +233,16 @@ const CreateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  startIcon={<DriveFolderUploadIcon />}
+                  component="label"
+                >
+                  Upload File
+                  <input type="file" hidden />
+                </Button>
+              </Stack>
             </Box>
             <Box display="flex" justifyContent="start" mt="30px">
               <Button type="submit" color="secondary" variant="contained">

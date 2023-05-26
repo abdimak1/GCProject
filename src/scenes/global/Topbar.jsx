@@ -41,7 +41,7 @@ const Topbar = () => {
           <NotificationsOutlinedIcon />
         </IconButton>
         <div className="personlogo">
-          <IconButton size="large" onClick={handleMenu}>
+          <IconButton size="small" onClick={handleMenu}>
             <PersonOutlinedIcon />
           </IconButton>
           <Menu

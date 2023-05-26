@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar  } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
@@ -9,12 +9,18 @@ import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import AlertDialogSlide from "../../global/dialogue";
 
 const Regionalusers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
   const navigate = useNavigate();
+  const [open,setOpen] = useState(false)
+
+  const handleC = () => {
+    setOpen(!open);
+  };
   useEffect(() => {
     get_all_regions().then((res) => {
       if (res.success && res.data) {
@@ -29,45 +35,77 @@ const Regionalusers = () => {
   const columns = [
     { field: "id", headerName: "ID" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
+      field: "fname",
+      headerName: "First Name",
+      // flex: 0.5,
       cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.fname,
+      disableColumnFilter: true,
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "Mname",
+      headerName: "Middle Name",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.Mname,
+      disableColumnFilter: true,
     },
+    {
+      field: "lname",
+      headerName: "Last Name",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.lname,
+      disableColumnFilter: true,
+    },
+  
+    {
+      field: "sex",
+      headerName: "Gender",
+      // flex: 0.2,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.sex,
+      disableColumnFilter: true,
+    },
+
+   
     {
       field: "phone",
       headerName: "Phone Number",
-      flex: 1,
+      // flex: 0.5,
+      valueGetter: (params) => params.row?.user?.userprofile?.phone,
+      disableColumnFilter: true,
+    },
+    {
+      field: "Region_name",
+      headerName: "Region",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
     },
     {
       field: "email",
       headerName: "Email",
       flex: 1,
+      valueGetter: (params) => params.row?.user?.email,
+      disableColumnFilter: true,
     },
     {
       field: "accessLevel",
       headerName: "Access Level",
-      flex: 1,
+      flex: 3,
       renderCell: ({ row: { access } }) => {
         return (
-          <Box display="flex" p="55px">
+          <Box display="flex" p="0px">
             <Box
-              width="60%"
+              width="100%"
               m="0 15px 0 0 "
-              p="5px"
+              p="2px"
               display="flex"
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button variant="text">Update</Button>
+              <Button onClick = {handleC} variant="text" size="small">Update</Button>
             </Box>
 
             <Box
@@ -91,8 +129,9 @@ const Regionalusers = () => {
 
   return (
     <Box m="20px">
+      <AlertDialogSlide open={open} onClose = {handleC}></AlertDialogSlide>
       <Header title="Regional users" subtitle="List of Regional users" />
-      <Box display="flex" justifyContent="end" mt="20px">
+      <Box display="flex" justifyContent="end" mt="0px">
         <Button
           onClick={() => {
             navigate("/createregionalaccount");
@@ -110,7 +149,8 @@ const Regionalusers = () => {
       </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="60vh"
+        width="100%"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -139,7 +179,11 @@ const Regionalusers = () => {
       >
         {!mockdata && <CircularProgress color="success" />}
         {mockdata && (
-          <DataGrid checkboxSelection rows={mockdata} columns={columns} />
+          <DataGrid 
+          
+          columns={columns}
+          components={{ Toolbar: GridToolbar }} 
+          checkboxSelection rows={mockdata}  />
         )}{" "}
       </Box>
     </Box>
