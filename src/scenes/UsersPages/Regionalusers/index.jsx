@@ -1,4 +1,4 @@
-import { Box,useTheme } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
@@ -91,7 +91,7 @@ const Regionalusers = () => {
 
   return (
     <Box m="20px">
-      <Header title="Regional users" subtitle="List of kebele users" />
+      <Header title="Regional users" subtitle="List of Regional users" />
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
           onClick={() => {
@@ -105,7 +105,7 @@ const Regionalusers = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Add Business User
+          Add Regional User
         </Button>
       </Box>
       <Box

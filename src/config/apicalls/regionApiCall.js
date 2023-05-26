@@ -14,30 +14,29 @@ export const get_all_regions = async () => {
   }
 };
 
-export const create_region = async (val, phonen) => {
-  console.log(val, phonen);
-  // try {
-  //   const response = await api.post("/region/create",{
-  //     "fname":val.firstName,
-  //     "Mname":val.middleName,
-  //     "lname":val.lastName,
-  //     "phone":phonen,
-  //     "sex":val.sex,
-  //     "profile":"pic",
-  //     "region_name":val.region,
-  //     "username":val.useName,
-  //     "email":val.email,
-  //     "password":`ufuyfuf8998@123`,
-  //     "created_by":"1"
-  //   });
+export const create_region = async (val) => {
+  console.log(val);
   try {
     const response = await api.post("/region/create", {
-      region_name: "kmkmkmkmk",
-      username: "abdu",
-      email: "asljdbfa@gmail.com",
-      password: "mmsdjbaiubab@123djf",
-      created_by: "1",
+      fname: val.firstName,
+      Mname: val.middleName,
+      lname: val.lastName,
+      phone: val.phone,
+      sex: val.sex,
+      profile: "453453453ertr",
+      region_name: val.region,
+      username: val.userName,
+      email: val.email,
+      password: val.password,
     });
+    // try {
+    //   const response = await api.post("/region/create", {
+    //     region_name: "kmkmkmkmk",
+    //     username: "wawawa",
+    //     email: "sdfadsfasdf@gmail.com",
+    //     password: "mmsdjbaiubab@123djf",
+    //     created_by: "1",
+    //   });
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {

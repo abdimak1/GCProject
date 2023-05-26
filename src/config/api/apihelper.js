@@ -2,7 +2,8 @@ import axios from "axios";
 import jwt_decode from "jwt-decode";
 import dayjs from "dayjs";
 
-const baseURL = "http://192.168.45.137:8000";
+// const baseURL = "http://192.168.45.137:8000";
+const baseURL = "https://farmawebapp.onrender.com";
 
 let authTokens = localStorage.getItem("authTokens")
   ? JSON.parse(localStorage.getItem("authTokens"))
