@@ -14,6 +14,21 @@ export const get_all_regions = async () => {
   }
 };
 
+export const get_region = async (id) => {
+  try {
+    const response = await api.get(`/region/${id}`);
+    return { success: true, data: response.data };
+  } catch (err) {
+    if (err.response) {
+      console.log(err.response.data);
+      return { success: false, data: null, error: err.response.data.message };
+    } else {
+      console.log(`Error: ${err.message}`);
+    }
+  }
+};
+
+
 export const create_region = async (val) => {
   console.log(val);
   try {
@@ -29,14 +44,24 @@ export const create_region = async (val) => {
       email: val.email,
       password: val.passWord,
     });
-    // try {
-    //   const response = await api.post("/region/create", {
-    //     region_name: "kmkmkmkmk",
-    //     username: "wawawa",
-    //     email: "sdfadsfasdf@gmail.com",
-    //     password: "mmsdjbaiubab@123djf",
-    //     created_by: "1",
-    //   });
+  
+   
+    return { success: true, data: response.data };
+  } catch (err) {
+    if (err.response) {
+      console.log(err.response.data);
+      return { success: false, data: null, error: err.response.data.message };
+    } else {
+      console.log(`Error: ${err.message}`);
+    }
+  }
+};
+
+export const update_region = async (id,values) => {
+ 
+  console.log("i will try to send this",values)
+  try {
+    const response = await api.put(`/region/${id}/update/`,values);
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {

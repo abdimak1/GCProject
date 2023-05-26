@@ -3,7 +3,8 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -11,17 +12,31 @@ import SimpleSnackbar from "../../global/snackbar";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import { create_region } from "../../../config/apicalls/regionApiCall";
-import AlertDialogSlide from "../../global/dialogue";
+import { get_region,update_region } from "../../../config/apicalls/regionApiCall";
 
-const CreateregionalUser = () => {
+const UpdateregionalUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [prevdata,setprevdata]=useState()
+  const [initialValues, setInitialValues] = useState({
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    userName: "",
+    email: "",
+    region: "",
+    sex: "",
+    passWord: "",
+    phone: "",
+  });
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
     open: false,
   });
- 
+  const param = useParams();
+  const userid = param.id;
+  console.log(userid);
+
   const handleClose = () => {
     setsnak({
       open: false,
@@ -30,11 +45,39 @@ const CreateregionalUser = () => {
     });
   };
 
-
+  useEffect(() => {
+    get_region(userid).then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setprevdata(res.data)
+        setInitialValues({
+            firstName: res.data.user.userprofile.fname,
+            lastName: res.data.user.userprofile.lname,
+            middleName: res.data.user.userprofile.Mname,
+            userName: res.data.user.username,
+            email: res.data.user.email,
+            region: res.data.Region_name,
+            sex: res.data.user.userprofile.sex,
+            passWord: "qwqwqw",
+            phone: res.data.user.userprofile.phone,
+          })
+      } else {
+        console.log(res.error);
+      }
+    });
+  }, []);
 
   const handleFormSubmit = (values) => {
     console.log("function called");
-    create_region(values).then((res) => {
+    prevdata['user']['email']=values.email
+    prevdata['Region_name']=values.region
+    prevdata['user']['username']=values.userName
+    prevdata['user']['userprofile']['fname']=values.firstName
+    prevdata['user']['userprofile']['lname']=values.lastName
+    prevdata['user']['userprofile']['Mname']=values.middleName
+    prevdata['user']['userprofile']['sex']=values.sex
+    prevdata['user']['userprofile']['phone']=values.phone
+    update_region(userid,prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -67,17 +110,7 @@ const CreateregionalUser = () => {
     //     .required("Password is required")
     //     .min(6, "Password must be at least 6 characters"),
   });
-  const initialValues = {
-    firstName: "av",
-    lastName: "",
-    middleName: "",
-    userName: "",
-    email: "",
-    region: "",
-    sex: "",
-    passWord: "",
-    phone: "",
-  };
+
   return (
     <Box m="20px">
       <SimpleSnackbar
@@ -86,10 +119,11 @@ const CreateregionalUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-   
-      <Header  title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
+
+      <Header title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
 
       <Formik
+        enableReinitialize={true}
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
@@ -256,4 +290,4 @@ const CreateregionalUser = () => {
   );
 };
 
-export default CreateregionalUser;
+export default UpdateregionalUser;

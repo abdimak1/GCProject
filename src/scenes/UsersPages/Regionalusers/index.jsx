@@ -5,6 +5,7 @@ import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
 import { get_all_regions } from "../../../config/apicalls/regionApiCall";
 import { useEffect, useState } from "react";
+
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
@@ -21,6 +22,7 @@ const Regionalusers = () => {
   const handleC = () => {
     setOpen(!open);
   };
+
   useEffect(() => {
     get_all_regions().then((res) => {
       if (res.success && res.data) {
@@ -31,6 +33,10 @@ const Regionalusers = () => {
       }
     });
   }, []);
+
+  const editHandler = (u_id) => {
+    navigate(`/updateuser/${u_id}`);
+  };
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -93,7 +99,7 @@ const Regionalusers = () => {
       field: "accessLevel",
       headerName: "Access Level",
       flex: 3,
-      renderCell: ({ row: { access } }) => {
+      renderCell: (params) => {
         return (
           <Box display="flex" p="0px">
             <Box
@@ -105,7 +111,7 @@ const Regionalusers = () => {
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button onClick = {handleC} variant="text" size="small">Update</Button>
+              <Button onClick={() => editHandler(params.row.id)}  variant="text" size="small">Update</Button>
             </Box>
 
             <Box

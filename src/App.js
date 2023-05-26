@@ -20,6 +20,7 @@ import AuthContext from "./config/context/authContext";
 import Dashboard from "@mui/icons-material/Dashboard";
 import { useLocation } from "react-router-dom";
 import MyResources from "./scenes/MyResources";
+import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -55,6 +56,7 @@ function App() {
                 <Route path="/regional" element={<Regionalusers />} />
                 <Route path="/woreda" element={<WoredaUsers />} />
                 <Route path="/zonal" element={<ZonalUsers />} />
+                <Route path="/updateuser/:id" element={<UpdateregionalUser/>}/>
                 <Route
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}
