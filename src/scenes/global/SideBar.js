@@ -119,27 +119,7 @@ const SideBar = () => {
                 selected={true}
                 setSelected={setSelected}
               />
-              <Typography
-                variant="h6"
-                color="#a3a3a3"
-                sx={{ m: "15px 0 5px 20px" }}
-              >
-                Data
-              </Typography>
-              <Item
-                title="Manage users"
-                to="/manageusers"
-                icon={<GroupAddIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="users"
-                to="/users"
-                icon={<GroupAddIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+            
               <Typography
                 variant="h6"
                 color="#a3a3a3"

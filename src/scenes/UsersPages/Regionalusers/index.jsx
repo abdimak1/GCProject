@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import AlertDialogSlide from "../../global/dialogue";
-import CreateregionalUser from "./CreateRegionalUser";
 
 const Regionalusers = () => {
   const theme = useTheme();
@@ -117,15 +116,29 @@ const Regionalusers = () => {
 
             <Box
               width="60%"
-              m="0 auto"
+              m="0 15px 0 0 "
+              pl={"10px"}
+              display="flex"
+              justifyContent="center"
+              backgroundColor={colors.redAccent[500]}
+              borderRadius="4px"
+            >
+              <Button  onClick={handleC} variant="text">
+                <Delete></Delete>
+              </Button>
+            </Box>
+            <Box
+              width="60%"
+              m="0 15px 0 0 "
               pl={"10px"}
               display="flex"
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
+              
             >
-              <Button variant="text">
-                <Delete></Delete>
+              <Button  onClick={handleC} variant="text">
+               Deactivate
               </Button>
             </Box>
           </Box>
@@ -181,6 +194,9 @@ const Regionalusers = () => {
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
           },
         }}
       >

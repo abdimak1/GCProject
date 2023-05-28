@@ -12,16 +12,22 @@ import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import { create_region } from "../../../config/apicalls/regionApiCall";
-import AlertDialogSlide from "../../global/dialogue";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import { useNavigate } from "react-router-dom";
+import { useTheme } from "@mui/material";
+import { tokens } from "../../../theme";
 
 const CreateregionalUser = () => {
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
+  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
     open: false,
   });
- 
+
   const handleClose = () => {
     setsnak({
       open: false,
@@ -29,8 +35,6 @@ const CreateregionalUser = () => {
       message: "",
     });
   };
-
-
 
   const handleFormSubmit = (values) => {
     console.log("function called");
@@ -86,8 +90,8 @@ const CreateregionalUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-   
-      <Header  title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
+
+      <Header title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -235,7 +239,7 @@ const CreateregionalUser = () => {
               />
               <InputLabel>Profile Pic</InputLabel>
               <Stack direction="row" spacing={2}>
-                <Button 
+                <Button
                   variant="contained"
                   startIcon={<DriveFolderUploadIcon />}
                   component="label"
@@ -245,11 +249,22 @@ const CreateregionalUser = () => {
                 </Button>
               </Stack>
             </Box>
-            <Box display="flex" justifyContent="start" mt="30px">
+            <Box gap="20px" display="flex" justifyContent="start" mt="30px">
+             
+              <Button color="secondary" variant="contained"
+                onClick={() => {
+                  navigate("/regional");
+                }}
+               
+              >
+                Back
+              </Button>
               <Button type="submit" color="secondary" variant="contained">
                 Create New User
               </Button>
             </Box>
+
+            
           </Form>
         )}
       </Formik>
