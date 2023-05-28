@@ -39,7 +39,7 @@ const SideBar = () => {
   const colors = tokens(theme.palette.mode);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const [selected, setSelected] = useState("Dashboard");
-
+  console.log(authctx);
   return (
     <Box
       sx={{
@@ -147,34 +147,43 @@ const SideBar = () => {
               >
                 Users
               </Typography>
-              <Item
-                title="Regional"
-                to="/regional"
-                icon={<PersonIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="Zonal"
-                to="/zonal"
-                icon={<PersonIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="Woreda"
-                to="/woreda"
-                icon={<PersonIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
-              <Item
-                title="Kebele"
-                to="/kebeleUsers"
-                icon={<PersonIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+              {authctx.role === "region" && (
+                <Item
+                  title="Zonal users"
+                  to="/zonal"
+                  icon={<PersonIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+
+              {authctx.role === "federal" && (
+                <Item
+                  title="Regional users"
+                  to="/regional"
+                  icon={<PersonIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              {authctx.role === "zone" && (
+                <Item
+                  title="Woreda users"
+                  to="/woreda"
+                  icon={<PersonIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              {authctx.role === "woreda"  && (
+                <Item
+                  title="Kebele users"
+                  to="/kebeleUsers"
+                  icon={<PersonIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
               <Typography
                 variant="h6"
                 color="#a3a3a3"

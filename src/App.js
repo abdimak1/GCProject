@@ -21,6 +21,8 @@ import Dashboard from "@mui/icons-material/Dashboard";
 import { useLocation } from "react-router-dom";
 import MyResources from "./scenes/MyResources";
 import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
+import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
+import UpdatekebeleadminUser from "./scenes/UsersPages/Kebeleusers/updateUser";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -50,13 +52,16 @@ function App() {
             <Routes>
               <Route element={<Login />} path="/" />
               <Route element={<PrivateRoutes />}>
-                {/* <Route path="/" element={<Dashboard />} /> */}
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/users" element={<FullFeaturedCrudGrid />} />
                 <Route path="/kebeleUsers" element={<KebeleUsers />} />
                 <Route path="/regional" element={<Regionalusers />} />
                 <Route path="/woreda" element={<WoredaUsers />} />
                 <Route path="/zonal" element={<ZonalUsers />} />
                 <Route path="/updateuser/:id" element={<UpdateregionalUser/>}/>
+                <Route path="/updatezoneuser/:id" element={<UpdatezonalUser/>}/>
+                <Route path="/updatekebeleuser/:id" element={<UpdatekebeleadminUser/>}/>
+
                 <Route
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}

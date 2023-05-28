@@ -28,7 +28,7 @@ const Login = () => {
     login_user(values.username, values.password).then((res) => {
       if (res.success && res.data) {
         loginUser(res.data);
-        navigate("/users");
+        navigate("/dashboard");
       } else {
         console.log(res.error);
 // <<<<<<< HEAD

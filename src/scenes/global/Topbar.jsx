@@ -22,7 +22,11 @@ const Topbar = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const logouthandler = () => {
+    setAnchorEl(null);
 
+    authctx.logoutUser()
+  };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -59,7 +63,7 @@ const Topbar = () => {
             open={Boolean(anchorEl)}
             onClose={handleClose}
           >
-            <MenuItem onClick={handleClose}>logout</MenuItem>
+            <MenuItem onClick={logouthandler}>logout</MenuItem>
             <MenuItem onClick={handleClose}>My account</MenuItem>
           </Menu>
         </div>

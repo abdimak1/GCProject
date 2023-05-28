@@ -9,6 +9,7 @@ import { Button } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import { get_all_woredas } from "../../../config/apicalls/woredaApiCalls";
 const WoredaUsers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -16,15 +17,17 @@ const WoredaUsers = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    // fetchData().then((res) => {
-    //   if (res.success && res.data) {
-    //     console.log(res.data);
-    //     setMockdata(res.data);
-    //   } else {
-    //     console.log(res.error);
-    //   }
-    // });
+    get_all_woredas().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setMockdata(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
   }, []);
+
+
 
   const columns = [
     { field: "id", headerName: "ID" },

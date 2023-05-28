@@ -1,14 +1,12 @@
 import { Box, Button, TextField } from "@mui/material";
-import { Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import { useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-import { MuiTelInput } from "mui-tel-input";
 
 import { create_zone } from "../../../config/apicalls/zonalApiCalls";
 const CreatekebeleUser = () => {
@@ -29,7 +27,8 @@ const CreatekebeleUser = () => {
   };
 
   const handleFormSubmit = (values) => {
-    create_zone(values, phonen).then((res) => {
+    console.log("function called");
+    create_zone(values).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -53,13 +52,13 @@ const CreatekebeleUser = () => {
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    region: yup.string().required("required"),
+    zone: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
-    passWord: yup
-      .string()
-      .required("Password is required")
-      .min(6, "Password must be at least 6 characters"),
+    // passWord: yup
+    //   .string()
+    //   .required("Password is required")
+    //   .min(6, "Password must be at least 6 characters"),
   });
   const initialValues = {
     firstName: "",
@@ -67,9 +66,10 @@ const CreatekebeleUser = () => {
     middleName: "",
     userName: "",
     email: "",
-    region: "",
+    zone: "",
     sex: "",
     passWord: "",
+    phone:"",
   };
   return (
     <Box m="20px">
@@ -94,7 +94,7 @@ const CreatekebeleUser = () => {
           handleChange,
           handleSubmit,
         }) => (
-          <form onSubmit={handleSubmit}>
+          <Form>
             <Box
               display="grid"
               gap="30px"
@@ -175,10 +175,10 @@ const CreatekebeleUser = () => {
                 label="selcet zone"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
+                value={values.zone}
+                name="zone"
+                error={!!touched.zone && !!errors.zone}
+                helperText={touched.zone && errors.zone}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -229,7 +229,7 @@ const CreatekebeleUser = () => {
                 Create New User
               </Button>
             </Box>
-          </form>
+          </Form>
         )}
       </Formik>
     </Box>

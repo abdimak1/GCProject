@@ -5,12 +5,12 @@ import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
 import { get_all_regions } from "../../../config/apicalls/regionApiCall";
 import { useEffect, useState } from "react";
-
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import AlertDialogSlide from "../../global/dialogue";
+import CreateregionalUser from "./CreateRegionalUser";
 
 const Regionalusers = () => {
   const theme = useTheme();
@@ -111,7 +111,8 @@ const Regionalusers = () => {
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button onClick={() => editHandler(params.row.id)}  variant="text" size="small">Update</Button>
+              <Button onClick={() => editHandler(params.row.id)}   variant="text" size="small">Update</Button>
+              
             </Box>
 
             <Box
@@ -136,7 +137,7 @@ const Regionalusers = () => {
   return (
     <Box m="20px">
       <AlertDialogSlide open={open} onClose = {handleC}></AlertDialogSlide>
-      <Header title="Regional users" subtitle="List of Regional users" />
+      <Header title="Regional users" subtitle="List of regional users" />
       <Box display="flex" justifyContent="end" mt="0px">
         <Button
           onClick={() => {
@@ -186,7 +187,7 @@ const Regionalusers = () => {
         {!mockdata && <CircularProgress color="success" />}
         {mockdata && (
           <DataGrid 
-          
+          // getRowId={(row) => row.id}
           columns={columns}
           components={{ Toolbar: GridToolbar }} 
           checkboxSelection rows={mockdata}  />

@@ -1,8 +1,8 @@
 import axiosInstance from "../api/apihelper";
 let api = axiosInstance;
-export const get_all_regions = async () => {
+export const get_all_woredas = async () => {
   try {
-    const response = await api.get("/kebele");
+    const response = await api.get("/woredas");
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {

@@ -68,7 +68,7 @@ const CreateregionalUser = () => {
     //     .min(6, "Password must be at least 6 characters"),
   });
   const initialValues = {
-    firstName: "av",
+    firstName: "",
     lastName: "",
     middleName: "",
     userName: "",
@@ -233,8 +233,9 @@ const CreateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
+              <InputLabel>Profile Pic</InputLabel>
               <Stack direction="row" spacing={2}>
-                <Button
+                <Button 
                   variant="contained"
                   startIcon={<DriveFolderUploadIcon />}
                   component="label"

@@ -120,7 +120,7 @@ const UpdateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
+      <Header title="UPDATE USER ACCOUNT" subtitle="Update Regional Account" />
 
       <Formik
         enableReinitialize={true}
@@ -267,6 +267,7 @@ const UpdateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
+              <InputLabel>Profile Pic</InputLabel>
               <Stack direction="row" spacing={2}>
                 <Button
                   variant="contained"
@@ -280,7 +281,7 @@ const UpdateregionalUser = () => {
             </Box>
             <Box display="flex" justifyContent="start" mt="30px">
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Update User Account
               </Button>
             </Box>
           </Form>

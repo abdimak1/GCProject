@@ -2,12 +2,9 @@ import { Box, Typography, useTheme } from "@mui/material";
 import { Link } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
-// import AdminPanelSettingsOutlinedIcon from "@mui/icons-material/AdminPanelSettingsOutlined";
-// import LockOpenOutlinedIcon from "@mui/icons-material/LockOpenOutlined";
-// import SecurityOutlinedIcon from "@mui/icons-material/SecurityOutlined";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
-import { get_all_regions } from "../../../config/apicalls/regionApiCall"; 
+import { get_all_kebeleadmin } from "../../../config/apicalls/kebeleApiCalls";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
@@ -21,7 +18,7 @@ const KebeleUsers = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    get_all_regions().then((res) => {
+    get_all_kebeleadmin().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setMockdata(res.data);
@@ -31,48 +28,85 @@ const KebeleUsers = () => {
     });
   }, []);
 
+  const editHandler = (u_id) => {
+    navigate(`/updatekebeleuser/${u_id}`);
+  };
+
   const columns = [
     { field: "id", headerName: "ID" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
+      field: "fname",
+      headerName: "First Name",
+      // flex: 0.5,
       cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.fname,
+      disableColumnFilter: true,
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "Mname",
+      headerName: "Middle Name",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.Mname,
+      disableColumnFilter: true,
     },
+    {
+      field: "lname",
+      headerName: "Last Name",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.lname,
+      disableColumnFilter: true,
+    },
+  
+    {
+      field: "sex",
+      headerName: "Gender",
+      // flex: 0.2,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.sex,
+      disableColumnFilter: true,
+    },
+
+   
     {
       field: "phone",
       headerName: "Phone Number",
-      flex: 1,
+      // flex: 0.5,
+      valueGetter: (params) => params.row?.user?.userprofile?.phone,
+      disableColumnFilter: true,
+    },
+    {
+      field: "Region_name",
+      headerName: "Region",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
     },
     {
       field: "email",
       headerName: "Email",
       flex: 1,
+      valueGetter: (params) => params.row?.user?.email,
+      disableColumnFilter: true,
     },
     {
       field: "accessLevel",
       headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
+      flex: 3,
+      renderCell: (params) => {
         return (
-          <Box display="flex" p="55px">
+          <Box display="flex" p="0px">
             <Box
-              width="60%"
+              width="100%"
               m="0 15px 0 0 "
-              p="5px"
+              p="2px"
               display="flex"
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button variant="text">Update</Button>
+              <Button onClick={() => editHandler(params.row.id)}   variant="text" size="small">Update</Button>
+              
             </Box>
 
             <Box
@@ -93,7 +127,6 @@ const KebeleUsers = () => {
       },
     },
   ];
-
   return (
     <Box m="20px">
       <Header title="Kebele users" subtitle="List of kebele users" />
