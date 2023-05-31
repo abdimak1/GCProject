@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar  } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
@@ -17,7 +17,7 @@ const Zonalusers = () => {
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
   const navigate = useNavigate();
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleC = () => {
     setOpen(!open);
@@ -27,7 +27,7 @@ const Zonalusers = () => {
     get_all_zones().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
-         setMockdata(res.data);
+        setMockdata(res.data);
       } else {
         console.log(res.error);
       }
@@ -64,7 +64,7 @@ const Zonalusers = () => {
       valueGetter: (params) => params.row?.user?.userprofile?.lname,
       disableColumnFilter: true,
     },
-  
+
     {
       field: "sex",
       headerName: "Gender",
@@ -74,7 +74,6 @@ const Zonalusers = () => {
       disableColumnFilter: true,
     },
 
-   
     {
       field: "phone",
       headerName: "Phone Number",
@@ -111,22 +110,42 @@ const Zonalusers = () => {
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button onClick={() => editHandler(params.row.id)}  variant="text" size="small">Update</Button>
+              <Button
+                onClick={() => editHandler(params.row.id)}
+                variant="text"
+                size="small"
+              >
+                Update
+              </Button>
             </Box>
 
             <Box
               width="60%"
-              m="0 auto"
+              m="0 15px 0 0 "
               pl={"10px"}
               display="flex"
               justifyContent="center"
-              backgroundColor={colors.greenAccent[600]}
+              backgroundColor={colors.redAccent[500]}
               borderRadius="4px"
             >
-              <Button variant="text">
+              <Button onClick={handleC} variant="text">
                 <Delete></Delete>
               </Button>
-            </Box>
+              </Box>
+              <Box
+                width="60%"
+                m="0 15px 0 0 "
+                pl={"10px"}
+                display="flex"
+                justifyContent="center"
+                backgroundColor={colors.greenAccent[600]}
+                borderRadius="4px"
+              >
+                <Button onClick={handleC} variant="text">
+                  Deactivate
+                </Button>
+              </Box>
+            
           </Box>
         );
       },
@@ -135,12 +154,12 @@ const Zonalusers = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} onClose = {handleC}></AlertDialogSlide>
-      <Header title="zonal users" subtitle="List of zonal users" />
+      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
+      <Header title="Zonal users" subtitle="List of zonal users" />
       <Box display="flex" justifyContent="end" mt="0px">
         <Button
           onClick={() => {
-            navigate("/createworedaaccount");
+            navigate("/createzonalaccount");
           }}
           sx={{
             backgroundColor: colors.blueAccent[700],
@@ -181,15 +200,20 @@ const Zonalusers = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
         {!mockdata && <CircularProgress color="success" />}
         {mockdata && (
-          <DataGrid 
-          getRowId={(row) => row.id}
-          columns={columns}
-          components={{ Toolbar: GridToolbar }} 
-          checkboxSelection rows={mockdata}  />
+          <DataGrid
+            getRowId={(row) => row.id}
+            columns={columns}
+            components={{ Toolbar: GridToolbar }}
+            checkboxSelection
+            rows={mockdata}
+          />
         )}{" "}
       </Box>
     </Box>

@@ -7,11 +7,12 @@ import { useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-
+import { useNavigate } from "react-router-dom";
 import { create_zone } from "../../../config/apicalls/zonalApiCalls";
 const CreatekebeleUser = () => {
+    const navigate = useNavigate();
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [phonen, setphonen] = useState("");
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
@@ -79,7 +80,7 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="CREATE ACCOUNT" subtitle="Create a New Account Profile" />
+      <Header title="CREATE ACCOUNT" subtitle="Create a New Zonal Account " />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -224,7 +225,15 @@ const CreatekebeleUser = () => {
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
-            <Box display="flex" justifyContent="start" mt="30px">
+            <Box  gap="20px" display="flex" justifyContent="start" mt="30px">
+            <Button color="secondary" variant="contained"
+                onClick={() => {
+                  navigate("/zonal");
+                }}
+               
+              >
+                Back
+              </Button>
               <Button type="submit" color="secondary" variant="contained">
                 Create New User
               </Button>

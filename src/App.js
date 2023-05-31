@@ -15,12 +15,14 @@ import ZonalUsers from "./scenes/UsersPages/ZonalUsers";
 import Login from "./scenes/Login";
 import PrivateRoutes from "./config/context/PrivateRoutes";
 import AuthContext from "./config/context/authContext";
-import Dashboard from "@mui/icons-material/Dashboard";
+import Dashboard from "./scenes/Dashboard";
 import { useLocation } from "react-router-dom";
 import MyResources from "./scenes/MyResources";
 import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
 import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
 import UpdatekebeleadminUser from "./scenes/UsersPages/Kebeleusers/updateUser";
+import Bar from "./scenes/bar";
+import Line from "./scenes/line";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -58,6 +60,8 @@ function App() {
                 <Route path="/updateuser/:id" element={<UpdateregionalUser/>}/>
                 <Route path="/updatezoneuser/:id" element={<UpdatezonalUser/>}/>
                 <Route path="/updatekebeleuser/:id" element={<UpdatekebeleadminUser/>}/>
+                <Route path="/bar" element={<Bar/>}/>
+                <Route path="/line" element={<Line/>}/>
 
                 <Route
                   path="/createkebeleaccount"

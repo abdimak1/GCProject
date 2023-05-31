@@ -4,11 +4,9 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import { useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-import { MuiTelInput } from "mui-tel-input";
 
 import { create_woreda } from "../../../config/apicalls/woredaApiCalls";
 
@@ -73,7 +71,7 @@ const CreatekebeleUser = () => {
     middleName: "",
     userName: "",
     email: "",
-    region: "",
+    woreda: "",
     sex: "",
     passWord: "",
   };
@@ -181,10 +179,10 @@ const CreatekebeleUser = () => {
                 label="select woreda"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
+                value={values.woreda}
+                name="woreda"
+                error={!!touched.woreda && !!errors.woreda}
+                helperText={touched.woreda && errors.woreda}
                 sx={{ gridColumn: "span 2" }}
               />
              <TextField

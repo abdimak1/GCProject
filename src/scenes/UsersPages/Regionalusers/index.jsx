@@ -137,7 +137,7 @@ const Regionalusers = () => {
               borderRadius="4px"
               
             >
-              <Button  onClick={handleC} variant="text">
+              <Button   variant="text">
                Deactivate
               </Button>
             </Box>
