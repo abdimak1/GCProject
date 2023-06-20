@@ -2,35 +2,32 @@ import { useContext, useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route, Form } from "react-router-dom";
 import Topbar from "./scenes/global/Topbar";
 import SideBar from "./scenes/global/SideBar";
-import FullFeaturedCrudGrid from "./scenes/UsersPages/allUsers";
 import CreatekebeleUser from "./scenes/UsersPages/Kebeleusers/CreateKebeleUser";
 import CreateregionalUser from "./scenes/UsersPages/Regionalusers/CreateRegionalUser";
 import CreateworedaUser from "./scenes/UsersPages/WoredaUsers/CreateWoredaUser";
 import CreatezoneUser from "./scenes/UsersPages/ZonalUsers/CreateZonalaccount";
 import KebeleUsers from "./scenes/UsersPages/Kebeleusers";
+import CreatekebelebusinessUser from "./scenes/UsersPages/Kebelebusinessuser/CreateKebelebusinessUser";
+import KebeleBusiness from "./scenes/UsersPages/Kebelebusinessuser";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { ColorModeContext, useMode } from "./theme";
 import Regionalusers from "./scenes/UsersPages/Regionalusers";
 import WoredaUsers from "./scenes/UsersPages/WoredaUsers";
 import ZonalUsers from "./scenes/UsersPages/ZonalUsers";
-import Formuser from "./scenes/newuser";
 import Login from "./scenes/Login";
 import PrivateRoutes from "./config/context/PrivateRoutes";
 import AuthContext from "./config/context/authContext";
-<<<<<<< HEAD
 import Dashboard from "./scenes/Dashboard";
 import { useLocation } from "react-router-dom";
 import MyResources from "./scenes/MyResources";
 import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
 import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
+import UpdatekebelebusinessUser from "./scenes/UsersPages/Kebelebusinessuser/updateUser";
 import UpdatekebeleadminUser from "./scenes/UsersPages/Kebeleusers/updateUser";
 import Bar from "./scenes/bar";
+import CreateReport from "./scenes/Report/Createreport";
+import ViewReport from "./scenes/Report/Viewreport";
 import Line from "./scenes/line";
-=======
-import { useLocation } from "react-router-dom";
-import MyResources from "./scenes/MyResources";
-import Dashboard from "./scenes/Dashboard";
->>>>>>> 6d3b5e11b46b4b2ea6ab158470add2bb17ce7234
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -60,25 +57,42 @@ function App() {
             <Routes>
               <Route element={<Login />} path="/" />
               <Route element={<PrivateRoutes />}>
-                
-                <Route path="/dashboard" element={<Dashboard />}/> 
-                <Route path="/users" element={<FullFeaturedCrudGrid />} />
+                <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/kebeleUsers" element={<KebeleUsers />} />
                 <Route path="/regional" element={<Regionalusers />} />
                 <Route path="/woreda" element={<WoredaUsers />} />
                 <Route path="/zonal" element={<ZonalUsers />} />
-<<<<<<< HEAD
-                <Route path="/updateuser/:id" element={<UpdateregionalUser/>}/>
-                <Route path="/updatezoneuser/:id" element={<UpdatezonalUser/>}/>
-                <Route path="/updatekebeleuser/:id" element={<UpdatekebeleadminUser/>}/>
-                <Route path="/bar" element={<Bar/>}/>
-                <Route path="/line" element={<Line/>}/>
+                <Route path="/createreport" element={<CreateReport />} />
+                <Route path="/viewreport" element={<ViewReport />} />
+                <Route
+                  path="/updateuser/:id"
+                  element={<UpdateregionalUser />}
+                />
+                <Route
+                  path="/updatezoneuser/:id"
+                  element={<UpdatezonalUser />}
+                />
+                <Route
+                path = "/updatekebelebusinessuser/:id"
+                element = {<UpdatekebelebusinessUser/>}
+                />
+                <Route
+                  path="/updatekebeleuser/:id"
+                  element={<UpdatekebeleadminUser />}
+                />
+                <Route path="/kebelebusinesses" element={<KebeleBusiness />} />
 
-=======
->>>>>>> 6d3b5e11b46b4b2ea6ab158470add2bb17ce7234
+                <Route path="/bar" element={<Bar />} />
+                <Route path="/line" element={<Line />} />
+
                 <Route
                   path="/createkebeleaccount"
-                  element={<CreatekebeleUser></CreatekebeleUser> }
+                  element={<CreatekebeleUser />}
+                />
+
+                <Route
+                  path="/createkebelebusinessuser"
+                  element={<CreatekebelebusinessUser />}
                 />
                 <Route
                   path="/createregionalaccount"
@@ -92,7 +106,6 @@ function App() {
                   path="/createzonalaccount"
                   element={<CreatezoneUser />}
                 />
-                <Route path="/manageusers" element={<Formuser />} />
                 <Route path="/resources" element={<MyResources />} />
                 <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>

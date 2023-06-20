@@ -1,17 +1,15 @@
-import { Box, Typography, useTheme } from "@mui/material";
-import { Link } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
-import { get_all_kebeleadmin } from "../../../config/apicalls/kebeleApiCalls";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { useNavigate } from "react-router-dom";
-
-const KebeleUsers = () => {
+import { get_all_kebelebusiness } from "../../../config/apicalls/kebelebusinessApiCalls";
+const KebeleBusiness = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
@@ -21,9 +19,8 @@ const KebeleUsers = () => {
   const handleC = () => {
     setOpen(!open);
   };
-  
   useEffect(() => {
-    get_all_kebeleadmin().then((res) => {
+    get_all_kebelebusiness().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setMockdata(res.data);
@@ -34,7 +31,7 @@ const KebeleUsers = () => {
   }, []);
 
   const editHandler = (u_id) => {
-    navigate(`/updatekebeleuser/${u_id}`);
+    navigate(`/updatekebelebusinessuser/${u_id}`);
   };
 
   const columns = [
@@ -152,11 +149,11 @@ const KebeleUsers = () => {
   ];
   return (
     <Box m="20px">
-      <Header title="Kebele users" subtitle="List of kebele users" />
+      <Header title="Kebele Business users" subtitle="List of kebele business users" />
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
           onClick={() => {
-            navigate("/createkebeleaccount");
+            navigate("/createkebelebusinessuser");
           }}
           sx={{
             backgroundColor: colors.blueAccent[700],
@@ -214,4 +211,4 @@ const KebeleUsers = () => {
   );
 };
 
-export default KebeleUsers;
+export default KebeleBusiness;

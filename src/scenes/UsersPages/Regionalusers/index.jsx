@@ -1,5 +1,5 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar  } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
@@ -16,7 +16,7 @@ const Regionalusers = () => {
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
   const navigate = useNavigate();
-  const [open,setOpen] = useState(false)
+  const [open, setOpen] = useState(false);
 
   const handleC = () => {
     setOpen(!open);
@@ -63,7 +63,7 @@ const Regionalusers = () => {
       valueGetter: (params) => params.row?.user?.userprofile?.lname,
       disableColumnFilter: true,
     },
-  
+
     {
       field: "sex",
       headerName: "Gender",
@@ -73,7 +73,6 @@ const Regionalusers = () => {
       disableColumnFilter: true,
     },
 
-   
     {
       field: "phone",
       headerName: "Phone Number",
@@ -110,8 +109,13 @@ const Regionalusers = () => {
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button onClick={() => editHandler(params.row.id)}   variant="text" size="small">Update</Button>
-              
+              <Button
+                onClick={() => editHandler(params.row.id)}
+                variant="text"
+                size="small"
+              >
+                Update
+              </Button>
             </Box>
 
             <Box
@@ -123,7 +127,7 @@ const Regionalusers = () => {
               backgroundColor={colors.redAccent[500]}
               borderRadius="4px"
             >
-              <Button  onClick={handleC} variant="text">
+              <Button onClick={handleC} variant="text">
                 <Delete></Delete>
               </Button>
             </Box>
@@ -135,11 +139,8 @@ const Regionalusers = () => {
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
-              
             >
-              <Button   variant="text">
-               Deactivate
-              </Button>
+              <Button variant="text">Deactivate</Button>
             </Box>
           </Box>
         );
@@ -149,7 +150,7 @@ const Regionalusers = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} onClose = {handleC}></AlertDialogSlide>
+      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
       <Header title="Regional users" subtitle="List of regional users" />
       <Box display="flex" justifyContent="end" mt="0px">
         <Button
@@ -200,13 +201,26 @@ const Regionalusers = () => {
           },
         }}
       >
-        {!mockdata && <CircularProgress color="success" />}
+        {!mockdata && (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "70%",
+              left: "60%",
+              marginTop: `${-40}px`,
+              marginLeft: `${-40}px`,
+            }}
+            color="success"
+          />
+        )}
         {mockdata && (
-          <DataGrid 
-          // getRowId={(row) => row.id}
-          columns={columns}
-          components={{ Toolbar: GridToolbar }} 
-          checkboxSelection rows={mockdata}  />
+          <DataGrid
+            // getRowId={(row) => row.id}
+            columns={columns}
+            components={{ Toolbar: GridToolbar }}
+            checkboxSelection
+            rows={mockdata}
+          />
         )}{" "}
       </Box>
     </Box>

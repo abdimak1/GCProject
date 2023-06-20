@@ -12,7 +12,6 @@ import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
 import { create_region } from "../../../config/apicalls/regionApiCall";
-import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../../theme";

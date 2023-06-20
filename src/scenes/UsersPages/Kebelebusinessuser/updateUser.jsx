@@ -1,23 +1,42 @@
 import { Box, Button, TextField } from "@mui/material";
-import { Form,Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-import { useNavigate } from "react-router-dom";
-import { create_kebele } from "../../../config/apicalls/kebeleApiCalls";
-const CreatekebeleUser = () => {
-  const [arr, setArr] = useState([]);
-  const navigate = useNavigate();
+import FormControl from "@mui/material/FormControl";
+import Stack from "@mui/material/Stack";
+
+import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
+import { get_kebelebusiness, update_kebelebusiness } from "../../../config/apicalls/kebelebusinessApiCalls";
+const UpdatekebelebusinessUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const navigate = useNavigate();
+  const [prevdata,setprevdata]=useState()
+  const [initialValues, setInitialValues] = useState({
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    userName: "",
+    email: "",
+    unique_name: "",
+    sex: "",
+    passWord: "",
+    phone: "",
+  });
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
     open: false,
   });
+  const param = useParams();
+  const userid = param.id;
+  console.log(userid);
 
   const handleClose = () => {
     setsnak({
@@ -27,10 +46,39 @@ const CreatekebeleUser = () => {
     });
   };
 
+  useEffect(() => {
+    get_kebelebusiness(userid).then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setprevdata(res.data)
+        setInitialValues({
+            firstName: res.data.user.userprofile.fname,
+            lastName: res.data.user.userprofile.lname,
+            middleName: res.data.user.userprofile.Mname,
+            userName: res.data.user.username,
+            email: res.data.user.email,
+            unique_name: res.data.unique_name,
+            sex: res.data.user.userprofile.sex,
+            passWord: "qwqwqw",
+            phone: res.data.user.userprofile.phone,
+          })
+      } else {
+        console.log(res.error);
+      }
+    });
+  }, []);
 
   const handleFormSubmit = (values) => {
     console.log("function called");
-    create_kebele(values).then((res) => {
+    prevdata['user']['email']=values.email
+    prevdata['unique_name']=values.unique_name
+    prevdata['user']['username']=values.userName
+    prevdata['user']['userprofile']['fname']=values.firstName
+    prevdata['user']['userprofile']['lname']=values.lastName
+    prevdata['user']['userprofile']['Mname']=values.middleName
+    prevdata['user']['userprofile']['sex']=values.sex
+    prevdata['user']['userprofile']['phone']=values.phone
+    update_kebelebusiness(userid,prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -47,7 +95,6 @@ const CreatekebeleUser = () => {
         console.log(res.error);
       }
     });
-   
   };
 
   const checkoutSchema = yup.object().shape({
@@ -55,25 +102,16 @@ const CreatekebeleUser = () => {
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    kebele: yup.string().required("required"),
+    unique_name: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
-    // passWord: yup
-    //   .string()
-    //   .required("Password is required")
-    //   .min(6, "Password must be at least 6 characters"),
+    phone: yup.string().required("required"),
+    //   passWord: yup
+    //     .string()
+    //     .required("Password is required")
+    //     .min(6, "Password must be at least 6 characters"),
   });
-  const initialValues = {
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    userName: "",
-    email: "",
-    kebele: "",
-    sex: "",
-    passWord: "",
-    phone:"",
-  };
+
   return (
     <Box m="20px">
       <SimpleSnackbar
@@ -82,9 +120,11 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="CREATE ACCOUNT" subtitle="Create a New kebele Account Profile" />
+
+      <Header title="CREATE ACCOUNT" subtitle="Create A New kebele business Account" />
 
       <Formik
+        enableReinitialize={true}
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
@@ -103,11 +143,10 @@ const CreatekebeleUser = () => {
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
+                "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
               }}
             >
-             
-             <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -176,13 +215,13 @@ const CreatekebeleUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="select kebele"
+                label="unique name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.kebele}
-                name="kebele"
-                error={!!touched.kebele && !!errors.kebele}
-                helperText={touched.kebele && errors.kebele}
+                value={values.unique_name}
+                name="unique_name"
+                error={!!touched.unique_name && !!errors.unique_name}
+                helperText={touched.unique_name && errors.unique_name}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -198,22 +237,24 @@ const CreatekebeleUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
               />
-              <Select
-                fullWidth
-                variant="filled"
-                type="text"
-                onBlur={handleBlur}
-                value={values.sex}
-                label="Sex"
-                onChange={handleChange}
-                sx={{ gridColumn: "span 2" }}
-                name="sex"
-                error={!!touched.sex && !!errors.sex}
-              >
-                <MenuItem value={"MSex"}>Male</MenuItem>
-                <MenuItem value={"FSex"}>Female</MenuItem>
-              </Select>
-
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.sex}
+                  label="Sex"
+                  name="sex"
+                  onChange={handleChange}
+                  error={!!touched.sex && !!errors.sex}
+                >
+                  <MenuItem value={"MSex"}>Male</MenuItem>
+                  <MenuItem value={"FSex"}>Female</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
@@ -227,12 +268,22 @@ const CreatekebeleUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  startIcon={<DriveFolderUploadIcon />}
+                  component="label"
+                >
+                  Upload File
+                  <input type="file" hidden />
+                </Button>
+              </Stack>
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
              
              <Button color="secondary" variant="contained"
                onClick={() => {
-                 navigate("/kebeleUsers");
+                 navigate("/kebelebusinesses");
                }}
               
              >
@@ -249,4 +300,4 @@ const CreatekebeleUser = () => {
   );
 };
 
-export default CreatekebeleUser;
+export default UpdatekebelebusinessUser;

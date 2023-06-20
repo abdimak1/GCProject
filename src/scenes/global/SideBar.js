@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import React from "react";
 import "react-pro-sidebar/dist/css/styles.css";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import GroupAddIcon from "@mui/icons-material/GroupAdd";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
@@ -14,6 +13,7 @@ import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import { tokens } from "../../theme";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AuthContext from "../../config/context/authContext";
+import AssessmentIcon from "@mui/icons-material/Assessment";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -119,7 +119,7 @@ const SideBar = () => {
                 selected={true}
                 setSelected={setSelected}
               />
-            
+
               <Typography
                 variant="h6"
                 color="#a3a3a3"
@@ -145,7 +145,21 @@ const SideBar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
+                
+             
               )}
+               {authctx.role === "kebeleadmin" && (
+               
+                
+                <Item
+                  title="Kebele business"
+                  to="/kebelebusinesses"
+                  icon={<PersonIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              
               {authctx.role === "zone" && (
                 <Item
                   title="Woreda users"
@@ -155,7 +169,7 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
-              {authctx.role === "woreda"  && (
+              {authctx.role === "woreda" && (
                 <Item
                   title="Kebele users"
                   to="/kebeleUsers"
@@ -164,6 +178,35 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
+               {/* {authctx.role === "kebeleadmin" && (
+               
+              )} */}
+              
+              <Typography
+                variant="h6"
+                color="#a3a3a3"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Report
+              </Typography>
+              {authctx.role !== "federal" && (
+                <Item
+                  title="Create Report "
+                  to="/createreport"
+                  icon={<AssessmentIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+                
+              )}
+
+              <Item
+                title="View Report "
+                to="/viewreport"
+                icon={<AssessmentIcon />}
+                selected={selected}
+                setSelected={setSelected}
+              />
               <Typography
                 variant="h6"
                 color="#a3a3a3"

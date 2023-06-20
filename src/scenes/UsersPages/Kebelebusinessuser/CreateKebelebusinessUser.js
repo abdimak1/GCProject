@@ -1,5 +1,5 @@
 import { Box, Button, TextField } from "@mui/material";
-import { Form,Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
@@ -8,10 +8,11 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
 import { useNavigate } from "react-router-dom";
-import { create_kebele } from "../../../config/apicalls/kebeleApiCalls";
-const CreatekebeleUser = () => {
+import { create_kebele_business } from "../../../config/apicalls/kebelebusinessApiCalls";
+const CreatekebelebusinessUser = () => {
   const [arr, setArr] = useState([]);
   const navigate = useNavigate();
+
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
     severity: "",
@@ -27,10 +28,9 @@ const CreatekebeleUser = () => {
     });
   };
 
-
   const handleFormSubmit = (values) => {
     console.log("function called");
-    create_kebele(values).then((res) => {
+    create_kebele_business(values).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -47,7 +47,6 @@ const CreatekebeleUser = () => {
         console.log(res.error);
       }
     });
-   
   };
 
   const checkoutSchema = yup.object().shape({
@@ -55,7 +54,7 @@ const CreatekebeleUser = () => {
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    kebele: yup.string().required("required"),
+    unique_name: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
     // passWord: yup
@@ -69,10 +68,10 @@ const CreatekebeleUser = () => {
     middleName: "",
     userName: "",
     email: "",
-    kebele: "",
+    unique_name: "",
     sex: "",
     passWord: "",
-    phone:"",
+    phone: "",
   };
   return (
     <Box m="20px">
@@ -82,7 +81,10 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="CREATE ACCOUNT" subtitle="Create a New kebele Account Profile" />
+      <Header
+        title="CREATE ACCOUNT"
+        subtitle="Create a New kebele Business Account Profile"
+      />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -106,8 +108,7 @@ const CreatekebeleUser = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-             
-             <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -176,13 +177,13 @@ const CreatekebeleUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="select kebele"
+                label="unique name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.kebele}
-                name="kebele"
-                error={!!touched.kebele && !!errors.kebele}
-                helperText={touched.kebele && errors.kebele}
+                value={values.unique_name}
+                name="unique_name"
+                error={!!touched.unique_name && !!errors.unique_name}
+                helperText={touched.unique_name && errors.unique_name}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -229,19 +230,19 @@ const CreatekebeleUser = () => {
               />
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
-             
-             <Button color="secondary" variant="contained"
-               onClick={() => {
-                 navigate("/kebeleUsers");
-               }}
-              
-             >
-               Back
-             </Button>
-             <Button type="submit" color="secondary" variant="contained">
-               Create New User
-             </Button>
-           </Box>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  navigate("/kebelebusinesses");
+                }}
+              >
+                Back
+              </Button>
+              <Button type="submit" color="secondary" variant="contained">
+                Create New User
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>
@@ -249,4 +250,4 @@ const CreatekebeleUser = () => {
   );
 };
 
-export default CreatekebeleUser;
+export default CreatekebelebusinessUser;

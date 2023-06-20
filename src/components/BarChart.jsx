@@ -1,7 +1,7 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
-// import { mockBarData as data } from "../data/mockData";
+import { mockBarData as data } from "../Data/mockData";
 
 const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();
@@ -9,7 +9,7 @@ const BarChart = ({ isDashboard = false }) => {
 
   return (
     <ResponsiveBar
-    //   data={data}
+      data={data}
       theme={{
         // added
         axis: {
@@ -39,7 +39,7 @@ const BarChart = ({ isDashboard = false }) => {
           },
         },
       }}
-      keys={["hot dog", "burger", "sandwich", "kebab", "fries", "donut"]}
+      keys={["resource", "fertlizer", "urea", "dup"]}
       indexBy="country"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}

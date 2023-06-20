@@ -9,10 +9,11 @@ import logo from "../../assets/logo.png";
 import MenuItem from "@mui/material/MenuItem";
 import Menu from "@mui/material/Menu";
 import AuthContext from "../../config/context/authContext";
+import { useNavigate } from "react-router-dom";
 const Topbar = () => {
   const authctx = useContext(AuthContext);
   console.log(authctx);
-
+  const navigate = useNavigate();
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const colorMode = useContext(ColorModeContext);
@@ -25,7 +26,8 @@ const Topbar = () => {
   const logouthandler = () => {
     setAnchorEl(null);
 
-    authctx.logoutUser()
+    authctx.logoutUser();
+    navigate(0);
   };
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
