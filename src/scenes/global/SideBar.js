@@ -14,7 +14,7 @@ import { tokens } from "../../theme";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AuthContext from "../../config/context/authContext";
 import AssessmentIcon from "@mui/icons-material/Assessment";
-
+import HowToRegIcon from '@mui/icons-material/HowToReg';
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -159,7 +159,18 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
-              
+              {authctx.role === "kebelebusiness" && (
+               
+                
+               <Item
+                 title="registration"
+                 to="/registration"
+                 icon={<HowToRegIcon />}
+                 selected={selected}
+                 setSelected={setSelected}
+               />
+             )}
+             
               {authctx.role === "zone" && (
                 <Item
                   title="Woreda users"
@@ -249,13 +260,7 @@ const SideBar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <Item
-                title="Pie Chart"
-                to="/pie"
-                icon={<PieChartOutlineOutlinedIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+              
               <Item
                 title="Line Chart"
                 to="/line"
@@ -264,9 +269,7 @@ const SideBar = () => {
                 setSelected={setSelected}
               />
             </>
-            {/* ) : (
-              <></>
-            )} */}
+            
           </Box>
         </Menu>
       </ProSidebar>

@@ -39,11 +39,11 @@ const Zonalusers = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID",  flex: 0.5, },
     {
       field: "fname",
       headerName: "First Name",
-      // flex: 0.5,
+      flex: 0.8,
       cellClassName: "name-column--cell",
       valueGetter: (params) => params.row?.user?.userprofile?.fname,
       disableColumnFilter: true,

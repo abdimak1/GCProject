@@ -24,6 +24,7 @@ import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
 import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
 import UpdatekebelebusinessUser from "./scenes/UsersPages/Kebelebusinessuser/updateUser";
 import UpdatekebeleadminUser from "./scenes/UsersPages/Kebeleusers/updateUser";
+import Registration from "./scenes/Registration/registration";
 import Bar from "./scenes/bar";
 import CreateReport from "./scenes/Report/Createreport";
 import ViewReport from "./scenes/Report/Viewreport";
@@ -73,8 +74,8 @@ function App() {
                   element={<UpdatezonalUser />}
                 />
                 <Route
-                path = "/updatekebelebusinessuser/:id"
-                element = {<UpdatekebelebusinessUser/>}
+                  path="/updatekebelebusinessuser/:id"
+                  element={<UpdatekebelebusinessUser />}
                 />
                 <Route
                   path="/updatekebeleuser/:id"
@@ -89,15 +90,17 @@ function App() {
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}
                 />
-
+                <Route path="/registration" element={<Registration />} />
                 <Route
                   path="/createkebelebusinessuser"
                   element={<CreatekebelebusinessUser />}
                 />
+
                 <Route
                   path="/createregionalaccount"
                   element={<CreateregionalUser />}
                 />
+
                 <Route
                   path="/createworedaaccount"
                   element={<CreateworedaUser />}
