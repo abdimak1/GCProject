@@ -178,6 +178,7 @@ const Login = () => {
                     LOGIN AS KEBELE ADMIN
                   </Button>
                   <Button
+                    onClick = {()=> defenseHandler("abdisahjvhjhgch","abdiyu@123")}
                     type="submit"
                     color="secondary"
                     variant="contained"
