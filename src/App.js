@@ -26,10 +26,13 @@ import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
 import UpdatekebelebusinessUser from "./scenes/UsersPages/Kebelebusinessuser/updateUser";
 import UpdatekebeleadminUser from "./scenes/UsersPages/Kebeleusers/updateUser";
 import Registration from "./scenes/Registration/registration";
+import SentResource from "./scenes/MyResources/SentResource";
 import Bar from "./scenes/bar";
 import CreateReport from "./scenes/Report/Createreport";
 import ViewReport from "./scenes/Report/Viewreport";
 import Line from "./scenes/line";
+import CreateResource from "./scenes/MyResources/CreateResource";
+import TransferResource from "./scenes/MyResources/TransferResource";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -83,7 +86,7 @@ function App() {
                   element={<UpdatekebeleadminUser />}
                 />
                 <Route path="/kebelebusinesses" element={<KebeleBusiness />} />
-
+                {/* <Route path="/resources/sent" element={<SentResource />} /> */}
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/line" element={<Line />} />
 
@@ -96,10 +99,7 @@ function App() {
                   path="/createkebelebusinessuser"
                   element={<CreatekebelebusinessUser />}
                 />
-<<<<<<< HEAD
                 <Route path="/createresource" element={<CreateResource />} />
-=======
->>>>>>> parent of 9a3375e (latest with transfer resource)
 
                 <Route
                   path="/createregionalaccount"
@@ -115,14 +115,11 @@ function App() {
                   element={<CreatezoneUser />}
                 />
                 <Route path="/resources" element={<MyResources />} />
-<<<<<<< HEAD
                 <Route
                   path="/resources/transfer"
                   element={<TransferResource />}
                 />
                 <Route path="/resources/sent" element={<SentResources />} />
-=======
->>>>>>> parent of 9a3375e (latest with transfer resource)
                 <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>
             </Routes>
