@@ -168,14 +168,7 @@ const SideBar = () => {
                  icon={<HowToRegIcon />}
                  selected={selected}
                  setSelected={setSelected}
-               />,
-               <Item
-               title="Developemental Agent "
-               to="/da"
-               icon={<HowToRegIcon />}
-               selected={selected}
-               setSelected={setSelected}
-             />
+               />
              )}
              
               {authctx.role === "zone" && (

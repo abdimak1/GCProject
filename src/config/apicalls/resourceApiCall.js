@@ -13,6 +13,7 @@ export const get_resources = async () => {
     }
   }
 };
+<<<<<<< HEAD
 
 export const get_sent_resources = async () => {
   try {
@@ -46,3 +47,5 @@ export const transfer_resource = async (val) => {
     }
   }
 };
+=======
+>>>>>>> parent of 9a3375e (latest with transfer resource)

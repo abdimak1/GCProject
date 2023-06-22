@@ -2,16 +2,15 @@ import {
   Box,
   Button,
   CircularProgress,
-
+  Typography,
   useTheme,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { useNavigate } from "react-router-dom";
+
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 
 import { get_resources } from "../../config/apicalls/resourceApiCall";
 
@@ -19,7 +18,7 @@ const MyResources = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resources, setresources] = useState();
-  const navigate = useNavigate();
+
   useEffect(() => {
     get_resources().then((res) => {
       if (res.success && res.data) {
@@ -103,36 +102,6 @@ const MyResources = () => {
   return (
     <Box m="20px">
       <Header title="All Resource" subtitle="My Resources in Stock" />
-      <Box  gap ="20px" display="flex" justifyContent="end" mt="0px">
-        <Button
-          onClick={() => {
-            navigate("/createresource");
-          }}
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Create Resource
-        </Button>
-        <Button
-          onClick={() => {
-            navigate("/resources/transfer");
-          }}
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Transfer Resource
-        </Button>
-      </Box>
       <Box
         m="40px 0 0 0"
         height="75vh"
