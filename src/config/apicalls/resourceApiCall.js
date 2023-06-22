@@ -14,19 +14,9 @@ export const get_resources = async () => {
   }
 };
 
-export const create_resource = async (val) => {
-  console.log(val);
+export const get_sent_resources = async () => {
   try {
-    const response = await api.post("resources/create", {
-      name: val.Name,
-      type: val.type,
-      amount: val.amount,
-      price_perKilo: val.price_perKilo,
-     
-      
-    });
-  
-   
+    const response = await api.get("/sentresources/");
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {
@@ -38,14 +28,13 @@ export const create_resource = async (val) => {
   }
 };
 
-
 export const transfer_resource = async (val) => {
   console.log(val);
   try {
     const response = await api.post("/transfer/", {
       to: val.to,
       resource_id: val.resource_id,
-      amount:val.amount
+      amount: val.amount,
     });
     return { success: true, data: response.data };
   } catch (err) {

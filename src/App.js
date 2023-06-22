@@ -20,6 +20,7 @@ import AuthContext from "./config/context/authContext";
 import Dashboard from "./scenes/Dashboard";
 import { useLocation } from "react-router-dom";
 import MyResources from "./scenes/MyResources";
+import SentResources from "./scenes/SentResource";
 import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
 import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
 import UpdatekebelebusinessUser from "./scenes/UsersPages/Kebelebusinessuser/updateUser";
@@ -98,7 +99,7 @@ function App() {
                   path="/createkebelebusinessuser"
                   element={<CreatekebelebusinessUser />}
                 />
-                <Route path = "/createresource" element = {<CreateResource/>}/>
+                <Route path="/createresource" element={<CreateResource />} />
 
                 <Route
                   path="/createregionalaccount"
@@ -114,7 +115,11 @@ function App() {
                   element={<CreatezoneUser />}
                 />
                 <Route path="/resources" element={<MyResources />} />
-                <Route path="/resources/transfer" element={<TransferResource/>} />
+                <Route
+                  path="/resources/transfer"
+                  element={<TransferResource />}
+                />
+                <Route path="/resources/sent" element={<SentResources />} />
                 <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>
             </Routes>
