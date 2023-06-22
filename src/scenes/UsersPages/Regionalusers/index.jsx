@@ -215,7 +215,7 @@ const Regionalusers = () => {
         )}
         {mockdata && (
           <DataGrid
-            getRowId={(row) => row.id}
+            // getRowId={(row) => row.id}
             columns={columns}
             components={{ Toolbar: GridToolbar }}
             checkboxSelection

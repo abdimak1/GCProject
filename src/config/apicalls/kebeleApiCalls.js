@@ -61,7 +61,7 @@ export const update_kebeleadmin = async (id,values) => {
  
   console.log("i will try to send this",values)
   try {
-    const response = await api.put(`/region/${id}/update/`,values);
+    const response = await api.put(`/kebeleadmin/${id}/update/`,values);
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {
