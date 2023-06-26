@@ -45,6 +45,7 @@ import DaUsers from "./scenes/UsersPages/DA";
 import CreateDaUser from "./scenes/UsersPages/DA/CreateDauser";
 import UpdatDaUser from "./scenes/UsersPages/DA/updateUser";
 import Post from "./scenes/post";
+import Createpost from "./scenes/post/createPost";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -134,6 +135,8 @@ function App() {
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}
                 />
+                <Route path="/createpost"
+                element = {<Createpost/>}/>
 
                 <Route
                   path="/createkebelebusinessuser"

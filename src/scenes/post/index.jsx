@@ -42,20 +42,21 @@ const Post = () => {
     {
       field: "title",
       headerName: "Title",
+      headerAlign: "left",
       flex: 0.2,
       cellClassName: "name-column--cell",
     },
     {
       field: "discription",
       headerName: "Discription",
-      type: "number",
+
       headerAlign: "left",
       align: "left",
     },
     {
       field: "thumbnail",
       headerName: "thumbnail",
-      type: "number",
+   
       headerAlign: "left",
       flex: 0.4,
       align: "left",
@@ -69,9 +70,7 @@ const Post = () => {
       renderCell: ({ row: { id } }) => {
         return (
           <Box display="flex" gap="10px">
-            <Box backgroundColor={colors.greenAccent[600]} borderRadius="4px">
-              <Button variant="text">Update</Button>
-            </Box>
+            
             <Box
               width="60%"
               m="0 15px 0 0 "
@@ -100,7 +99,7 @@ const Post = () => {
         {authctx.role === "federal" && (
            <Button
            onClick={() => {
-             navigate("/createresource");
+             navigate("/createpost");
            }}
            sx={{
              backgroundColor: colors.blueAccent[700],

@@ -4,23 +4,25 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
+import InputAdornment from '@mui/material/InputAdornment';
+import ImageIcon from '@mui/icons-material/Image';
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import SimpleSnackbar from "../global/snackbar";
-import { create_resource } from "../../config/apicalls/resourceApiCall";
-
-const CreateResource = () => {
+import { create_post } from "../../config/apicalls/PostApicalls";
+const Createpost = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [file, setFile] = useState(null);
+
+  const handleimageChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
@@ -35,8 +37,13 @@ const CreateResource = () => {
     });
   };
   const handleFormSubmit = (values) => {
+    const formData = new FormData();
+    formData.append("title", values.title);
+    formData.append("discription", values.discription);
+    formData.append("thumbnail", values.thumbnail);
     console.log("function called");
-    create_resource(values).then((res) => {
+    
+    create_post(values).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -59,7 +66,6 @@ const CreateResource = () => {
     title: yup.string().required("required"),
     discription: yup.string().required("required"),
     thumbnail: yup.string().required("required"),
-    
   });
   const initialValues = {
     title: "",
@@ -99,7 +105,6 @@ const CreateResource = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
               }}
             >
-              
               <TextField
                 fullWidth
                 variant="filled"
@@ -108,12 +113,12 @@ const CreateResource = () => {
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.title}
-                name="title "
+                name="title"
                 error={!!touched.title && !!errors.title}
                 helperText={touched.title && errors.title}
                 sx={{ gridColumn: "span 2" }}
               />
-            
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -121,24 +126,23 @@ const CreateResource = () => {
                 label="Discription "
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.discription }
-                name="discription "
-                error={!!touched.discription  && !!errors.discription }
-                helperText={touched.discription  && errors.discription }
+                value={values.discription}
+                name="discription"
+                error={!!touched.discription && !!errors.discription}
+                helperText={touched.discription && errors.discription}
                 sx={{ gridColumn: "span 2" }}
               />
+               
               <TextField
+                type="file"
+                onChange={handleimageChange}
+                variant="outlined"
+                value={values.thumbnail}
+                name="thumbnail"
+                label="Attach a file"
+                InputLabelProps={{ shrink: true }}
+                inputProps={{ accept: ".jpg, .png" }}
                 fullWidth
-                variant="filled"
-                type="text"
-                label="thumbnail "
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.thumbnail }
-                name="thumbnail "
-                error={!!touched.thumbnail  && !!errors.thumbnail }
-                helperText={touched.thumbnail  && errors.thumbnail }
-                sx={{ gridColumn: "span 2" }}
               />
             </Box>
 
@@ -162,4 +166,4 @@ const CreateResource = () => {
     </Box>
   );
 };
-export default CreateResource;
+export default Createpost;
