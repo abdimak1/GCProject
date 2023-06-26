@@ -1,12 +1,25 @@
 import { useTheme } from "@mui/material";
 import { ResponsiveBar } from "@nivo/bar";
 import { tokens } from "../theme";
-import { mockBarData as data } from "../Data/mockData";
-
+import { mockBarData as mokdata } from "../Data/mockData";
+import { useEffect,useState } from "react";
+import { get_barData } from "../config/apicalls/dashboardcalls";
 const BarChart = ({ isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data,setData]=useState(mokdata)
 
+
+  useEffect(() => {
+    get_barData().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setData(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+  }, []);
   return (
     <ResponsiveBar
       data={data}
@@ -39,8 +52,8 @@ const BarChart = ({ isDashboard = false }) => {
           },
         },
       }}
-      keys={["resource", "fertlizer", "urea", "dup"]}
-      indexBy="country"
+      keys={["zones","woredas"]}
+      indexBy="region"
       margin={{ top: 50, right: 130, bottom: 50, left: 60 }}
       padding={0.3}
       valueScale={{ type: "linear" }}

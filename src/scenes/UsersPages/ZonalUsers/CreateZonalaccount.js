@@ -10,8 +10,7 @@ import SimpleSnackbar from "../../global/snackbar";
 import { useNavigate } from "react-router-dom";
 import { create_zone } from "../../../config/apicalls/zonalApiCalls";
 const CreatekebeleUser = () => {
-    const navigate = useNavigate();
-
+  const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
     severity: "",
@@ -70,7 +69,7 @@ const CreatekebeleUser = () => {
     zone: "",
     sex: "",
     passWord: "",
-    phone:"",
+    phone: "",
   };
   return (
     <Box m="20px">
@@ -80,7 +79,7 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="CREATE ACCOUNT" subtitle="Create a New Zonal Account " />
+      <Header title="Create Zonal Account" subtitle="Create a New Zonal Account " />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -210,7 +209,7 @@ const CreatekebeleUser = () => {
                 <MenuItem value={"MSex"}>Male</MenuItem>
                 <MenuItem value={"FSex"}>Female</MenuItem>
               </Select>
-    
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -225,12 +224,13 @@ const CreatekebeleUser = () => {
                 sx={{ gridColumn: "span 2" }}
               />
             </Box>
-            <Box  gap="20px" display="flex" justifyContent="start" mt="30px">
-            <Button color="secondary" variant="contained"
+            <Box gap="20px" display="flex" justifyContent="start" mt="30px">
+              <Button
+                color="secondary"
+                variant="contained"
                 onClick={() => {
                   navigate("/zonal");
                 }}
-               
               >
                 Back
               </Button>

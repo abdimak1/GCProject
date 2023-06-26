@@ -12,11 +12,15 @@ import SimpleSnackbar from "../../global/snackbar";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import { get_region,update_region } from "../../../config/apicalls/regionApiCall";
-
+import {
+  get_region,
+  update_region,
+} from "../../../config/apicalls/regionApiCall";
+import { useNavigate } from "react-router-dom";
 const UpdateregionalUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [prevdata,setprevdata]=useState()
+  const [prevdata, setprevdata] = useState();
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
@@ -49,18 +53,18 @@ const UpdateregionalUser = () => {
     get_region(userid).then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
-        setprevdata(res.data)
+        setprevdata(res.data);
         setInitialValues({
-            firstName: res.data.user.userprofile.fname,
-            lastName: res.data.user.userprofile.lname,
-            middleName: res.data.user.userprofile.Mname,
-            userName: res.data.user.username,
-            email: res.data.user.email,
-            region: res.data.Region_name,
-            sex: res.data.user.userprofile.sex,
-            passWord: "qwqwqw",
-            phone: res.data.user.userprofile.phone,
-          })
+          firstName: res.data.user.userprofile.fname,
+          lastName: res.data.user.userprofile.lname,
+          middleName: res.data.user.userprofile.Mname,
+          userName: res.data.user.username,
+          email: res.data.user.email,
+          region: res.data.Region_name,
+          sex: res.data.user.userprofile.sex,
+          passWord: "qwqwqw",
+          phone: res.data.user.userprofile.phone,
+        });
       } else {
         console.log(res.error);
       }
@@ -69,15 +73,15 @@ const UpdateregionalUser = () => {
 
   const handleFormSubmit = (values) => {
     console.log("function called");
-    prevdata['user']['email']=values.email
-    prevdata['Region_name']=values.region
-    prevdata['user']['username']=values.userName
-    prevdata['user']['userprofile']['fname']=values.firstName
-    prevdata['user']['userprofile']['lname']=values.lastName
-    prevdata['user']['userprofile']['Mname']=values.middleName
-    prevdata['user']['userprofile']['sex']=values.sex
-    prevdata['user']['userprofile']['phone']=values.phone
-    update_region(userid,prevdata).then((res) => {
+    prevdata["user"]["email"] = values.email;
+    prevdata["Region_name"] = values.region;
+    prevdata["user"]["username"] = values.userName;
+    prevdata["user"]["userprofile"]["fname"] = values.firstName;
+    prevdata["user"]["userprofile"]["lname"] = values.lastName;
+    prevdata["user"]["userprofile"]["Mname"] = values.middleName;
+    prevdata["user"]["userprofile"]["sex"] = values.sex;
+    prevdata["user"]["userprofile"]["phone"] = values.phone;
+    update_region(userid, prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -279,7 +283,16 @@ const UpdateregionalUser = () => {
                 </Button>
               </Stack>
             </Box>
-            <Box display="flex" justifyContent="start" mt="30px">
+            <Box gap="20px" display="flex" justifyContent="start" mt="30px">
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  navigate("/regional");
+                }}
+              >
+                Back
+              </Button>
               <Button type="submit" color="secondary" variant="contained">
                 Update User Account
               </Button>

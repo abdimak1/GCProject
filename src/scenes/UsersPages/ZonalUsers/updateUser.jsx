@@ -4,7 +4,7 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -16,6 +16,7 @@ import { get_zone, update_zone } from "../../../config/apicalls/zonalApiCalls";
 const UpdatezonalUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [prevdata,setprevdata]=useState()
+  const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState({
     firstName: "",
     lastName: "",
@@ -277,9 +278,18 @@ const UpdatezonalUser = () => {
                 </Button>
               </Stack>
             </Box>
-            <Box display="flex" justifyContent="start" mt="30px">
+            <Box gap ="20px" display="flex" justifyContent="start" mt="30px">
+            <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  navigate("/zonal");
+                }}
+              >
+                Back
+              </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                Update User Account
               </Button>
             </Box>
           </Form>

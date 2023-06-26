@@ -14,7 +14,9 @@ import { tokens } from "../../theme";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AuthContext from "../../config/context/authContext";
 import AssessmentIcon from "@mui/icons-material/Assessment";
-import HowToRegIcon from '@mui/icons-material/HowToReg';
+import HowToRegIcon from "@mui/icons-material/HowToReg";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -113,7 +115,7 @@ const SideBar = () => {
             {/* {authctx.role === "federal" ? ( */}
             <>
               <Item
-                title="dashboard"
+                title="Dashboard"
                 to="/dashboard"
                 icon={<DashboardIcon />}
                 selected={true}
@@ -145,32 +147,61 @@ const SideBar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-                
-             
               )}
-               {authctx.role === "kebeleadmin" && (
-               
-                
+              {authctx.role === "kebeleadmin" && (
                 <Item
                   title="Kebele business"
                   to="/kebelebusinesses"
-                  icon={<PersonIcon />}
+                  icon={<PersonAddIcon />}
                   selected={selected}
                   setSelected={setSelected}
                 />
               )}
+              {authctx.role === "kebeleadmin" && (
+                <Item
+                  title="Developemental Agent "
+                  to="/da"
+                  icon={<PersonAddIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+
               {authctx.role === "kebelebusiness" && (
-               
-                
-               <Item
-                 title="registration"
-                 to="/registration"
-                 icon={<HowToRegIcon />}
-                 selected={selected}
-                 setSelected={setSelected}
-               />
-             )}
-             
+                <Item
+                  title="Farmer "
+                  to="/farmer"
+                  icon={<PersonAddIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+
+              {authctx.role === "kebelebusiness" && (
+                <Item
+                  title="Private Sector "
+                  to="/privatesector"
+                  icon={<PersonAddIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+              <Typography
+                variant="h6"
+                color="#a3a3a3"
+                sx={{ m: "15px 0 5px 20px" }}
+              >
+                Task
+              </Typography>
+              {authctx.role === "kebelebusiness" && (
+                <Item
+                  title="Distribution "
+                  to="/distribute"
+                  icon={<AttachMoneyIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
               {authctx.role === "zone" && (
                 <Item
                   title="Woreda users"
@@ -189,10 +220,10 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
-               {/* {authctx.role === "kebeleadmin" && (
+              {/* {authctx.role === "kebeleadmin" && (
                
               )} */}
-              
+
               <Typography
                 variant="h6"
                 color="#a3a3a3"
@@ -208,7 +239,6 @@ const SideBar = () => {
                   selected={selected}
                   setSelected={setSelected}
                 />
-                
               )}
 
               <Item
@@ -260,7 +290,7 @@ const SideBar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              
+
               <Item
                 title="Line Chart"
                 to="/line"
@@ -269,7 +299,6 @@ const SideBar = () => {
                 setSelected={setSelected}
               />
             </>
-            
           </Box>
         </Menu>
       </ProSidebar>

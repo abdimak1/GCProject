@@ -20,16 +20,22 @@ import AuthContext from "./config/context/authContext";
 import Dashboard from "./scenes/Dashboard";
 import { useLocation } from "react-router-dom";
 import MyResources from "./scenes/MyResources";
-import SentResources from "./scenes/SentResource";
 import UpdateregionalUser from "./scenes/UsersPages/Regionalusers/updateUser";
 import UpdatezonalUser from "./scenes/UsersPages/ZonalUsers/updateUser";
 import UpdatekebelebusinessUser from "./scenes/UsersPages/Kebelebusinessuser/updateUser";
 import UpdatekebeleadminUser from "./scenes/UsersPages/Kebeleusers/updateUser";
-import Registration from "./scenes/Registration/registration";
+import SentResource from "./scenes/MyResources/SentResource";
 import Bar from "./scenes/bar";
 import CreateReport from "./scenes/Report/Createreport";
 import ViewReport from "./scenes/Report/Viewreport";
 import Line from "./scenes/line";
+import CreateResource from "./scenes/MyResources/CreateResource";
+import TransferResource from "./scenes/MyResources/TransferResource";
+import SentResources from "./scenes/MyResources/SentResource";
+import RecievedResources from "./scenes/MyResources/RecievedResource";
+import Farmer from "./scenes/UsersPages/Farmer";
+import PrivateSector from "./scenes/UsersPages/Privatesector";
+import FarmerRegistration from "./scenes/UsersPages/Farmer/farmerregistration";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -64,26 +70,33 @@ function App() {
                 <Route path="/regional" element={<Regionalusers />} />
                 <Route path="/woreda" element={<WoredaUsers />} />
                 <Route path="/zonal" element={<ZonalUsers />} />
+                <Route path="/farmer" element={<Farmer/>} />
+                <Route path="/privatesector" element={<PrivateSector/>} />
+                <Route path="/farmerRegistration" element={<FarmerRegistration/>} />
                 <Route path="/createreport" element={<CreateReport />} />
                 <Route path="/viewreport" element={<ViewReport />} />
+               
                 <Route
                   path="/updateuser/:id"
                   element={<UpdateregionalUser />}
                 />
+
                 <Route
                   path="/updatezoneuser/:id"
                   element={<UpdatezonalUser />}
                 />
+
                 <Route
                   path="/updatekebelebusinessuser/:id"
                   element={<UpdatekebelebusinessUser />}
                 />
+
                 <Route
                   path="/updatekebeleuser/:id"
                   element={<UpdatekebeleadminUser />}
                 />
                 <Route path="/kebelebusinesses" element={<KebeleBusiness />} />
-
+                <Route path="/resources/sent" element={<SentResource />} />
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/line" element={<Line />} />
 
@@ -91,38 +104,34 @@ function App() {
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}
                 />
-                <Route path="/registration" element={<Registration />} />
+              
                 <Route
                   path="/createkebelebusinessuser"
                   element={<CreatekebelebusinessUser />}
                 />
-<<<<<<< HEAD
-                <Route path="/createresource" element={<CreateResource />} />
-=======
->>>>>>> parent of 9a3375e (latest with transfer resource)
+                <Route path = "/createresource" element = {<CreateResource/>}/>
+
 
                 <Route
                   path="/createregionalaccount"
                   element={<CreateregionalUser />}
                 />
 
+
                 <Route
                   path="/createworedaaccount"
                   element={<CreateworedaUser />}
                 />
+
                 <Route
                   path="/createzonalaccount"
                   element={<CreatezoneUser />}
                 />
+
                 <Route path="/resources" element={<MyResources />} />
-<<<<<<< HEAD
-                <Route
-                  path="/resources/transfer"
-                  element={<TransferResource />}
-                />
-                <Route path="/resources/sent" element={<SentResources />} />
-=======
->>>>>>> parent of 9a3375e (latest with transfer resource)
+                <Route path="/resources/transfer" element={<TransferResource/>} />
+                <Route path="/resources/sent" element={<SentResources/>} />
+                <Route path ="/resources/recieved" element = {<RecievedResources/>}/>
                 <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>
             </Routes>

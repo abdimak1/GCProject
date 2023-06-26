@@ -82,7 +82,7 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="CREATE ACCOUNT" subtitle="Create a New kebele Account Profile" />
+      <Header title="Create Kebele Account" subtitle="Create a New kebele Account Profile" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -229,7 +229,6 @@ const CreatekebeleUser = () => {
               />
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
-             
              <Button color="secondary" variant="contained"
                onClick={() => {
                  navigate("/kebeleUsers");

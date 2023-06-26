@@ -1,6 +1,6 @@
 import { Box, Typography, useTheme } from "@mui/material";
 import { Link } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar} from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
@@ -21,7 +21,7 @@ const KebeleUsers = () => {
   const handleC = () => {
     setOpen(!open);
   };
-  
+
   useEffect(() => {
     get_all_kebeleadmin().then((res) => {
       if (res.success && res.data) {
@@ -81,8 +81,8 @@ const KebeleUsers = () => {
       disableColumnFilter: true,
     },
     {
-      field: "Region_name",
-      headerName: "Region",
+      field: "kebele_name",
+      headerName: "Kebele",
       // flex: 0.5,
       cellClassName: "name-column--cell",
     },
@@ -139,11 +139,8 @@ const KebeleUsers = () => {
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
-              
             >
-              <Button   variant="text">
-               Deactivate
-              </Button>
+              <Button variant="text">Deactivate</Button>
             </Box>
           </Box>
         );
@@ -171,7 +168,7 @@ const KebeleUsers = () => {
       </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="60vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -196,18 +193,30 @@ const KebeleUsers = () => {
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
           },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
+          },
         }}
       >
-        {!mockdata && <CircularProgress
-          sx={{
-            position: "absolute",
-            top: "70%",
-            left: "60%",
-            marginTop: `${-40}px`,
-            marginLeft: `${-40}px`,
-          }} color="success" />}
+        {!mockdata && (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "70%",
+              left: "60%",
+              marginTop: `${-40}px`,
+              marginLeft: `${-40}px`,
+            }}
+            color="success"
+          />
+        )}
         {mockdata && (
-          <DataGrid checkboxSelection rows={mockdata} columns={columns} />
+          <DataGrid
+            components={{ Toolbar: GridToolbar }}
+            checkboxSelection
+            rows={mockdata}
+            columns={columns}
+          />
         )}{" "}
       </Box>
     </Box>

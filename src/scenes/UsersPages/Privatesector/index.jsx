@@ -1,16 +1,17 @@
 import { Box, useTheme } from "@mui/material";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
+import { get_all_privatesector } from "../../../config/apicalls/privatesectorApicallls";
 import { useEffect, useState } from "react";
 import { Button } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import { useNavigate } from "react-router-dom";
 import AlertDialogSlide from "../../global/dialogue";
-import { get_all_kebelebusiness } from "../../../config/apicalls/kebelebusinessApiCalls";
-const KebeleBusiness = () => {
+
+const PrivateSector = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
@@ -20,8 +21,9 @@ const KebeleBusiness = () => {
   const handleC = () => {
     setOpen(!open);
   };
+
   useEffect(() => {
-    get_all_kebelebusiness().then((res) => {
+    get_all_privatesector().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setMockdata(res.data);
@@ -31,16 +33,16 @@ const KebeleBusiness = () => {
     });
   }, []);
 
-  const editHandler = (u_id) => {
-    navigate(`/updatekebelebusinessuser/${u_id}`);
-  };
+  // const editHandler = (u_id) => {
+  //   navigate(`/updateuser/${u_id}`);
+  // };
 
   const columns = [
-    { field: "id", headerName: "ID" },
+    { field: "id", headerName: "ID",   flex: 0.5,},
     {
       field: "fname",
       headerName: "First Name",
-      // flex: 0.5,
+      flex: 0.8,
       cellClassName: "name-column--cell",
       valueGetter: (params) => params.row?.user?.userprofile?.fname,
       disableColumnFilter: true,
@@ -78,7 +80,12 @@ const KebeleBusiness = () => {
       valueGetter: (params) => params.row?.user?.userprofile?.phone,
       disableColumnFilter: true,
     },
-
+    {
+      field: "Region_name",
+      headerName: "Region",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+    },
     {
       field: "email",
       headerName: "Email",
@@ -103,7 +110,7 @@ const KebeleBusiness = () => {
               borderRadius="4px"
             >
               <Button
-                onClick={() => editHandler(params.row.id)}
+                // onClick={() => editHandler(params.row.id)}
                 variant="text"
                 size="small"
               >
@@ -140,18 +147,15 @@ const KebeleBusiness = () => {
       },
     },
   ];
+
   return (
     <Box m="20px">
-          <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
-
-      <Header
-        title="Kebele Business users"
-        subtitle="List of kebele business users"
-      />
-      <Box display="flex" justifyContent="end" mt="20px">
+      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
+      <Header title="Regional users" subtitle="List of regional users" />
+      <Box display="flex" justifyContent="end" mt="0px">
         <Button
           onClick={() => {
-            navigate("/createkebelebusinessuser");
+            navigate("/farmerRegistration");
           }}
           sx={{
             backgroundColor: colors.blueAccent[700],
@@ -161,12 +165,13 @@ const KebeleBusiness = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Add Business User
+          Register Farmer
         </Button>
       </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="60vh"
+        width="100%"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -210,10 +215,11 @@ const KebeleBusiness = () => {
         )}
         {mockdata && (
           <DataGrid
+            // getRowId={(row) => row.id}
+            columns={columns}
             components={{ Toolbar: GridToolbar }}
             checkboxSelection
             rows={mockdata}
-            columns={columns}
           />
         )}{" "}
       </Box>
@@ -221,4 +227,5 @@ const KebeleBusiness = () => {
   );
 };
 
-export default KebeleBusiness;
+export default  PrivateSector ;
+    

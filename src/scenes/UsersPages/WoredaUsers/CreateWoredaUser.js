@@ -57,9 +57,10 @@ const CreatekebeleUser = () => {
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    region: yup.string().required("required"),
+    woreda: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
+    phone: yup.string().required("required"),
     passWord: yup
       .string()
       .required("Password is required")
@@ -74,6 +75,7 @@ const CreatekebeleUser = () => {
     woreda: "",
     sex: "",
     passWord: "",
+    phone: "",
   };
   return (
     <Box m="20px">
@@ -83,7 +85,7 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="CREATE ACCOUNT" subtitle="Create a New Account Profile" />
+      <Header title="Create Woreda Account" subtitle="Create a New Account Profile" />
 
       <Formik
         onSubmit={handleFormSubmit}

@@ -2,7 +2,7 @@ import axiosInstance from "../api/apihelper";
 let api = axiosInstance;
 export const get_all_woredas = async () => {
   try {
-    const response = await api.get("/woredas");
+    const response = await api.get("/woredas/");
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {
@@ -14,30 +14,23 @@ export const get_all_woredas = async () => {
   }
 };
 
-export const create_woreda = async (val, phonen) => {
-  console.log(val, phonen);
-  // try {
-  //   const response = await api.post("/region/create",{
-  //     "fname":val.firstName,
-  //     "Mname":val.middleName,
-  //     "lname":val.lastName,
-  //     "phone":phonen,
-  //     "sex":val.sex,
-  //     "profile":"pic",
-  //     "region_name":val.region,
-  //     "username":val.useName,
-  //     "email":val.email,
-  //     "password":`ufuyfuf8998@123`,
-  //     "created_by":"1"
-  //   });
+export const create_woreda = async (val) => {
+  console.log(val);
   try {
-    const response = await api.post("/region/create", {
-      region_name: "kmkmkmkmk",
-      username: "abdu",
-      email: "asljdbfa@gmail.com",
-      password: "mmsdjbaiubab@123djf",
-      created_by: "1",
+    const response = await api.get("/woreda/create", {
+      fname: val.firstName,
+      Mname: val.middleName,
+      lname: val.lastName,
+      phone: val.phone,
+      sex: val.sex,
+      profile: "453453453ertr",
+      woreda_name: val.woreda,
+      username: val.userName,
+      email: val.email,
+      password: val.passWord,
     });
+  
+   
     return { success: true, data: response.data };
   } catch (err) {
     if (err.response) {

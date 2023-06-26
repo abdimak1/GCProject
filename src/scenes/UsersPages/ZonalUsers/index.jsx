@@ -39,7 +39,7 @@ const Zonalusers = () => {
   };
 
   const columns = [
-    { field: "id", headerName: "ID",  flex: 0.5, },
+    { field: "id", headerName: "ID", flex: 0.5 },
     {
       field: "fname",
       headerName: "First Name",
@@ -131,21 +131,20 @@ const Zonalusers = () => {
               <Button onClick={handleC} variant="text">
                 <Delete></Delete>
               </Button>
-              </Box>
-              <Box
-                width="60%"
-                m="0 15px 0 0 "
-                pl={"10px"}
-                display="flex"
-                justifyContent="center"
-                backgroundColor={colors.greenAccent[600]}
-                borderRadius="4px"
-              >
-                <Button onClick={handleC} variant="text">
-                  Deactivate
-                </Button>
-              </Box>
-            
+            </Box>
+            <Box
+              width="60%"
+              m="0 15px 0 0 "
+              pl={"10px"}
+              display="flex"
+              justifyContent="center"
+              backgroundColor={colors.greenAccent[600]}
+              borderRadius="4px"
+            >
+              <Button onClick={handleC} variant="text">
+                Deactivate
+              </Button>
+            </Box>
           </Box>
         );
       },
@@ -205,7 +204,18 @@ const Zonalusers = () => {
           },
         }}
       >
-        {!mockdata && <CircularProgress color="success" />}
+        {!mockdata && (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "70%",
+              left: "60%",
+              marginTop: `${-40}px`,
+              marginLeft: `${-40}px`,
+            }}
+            color="success"
+          />
+        )}
         {mockdata && (
           <DataGrid
             getRowId={(row) => row.id}

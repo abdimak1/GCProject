@@ -39,6 +39,7 @@ export default function AlertDialogSlide(props) {
             sx={{
               color: colors.grey[100],
             }}
+            onClick={props.onClose}
           >
             Disagree
           </Button>
@@ -46,12 +47,13 @@ export default function AlertDialogSlide(props) {
             sx={{
               color: colors.grey[100],
             }}
-            onClick={props.onClose}
+            onClick={props.cancel}
           >
             Agree
           </Button>
         </DialogActions>
       </Dialog>
+      
     </div>
   );
 }

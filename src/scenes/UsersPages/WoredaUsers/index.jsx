@@ -1,5 +1,5 @@
 import { Box, Typography, useTheme } from "@mui/material";
-import { DataGrid } from "@mui/x-data-grid";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../../theme";
 import Header from "../../../components/Header";
 import { CircularProgress } from "@mui/material";
@@ -9,12 +9,19 @@ import { Button } from "@mui/material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import { Delete } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
+import AlertDialogSlide from "../../global/dialogue";
+
 import { get_all_woredas } from "../../../config/apicalls/woredaApiCalls";
 const WoredaUsers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+
+  const handleC = () => {
+    setOpen(!open);
+  };
 
   useEffect(() => {
     get_all_woredas().then((res) => {
@@ -26,8 +33,6 @@ const WoredaUsers = () => {
       }
     });
   }, []);
-
-
 
   const columns = [
     { field: "id", headerName: "ID" },
@@ -75,14 +80,14 @@ const WoredaUsers = () => {
 
             <Box
               width="60%"
-              m="0 auto"
+              m="0 15px 0 0 "
               pl={"10px"}
               display="flex"
               justifyContent="center"
-              backgroundColor={colors.greenAccent[600]}
+              backgroundColor={colors.redAccent[500]}
               borderRadius="4px"
             >
-              <Button variant="text">
+              <Button onClick={handleC} variant="text">
                 <Delete></Delete>
               </Button>
             </Box>
@@ -95,6 +100,7 @@ const WoredaUsers = () => {
   return (
     <Box m="20px">
       <Header title="Woreda users" subtitle="List of Woreda users" />
+      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
           onClick={() => {
@@ -140,9 +146,25 @@ const WoredaUsers = () => {
           },
         }}
       >
-        {!mockdata && <CircularProgress color="success" />}
+        {!mockdata && (
+          <CircularProgress
+            sx={{
+              position: "absolute",
+              top: "70%",
+              left: "60%",
+              marginTop: `${-40}px`,
+              marginLeft: `${-40}px`,
+            }}
+            color="success"
+          />
+        )}
         {mockdata && (
-          <DataGrid checkboxSelection rows={mockdata} columns={columns} />
+          <DataGrid
+            components={{ Toolbar: GridToolbar }}
+            checkboxSelection
+            rows={mockdata}
+            columns={columns}
+          />
         )}{" "}
       </Box>
     </Box>

@@ -1,45 +1,28 @@
+import { Grid } from "@mui/material";
+import Header from "../../../components/Header";
+import AppRegistrationIcon from "@mui/icons-material/AppRegistration";
 import { Box, Button, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
-import Header from "../../../components/Header";
-import { useState, useEffect } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import InputLabel from "@mui/material/InputLabel";
+import { useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
+import { useNavigate } from "react-router-dom";
+import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import {
-  get_kebeleadmin,
-  update_kebeleadmin,
-} from "../../../config/apicalls/kebeleApiCalls";
+import InputAdornment from "@mui/material/InputAdornment";
 
-const UpdatekebeleadminUser = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [prevdata, setprevdata] = useState();
+const FarmerRegistration = () => {
   const navigate = useNavigate();
-  const [initialValues, setInitialValues] = useState({
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    userName: "",
-    email: "",
-    kebele: "",
-    sex: "",
-    passWord: "",
-    phone: "",
-  });
+
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
     open: false,
   });
-  const param = useParams();
-  const userid = param.id;
-  console.log(userid);
 
   const handleClose = () => {
     setsnak({
@@ -49,72 +32,48 @@ const UpdatekebeleadminUser = () => {
     });
   };
 
-  useEffect(() => {
-    get_kebeleadmin(userid).then((res) => {
-      if (res.success && res.data) {
-        console.log(res.data);
-        setprevdata(res.data);
-        setInitialValues({
-          firstName: res.data.user.userprofile.fname,
-          lastName: res.data.user.userprofile.lname,
-          middleName: res.data.user.userprofile.Mname,
-          userName: res.data.user.username,
-          email: res.data.user.email,
-          kebele: res.data.kebele_name,
-          sex: res.data.user.userprofile.sex,
-          passWord: "qwqwqw",
-          phone: res.data.user.userprofile.phone,
-        });
-      } else {
-        console.log(res.error);
-      }
-    });
-  }, []);
-
-  const handleFormSubmit = (values) => {
-    console.log("function called");
-    prevdata["user"]["email"] = values.email;
-    prevdata["kebele_name"] = values.kebele;
-    prevdata["user"]["username"] = values.userName;
-    prevdata["user"]["userprofile"]["fname"] = values.firstName;
-    prevdata["user"]["userprofile"]["lname"] = values.lastName;
-    prevdata["user"]["userprofile"]["Mname"] = values.middleName;
-    prevdata["user"]["userprofile"]["sex"] = values.sex;
-    prevdata["user"]["userprofile"]["phone"] = values.phone;
-    update_kebeleadmin(userid, prevdata).then((res) => {
-      if (res.success && res.data) {
-        setsnak({
-          severity: "success",
-          message: "successfully created!",
-          open: true,
-        });
-        console.log(res.data);
-      } else {
-        setsnak({
-          severity: "error",
-          message: " not successfully created!",
-          open: true,
-        });
-        console.log(res.error);
-      }
-    });
-  };
+  //   const handleFormSubmit = (values) => {
+  //     console.log("function called");
+  //     create_kebele_business(values).then((res) => {
+  //       if (res.success && res.data) {
+  //         setsnak({
+  //           severity: "success",
+  //           message: "successfully created!",
+  //           open: true,
+  //         });
+  //         console.log(res.data);
+  //       } else {
+  //         setsnak({
+  //           severity: "error",
+  //           message: " not successfully created!",
+  //           open: true,
+  //         });
+  //         console.log(res.error);
+  //       }
+  //     });
+  //   };
 
   const checkoutSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    kebele: yup.string().required("required"),
+    resource_type: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
-    phone: yup.string().required("required"),
-    //   passWord: yup
-    //     .string()
-    //     .required("Password is required")
-    //     .min(6, "Password must be at least 6 characters"),
+    amount: yup.string().required("required"),
   });
-
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    userName: "",
+    amount: "",
+    resource_type: "",
+    sex: "",
+    passWord: "",
+    phone: "",
+  };
   return (
     <Box m="20px">
       <SimpleSnackbar
@@ -123,12 +82,12 @@ const UpdatekebeleadminUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-
-      <Header title="CREATE ACCOUNT" subtitle="Create A New kebele Account" />
-
+      <Grid align="left">
+        {/* <AppRegistrationIcon /> */}
+        <Header title="Registration" subtitle="Farmer registration" />
+      </Grid>
       <Formik
-        enableReinitialize={true}
-        onSubmit={handleFormSubmit}
+        // onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
       >
@@ -146,7 +105,7 @@ const UpdatekebeleadminUser = () => {
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
+                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
               <TextField
@@ -214,32 +173,7 @@ const UpdatekebeleadminUser = () => {
                 helperText={touched.passWord && errors.passWord}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="select kebele"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.kebele}
-                name="kebele"
-                error={!!touched.kebele && !!errors.kebele}
-                helperText={touched.kebele && errors.kebele}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-              />
+
               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
                 <InputLabel id="demo-simple-select-label">Sex</InputLabel>
                 <Select
@@ -258,6 +192,36 @@ const UpdatekebeleadminUser = () => {
                   <MenuItem value={"FSex"}>Female</MenuItem>
                 </Select>
               </FormControl>
+
+              {/* <TextField
+                label="amount"
+                id="filled-start-adornment"
+                name="amount"
+                value={values.amount}
+                error = {!!touched.amount && !!errors.amount}
+                sx={{ gridColumn: "span 2" }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">kg</InputAdornment>
+                  ),
+                }}
+                variant="filled"
+              /> */}
+              <TextField
+                label="Land Size"
+                id="filled-start-adornment"
+                name="land_size"
+                value={values.land_size}
+                error={!!touched.land_size && !!errors.land_size}
+                sx={{ gridColumn: "span 2" }}
+                InputProps={{
+                  startAdornment: (
+                    <InputAdornment position="start">Hectar</InputAdornment>
+                  ),
+                }}
+                variant="filled"
+              />
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -271,29 +235,19 @@ const UpdatekebeleadminUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  startIcon={<DriveFolderUploadIcon />}
-                  component="label"
-                >
-                  Upload File
-                  <input type="file" hidden />
-                </Button>
-              </Stack>
             </Box>
-            <Box gap = "20px" display="flex" justifyContent="start" mt="30px">
+            <Box gap="20px" display="flex" justifyContent="left" mt="30px">
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/kebeleUsers");
+                  navigate("/farmer");
                 }}
               >
                 Back
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Create New User
+                register
               </Button>
             </Box>
           </Form>
@@ -302,5 +256,4 @@ const UpdatekebeleadminUser = () => {
     </Box>
   );
 };
-
-export default UpdatekebeleadminUser;
+export default FarmerRegistration;

@@ -90,7 +90,7 @@ const CreateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="CREATE ACCOUNT" subtitle="Create A New Regional Account" />
+      <Header title="Create Regional Account" subtitle="Create A New Regional Account" />
 
       <Formik
         onSubmit={handleFormSubmit}

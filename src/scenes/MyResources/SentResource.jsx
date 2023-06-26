@@ -1,26 +1,25 @@
-import { Box, Button, CircularProgress, useTheme } from "@mui/material";
-import { DataGrid,GridToolbar } from "@mui/x-data-grid";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Typography,
+  useTheme,
+} from "@mui/material";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
-import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
 import { useEffect, useState } from "react";
-import { Delete } from "@mui/icons-material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import { cancel_resource, get_sent_resources } from "../../config/apicalls/resourceApiCall";
 import AlertDialogSlide from "../global/dialogue";
-import { get_resources } from "../../config/apicalls/resourceApiCall";
 
-const MyResources = () => {
+const SentResources = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resources, setresources] = useState();
-  const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
-  const handleC = () => {
-    setOpen(!open);
-  };
+  const [selectedId, setSelectedId] = useState("");
   useEffect(() => {
-    get_resources().then((res) => {
+    get_sent_resources().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setresources(res.data);
@@ -29,77 +28,90 @@ const MyResources = () => {
       }
     });
   }, []);
-  // const delhandlerv =(x)=>{
-  //   console.log("deleted",x)
-  //   // api call as an argument id=x
-  //   setresources(res.data)
-  // }
+
+  const handleC = (id) => {
+    setSelectedId(id);
+    setOpen(!open);
+  };
+
+  const cancelHandler = (selectedId) => {
+    cancel_resource(selectedId).then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setresources(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+    setOpen(false);
+  };
 
   const columns = [
     //   { field: "id", headerName: "ID" },
     {
       field: "name",
       headerName: "Name",
-      flex: 0.2,
+      flex: 1,
       cellClassName: "name-column--cell",
     },
+
     {
       field: "type",
       headerName: "Type",
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 1,
     },
     {
       field: "created_at",
       headerName: "Created_at",
       type: "number",
       headerAlign: "left",
-      flex: 0.4,
       align: "left",
+      flex: 2,
+      // valueGetter: (params) => params.row?.user?.email,
+      // disableColumnFilter: true,
     },
     {
       field: "amount",
       headerName: "Amount",
       type: "number",
       headerAlign: "left",
-      flex: 0.2,
       align: "left",
+      flex: 1,
+      // valueGetter: (params) => params.row?.user?.email,
+      // disableColumnFilter: true,
     },
     {
       field: "price_perKilo",
-      flex: 0.2,
       headerName: "Price",
       type: "number",
       headerAlign: "left",
       align: "left",
+      flex: 1.5,
+      // valueGetter: (params) => params.row?.user?.email,
+      // disableColumnFilter: true,
     },
 
     {
       field: "id",
-      
       headerName: "Manage",
-      flex: 0.5,
+      flex: 2,
       renderCell: ({ row: { id } }) => {
         return (
-          <Box display="flex" gap="10px">
-            <Box backgroundColor={colors.greenAccent[600]} borderRadius="4px">
-              <Button variant="text">Update</Button>
-            </Box>
-            <Box
-              width="60%"
-              m="0 15px 0 0 "
-              pl={"10px"}
-              display="flex"
-              justifyContent="center"
-              backgroundColor={colors.redAccent[500]}
-              borderRadius="4px"
-              onClick={handleC}
-            >
-              <Button variant="text">
-                <Delete></Delete>
-              </Button>
-            </Box>
+          <Box
+            width="60%"
+            m="0 15px 0 0 "
+            pl={"10px"}
+            display="flex"
+            justifyContent="center"
+            backgroundColor={colors.redAccent[500]}
+            borderRadius="4px"
+            onClick={()=>{handleC(id)}}
+            fontWeight= "bold"
+          >
+            <Button variant="text">Cancel</Button>
           </Box>
         );
       },
@@ -108,42 +120,11 @@ const MyResources = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
-      <Header title="All Resource" subtitle="My Resources in Stock" />
-      <Box gap="20px" display="flex" justifyContent="end" mt="0px">
-        <Button
-          onClick={() => {
-            navigate("/createresource");
-          }}
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Create Resource
-        </Button>
-        <Button
-          onClick={() => {
-            navigate("/resources/transfer");
-          }}
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Transfer Resource
-        </Button>
-      </Box>
+      <AlertDialogSlide open={open} cancel={()=>cancelHandler(selectedId)} onClose={handleC}></AlertDialogSlide>
+      <Header title="Sent Resource" subtitle="Resources You Sent" />
       <Box
         m="40px 0 0 0"
-        height="60vh"
-        width="100%"
+        height="75vh"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -198,4 +179,4 @@ const MyResources = () => {
   );
 };
 
-export default MyResources;
+export default SentResources;
