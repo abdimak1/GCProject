@@ -120,7 +120,7 @@ const SentResources = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} cancel={()=>cancelHandler(selectedId)} onClose={handleC}></AlertDialogSlide>
+      <AlertDialogSlide open={open} action={()=>cancelHandler(selectedId)} title="Are you sure you want to delete this resource" onClose={handleC}></AlertDialogSlide>
       <Header title="Sent Resource" subtitle="Resources You Sent" />
       <Box
         m="40px 0 0 0"

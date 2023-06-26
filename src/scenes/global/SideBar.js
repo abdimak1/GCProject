@@ -8,13 +8,11 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import PersonIcon from "@mui/icons-material/Person";
 import BarChartOutlinedIcon from "@mui/icons-material/BarChartOutlined";
-import PieChartOutlineOutlinedIcon from "@mui/icons-material/PieChartOutlineOutlined";
 import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined";
 import { tokens } from "../../theme";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import AuthContext from "../../config/context/authContext";
 import AssessmentIcon from "@mui/icons-material/Assessment";
-import HowToRegIcon from "@mui/icons-material/HowToReg";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 const Item = ({ title, to, icon, selected, setSelected }) => {
@@ -186,22 +184,7 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
-              <Typography
-                variant="h6"
-                color="#a3a3a3"
-                sx={{ m: "15px 0 5px 20px" }}
-              >
-                Task
-              </Typography>
-              {authctx.role === "kebelebusiness" && (
-                <Item
-                  title="Distribution "
-                  to="/distribute"
-                  icon={<AttachMoneyIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
-              )}
+
               {authctx.role === "zone" && (
                 <Item
                   title="Woreda users"
@@ -248,6 +231,43 @@ const SideBar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
+              {authctx.role === "federal" && (
+                <Typography
+                  variant="h6"
+                  color="#a3a3a3"
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Task
+                </Typography>
+              )}
+              {authctx.role === "federal" && (
+                <Item
+                  title="Post "
+                  to="/post"
+                  icon={<AssessmentIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+
+              {authctx.role === "kebelebusiness" && (
+                <Typography
+                  variant="h6"
+                  color="#a3a3a3"
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Task
+                </Typography>
+              )}
+              {authctx.role === "kebelebusiness" && (
+                <Item
+                  title="Distribution "
+                  to="/distribute"
+                  icon={<AttachMoneyIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
               <Typography
                 variant="h6"
                 color="#a3a3a3"
@@ -269,13 +289,16 @@ const SideBar = () => {
                 selected={selected}
                 setSelected={setSelected}
               />
-              <Item
-                title="Recieved Resource"
-                to="/resources/recieved"
-                icon={<PersonIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+              {authctx.role !== "federal" && (
+                <Item
+                  title="Recieved Resource"
+                  to="/resources/recieved"
+                  icon={<PersonIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+
               <Typography
                 variant="h6"
                 color="#a3a3a3"

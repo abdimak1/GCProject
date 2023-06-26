@@ -1,12 +1,27 @@
 import { ResponsiveLine } from "@nivo/line";
 import { useTheme } from "@mui/material";
 import { tokens } from "../theme";
-import { mockLineData as data } from "../Data/mockData";
+import { mockLineData } from "../Data/mockData";
+import { useEffect,useState } from "react";
+
+import { get_lineData } from "../config/apicalls/dashboardcalls";
+
 
 const LineChart = ({ isCustomLineColors = false, isDashboard = false }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const [data,setData]=useState(mockLineData)
 
+  useEffect(() => {
+    get_lineData().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setData(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+  }, []);
   return (
     <ResponsiveLine
       data={data}

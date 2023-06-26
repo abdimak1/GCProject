@@ -12,25 +12,20 @@ import SimpleSnackbar from "../../global/snackbar";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import {
-  get_region,
-  update_region,
-} from "../../../config/apicalls/regionApiCall";
+import { get_privatesector,update_privatesector} from "../../../config/apicalls/privatesectorApicallls";
+
 import { useNavigate } from "react-router-dom";
-const UpdateregionalUser = () => {
+const UpdatePrivatesector = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [prevdata, setprevdata] = useState();
   const navigate = useNavigate();
   const [initialValues, setInitialValues] = useState({
-    firstName: "",
-    lastName: "",
-    middleName: "",
     userName: "",
-    email: "",
-    region: "",
-    sex: "",
+    organization_name: "",
     passWord: "",
+    tin_number: "",
     phone: "",
+    email: "",
   });
   const [snak, setsnak] = useState({
     severity: "",
@@ -50,20 +45,17 @@ const UpdateregionalUser = () => {
   };
 
   useEffect(() => {
-    get_region(userid).then((res) => {
+    get_privatesector(userid).then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setprevdata(res.data);
         setInitialValues({
-          firstName: res.data.user.userprofile.fname,
-          lastName: res.data.user.userprofile.lname,
-          middleName: res.data.user.userprofile.Mname,
           userName: res.data.user.username,
-          email: res.data.user.email,
-          region: res.data.Region_name,
-          sex: res.data.user.userprofile.sex,
+          organization_name: res.data.organization_name,
           passWord: "qwqwqw",
+          tin_number: res.data.user.username,
           phone: res.data.user.userprofile.phone,
+          email: res.data.user.email,
         });
       } else {
         console.log(res.error);
@@ -74,14 +66,11 @@ const UpdateregionalUser = () => {
   const handleFormSubmit = (values) => {
     console.log("function called");
     prevdata["user"]["email"] = values.email;
-    prevdata["Region_name"] = values.region;
     prevdata["user"]["username"] = values.userName;
-    prevdata["user"]["userprofile"]["fname"] = values.firstName;
-    prevdata["user"]["userprofile"]["lname"] = values.lastName;
-    prevdata["user"]["userprofile"]["Mname"] = values.middleName;
-    prevdata["user"]["userprofile"]["sex"] = values.sex;
+    prevdata["organization_name"] = values.organization_name;
+    prevdata["tin_number"] = values.tin_number;
     prevdata["user"]["userprofile"]["phone"] = values.phone;
-    update_region(userid, prevdata).then((res) => {
+    update_privatesector(userid, prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -101,15 +90,12 @@ const UpdateregionalUser = () => {
   };
 
   const checkoutSchema = yup.object().shape({
-    firstName: yup.string().required("required"),
-    lastName: yup.string().required("required"),
-    middleName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    region: yup.string().required("required"),
     userName: yup.string().required("required"),
-    sex: yup.string().required("required"),
+    organization_name: yup.string().required("required"),
+    passWord: yup.string().required("required"),
+    tin_number: yup.string().required("required"),
     phone: yup.string().required("required"),
-
+    email: yup.string().required("required"),
   });
 
   return (
@@ -121,7 +107,7 @@ const UpdateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="Update User account " subtitle="Update Regional Account" />
+      <Header title="Update user Account" subtitle="Update private sector user Account" />
 
       <Formik
         enableReinitialize={true}
@@ -150,45 +136,6 @@ const UpdateregionalUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="First Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.firstName}
-                name="firstName"
-                error={!!touched.firstName && !!errors.firstName}
-                helperText={touched.firstName && errors.firstName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Middle Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.middleName}
-                name="middleName"
-                error={!!touched.middleName && !!errors.middleName}
-                helperText={touched.middleName && errors.middleName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Last Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.lastName}
-                name="lastName"
-                error={!!touched.lastName && !!errors.lastName}
-                helperText={touched.lastName && errors.lastName}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
                 label="User Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
@@ -211,17 +158,18 @@ const UpdateregionalUser = () => {
                 helperText={touched.passWord && errors.passWord}
                 sx={{ gridColumn: "span 2" }}
               />
+
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="select Region"
+                label="Phone Number"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
+                value={values.phone}
+                name="phone"
+                error={!!touched.phone && !!errors.phone}
+                helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -237,45 +185,43 @@ const UpdateregionalUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
               />
-              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
-                <Select
-                  fullWidth
-                  labelId="demo-simple-select-label"
-                  variant="filled"
-                  type="text"
-                  onBlur={handleBlur}
-                  value={values.sex}
-                  label="Sex"
-                  name="sex"
-                  onChange={handleChange}
-                  error={!!touched.sex && !!errors.sex}
-                >
-                  <MenuItem value={"MSex"}>Male</MenuItem>
-                  <MenuItem value={"FSex"}>Female</MenuItem>
-                </Select>
-              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Phone Number"
+                label=" organization Name"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.phone}
-                name="phone"
-                error={!!touched.phone && !!errors.phone}
-                helperText={touched.phone && errors.phone}
+                value={values.organization_name}
+                name="organization_name"
+                error={
+                  !!touched.organization_name && !!errors.organization_name
+                }
+                helperText={
+                  touched.organization_name && errors.organization_name
+                }
                 sx={{ gridColumn: "span 2" }}
               />
-              
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Tin Number"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.tin_number}
+                name="tin_number"
+                error={!!touched.tin_number && !!errors.tin_number}
+                helperText={touched.tin_number && errors.tin_number}
+                sx={{ gridColumn: "span 2" }}
+              />
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/regional");
+                  navigate("/privatesector");
                 }}
               >
                 Back
@@ -291,4 +237,4 @@ const UpdateregionalUser = () => {
   );
 };
 
-export default UpdateregionalUser;
+export default UpdatePrivatesector;

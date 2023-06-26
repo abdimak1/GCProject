@@ -78,7 +78,7 @@ const KebeleBusiness = () => {
       valueGetter: (params) => params.row?.user?.userprofile?.phone,
       disableColumnFilter: true,
     },
-
+    
     {
       field: "email",
       headerName: "Email",
@@ -88,7 +88,7 @@ const KebeleBusiness = () => {
     },
     {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Manage User",
       flex: 3,
       renderCell: (params) => {
         return (
@@ -166,7 +166,9 @@ const KebeleBusiness = () => {
       </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="60vh"
+        width="100%"
+
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",

@@ -12,8 +12,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function AlertDialogSlide(props) {
+  
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
+  const {title} = props;
+  const actionHandler =()=>{
+    props.action()
+  }
 
   return (
     <div>
@@ -32,7 +37,7 @@ export default function AlertDialogSlide(props) {
         onClose={props.onClose}
         aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle>{"Are you sure! you want to delete this user account?"}</DialogTitle>
+        <DialogTitle>{title}</DialogTitle>
 
         <DialogActions>
           <Button
@@ -47,7 +52,7 @@ export default function AlertDialogSlide(props) {
             sx={{
               color: colors.grey[100],
             }}
-            onClick={props.cancel}
+            onClick={actionHandler}
           >
             Agree
           </Button>

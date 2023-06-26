@@ -12,12 +12,9 @@ import SimpleSnackbar from "../../global/snackbar";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import {
-  get_region,
-  update_region,
-} from "../../../config/apicalls/regionApiCall";
+import { get_woreda, update_woreda } from "../../../config/apicalls/woredaApiCalls";
 import { useNavigate } from "react-router-dom";
-const UpdateregionalUser = () => {
+const UpdateworedaUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [prevdata, setprevdata] = useState();
   const navigate = useNavigate();
@@ -27,7 +24,7 @@ const UpdateregionalUser = () => {
     middleName: "",
     userName: "",
     email: "",
-    region: "",
+    woreda: "",
     sex: "",
     passWord: "",
     phone: "",
@@ -50,7 +47,7 @@ const UpdateregionalUser = () => {
   };
 
   useEffect(() => {
-    get_region(userid).then((res) => {
+    get_woreda(userid).then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setprevdata(res.data);
@@ -60,7 +57,7 @@ const UpdateregionalUser = () => {
           middleName: res.data.user.userprofile.Mname,
           userName: res.data.user.username,
           email: res.data.user.email,
-          region: res.data.Region_name,
+          woreda: res.data.woreda_name,
           sex: res.data.user.userprofile.sex,
           passWord: "qwqwqw",
           phone: res.data.user.userprofile.phone,
@@ -74,14 +71,14 @@ const UpdateregionalUser = () => {
   const handleFormSubmit = (values) => {
     console.log("function called");
     prevdata["user"]["email"] = values.email;
-    prevdata["Region_name"] = values.region;
+    prevdata["woreda_name"] = values.woreda;
     prevdata["user"]["username"] = values.userName;
     prevdata["user"]["userprofile"]["fname"] = values.firstName;
     prevdata["user"]["userprofile"]["lname"] = values.lastName;
     prevdata["user"]["userprofile"]["Mname"] = values.middleName;
     prevdata["user"]["userprofile"]["sex"] = values.sex;
     prevdata["user"]["userprofile"]["phone"] = values.phone;
-    update_region(userid, prevdata).then((res) => {
+    update_woreda(userid, prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -105,11 +102,14 @@ const UpdateregionalUser = () => {
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    region: yup.string().required("required"),
+    woreda: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
     phone: yup.string().required("required"),
-
+    //   passWord: yup
+    //     .string()
+    //     .required("Password is required")
+    //     .min(6, "Password must be at least 6 characters"),
   });
 
   return (
@@ -121,7 +121,7 @@ const UpdateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="Update User account " subtitle="Update Regional Account" />
+      <Header title="Update User Account" subtitle="Update Woreda Account" />
 
       <Formik
         enableReinitialize={true}
@@ -215,13 +215,13 @@ const UpdateregionalUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="select Region"
+                label="woreda"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
+                value={values.woreda}
+                name="woreda"
+                error={!!touched.woreda && !!errors.woreda}
+                helperText={touched.woreda && errors.woreda}
                 sx={{ gridColumn: "span 2" }}
               />
               <TextField
@@ -268,14 +268,24 @@ const UpdateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
-              
+              <InputLabel>Profile Pic</InputLabel>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  startIcon={<DriveFolderUploadIcon />}
+                  component="label"
+                >
+                  Upload File
+                  <input type="file" hidden />
+                </Button>
+              </Stack>
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/regional");
+                  navigate("/woreda");
                 }}
               >
                 Back
@@ -291,4 +301,4 @@ const UpdateregionalUser = () => {
   );
 };
 
-export default UpdateregionalUser;
+export default UpdateworedaUser;

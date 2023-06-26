@@ -10,8 +10,8 @@ import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import AlertDialogSlide from "../../global/dialogue";
-
-const Da = () => {
+import { get_all_da } from "../../../config/apicalls/Daapicalls";
+const DaUsers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
@@ -23,7 +23,7 @@ const Da = () => {
   };
 
   useEffect(() => {
-    get_all_farmers().then((res) => {
+    get_all_da().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setMockdata(res.data);
@@ -33,9 +33,9 @@ const Da = () => {
     });
   }, []);
 
-  // const editHandler = (u_id) => {
-  //   navigate(`/updateuser/${u_id}`);
-  // };
+  const editHandler = (u_id) => {
+    navigate(`/updateda/${u_id}`);
+  };
 
   const columns = [
     { field: "id", headerName: "ID",   flex: 0.5,},
@@ -81,10 +81,12 @@ const Da = () => {
       disableColumnFilter: true,
     },
     {
-      field: "Region_name",
-      headerName: "Region",
+      field: "specialization ",
+      headerName: "Specialization ",
       // flex: 0.5,
       cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.specialization,
+      disableColumnFilter: true,
     },
     {
       field: "email",
@@ -110,7 +112,7 @@ const Da = () => {
               borderRadius="4px"
             >
               <Button
-                // onClick={() => editHandler(params.row.id)}
+                onClick={() => editHandler(params.row.id)}
                 variant="text"
                 size="small"
               >
@@ -151,11 +153,11 @@ const Da = () => {
   return (
     <Box m="20px">
       <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
-      <Header title="Regional users" subtitle="List of regional users" />
+      <Header title="Developmental Agent Users" subtitle="List of Da users" />
       <Box display="flex" justifyContent="end" mt="0px">
         <Button
           onClick={() => {
-            navigate("/farmerRegistration");
+            navigate("/createda");
           }}
           sx={{
             backgroundColor: colors.blueAccent[700],
@@ -165,7 +167,7 @@ const Da = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Register Farmer
+          Add Business User
         </Button>
       </Box>
       <Box
@@ -227,4 +229,4 @@ const Da = () => {
   );
 };
 
-export default Da;
+export default DaUsers;

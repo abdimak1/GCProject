@@ -3,6 +3,8 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import { useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -79,7 +81,10 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="Create Zonal Account" subtitle="Create a New Zonal Account " />
+      <Header
+        title="Create Zonal Account"
+        subtitle="Create a New Zonal Account Profile "
+      />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -194,22 +199,24 @@ const CreatekebeleUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
               />
-              <Select
-                fullWidth
-                variant="filled"
-                type="text"
-                onBlur={handleBlur}
-                value={values.sex}
-                label="Sex"
-                onChange={handleChange}
-                sx={{ gridColumn: "span 2" }}
-                name="sex"
-                error={!!touched.sex && !!errors.sex}
-              >
-                <MenuItem value={"MSex"}>Male</MenuItem>
-                <MenuItem value={"FSex"}>Female</MenuItem>
-              </Select>
-
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.sex}
+                  label="Sex"
+                  name="sex"
+                  onChange={handleChange}
+                  error={!!touched.sex && !!errors.sex}
+                >
+                  <MenuItem value={"MSex"}>Male</MenuItem>
+                  <MenuItem value={"FSex"}>Female</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"

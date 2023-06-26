@@ -96,7 +96,7 @@ const Zonalusers = () => {
     },
     {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Manage User",
       flex: 3,
       renderCell: (params) => {
         return (

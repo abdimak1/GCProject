@@ -33,9 +33,9 @@ const Farmer = () => {
     });
   }, []);
 
-  // const editHandler = (u_id) => {
-  //   navigate(`/updateuser/${u_id}`);
-  // };
+  const editHandler = (u_id) => {
+    navigate(`/updatefarmer/${u_id}`);
+  };
 
   const columns = [
     { field: "id", headerName: "ID",   flex: 0.5,},
@@ -80,17 +80,20 @@ const Farmer = () => {
       valueGetter: (params) => params.row?.user?.userprofile?.phone,
       disableColumnFilter: true,
     },
+  
     {
-      field: "Region_name",
-      headerName: "Region",
-      // flex: 0.5,
-      cellClassName: "name-column--cell",
-    },
-    {
-      field: "email",
-      headerName: "Email",
+      field: "land_size",
+      headerName: "Land Size",
       flex: 1,
-      valueGetter: (params) => params.row?.user?.email,
+      valueGetter: (params) => params.row?.land_size,
+      disableColumnFilter: true,
+    },
+    
+    {
+      field: "land_map_id",
+      headerName: "Land Map Id",
+      flex: 1,
+      valueGetter: (params) => params.row?.land_map_id,
       disableColumnFilter: true,
     },
     {
@@ -110,7 +113,7 @@ const Farmer = () => {
               borderRadius="4px"
             >
               <Button
-                // onClick={() => editHandler(params.row.id)}
+                onClick={() => editHandler(params.row.id)}
                 variant="text"
                 size="small"
               >

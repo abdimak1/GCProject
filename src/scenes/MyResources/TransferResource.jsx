@@ -98,7 +98,8 @@ const TransferResource = () => {
   const handleFormSubmit = (values) => {
     console.log("function called");
           transfer_resource(values).then((res) => {
-            if (res.success && res.data) {
+            if (res.success && res.data && typeof res.data==="object") {
+             
               setsnak({
                 severity: "success",
                 message: "successfully transfered!",
@@ -108,7 +109,7 @@ const TransferResource = () => {
             } else {
               setsnak({
                 severity: "error",
-                message: " not successfully transfered!",
+                message: `not successfully transfered! ${res.data}`,
                 open: true,
               });
               console.log(res.error);
@@ -160,7 +161,7 @@ const TransferResource = () => {
               }}
             >
               <FormControl fullWidth>
-                <InputLabel id="catagory">post catagory</InputLabel>
+                <InputLabel id="catagory">To</InputLabel>
                 <Select
                   fullWidth
                   labelId="category"
@@ -242,7 +243,7 @@ const TransferResource = () => {
                 Back
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Create New Resource
+                Transfer  Resource
               </Button>
             </Box>
           </Form>

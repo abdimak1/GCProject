@@ -10,14 +10,9 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
 import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import {
-  get_region,
-  update_region,
-} from "../../../config/apicalls/regionApiCall";
+import { get_da, update_da } from "../../../config/apicalls/Daapicalls";
 import { useNavigate } from "react-router-dom";
-const UpdateregionalUser = () => {
+const UpdatDaUser = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [prevdata, setprevdata] = useState();
   const navigate = useNavigate();
@@ -27,10 +22,11 @@ const UpdateregionalUser = () => {
     middleName: "",
     userName: "",
     email: "",
-    region: "",
     sex: "",
     passWord: "",
     phone: "",
+    specialization:"",
+
   });
   const [snak, setsnak] = useState({
     severity: "",
@@ -50,7 +46,7 @@ const UpdateregionalUser = () => {
   };
 
   useEffect(() => {
-    get_region(userid).then((res) => {
+    get_da(userid).then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setprevdata(res.data);
@@ -60,10 +56,10 @@ const UpdateregionalUser = () => {
           middleName: res.data.user.userprofile.Mname,
           userName: res.data.user.username,
           email: res.data.user.email,
-          region: res.data.Region_name,
-          sex: res.data.user.userprofile.sex,
+          specialization: res.data.specialization,
           passWord: "qwqwqw",
           phone: res.data.user.userprofile.phone,
+          sex:  res.data.user.userprofile.sex,
         });
       } else {
         console.log(res.error);
@@ -74,14 +70,14 @@ const UpdateregionalUser = () => {
   const handleFormSubmit = (values) => {
     console.log("function called");
     prevdata["user"]["email"] = values.email;
-    prevdata["Region_name"] = values.region;
+    prevdata["specialization"] = values.specialization;
     prevdata["user"]["username"] = values.userName;
     prevdata["user"]["userprofile"]["fname"] = values.firstName;
     prevdata["user"]["userprofile"]["lname"] = values.lastName;
     prevdata["user"]["userprofile"]["Mname"] = values.middleName;
     prevdata["user"]["userprofile"]["sex"] = values.sex;
     prevdata["user"]["userprofile"]["phone"] = values.phone;
-    update_region(userid, prevdata).then((res) => {
+    update_da(userid, prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -121,7 +117,7 @@ const UpdateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="Update User account " subtitle="Update Regional Account" />
+      <Header title="Update User account " subtitle="Update Da Account" />
 
       <Formik
         enableReinitialize={true}
@@ -211,19 +207,7 @@ const UpdateregionalUser = () => {
                 helperText={touched.passWord && errors.passWord}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="select Region"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
-                sx={{ gridColumn: "span 2" }}
-              />
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -255,6 +239,7 @@ const UpdateregionalUser = () => {
                   <MenuItem value={"FSex"}>Female</MenuItem>
                 </Select>
               </FormControl>
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -268,6 +253,19 @@ const UpdateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Specialization"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.specialization}
+                name="specialization"
+                error={!!touched.specialization && !!errors.specialization}
+                helperText={touched.specialization && errors.specialization}
+                sx={{ gridColumn: "span 2" }}
+              />
               
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
@@ -275,7 +273,7 @@ const UpdateregionalUser = () => {
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/regional");
+                  navigate("/da");
                 }}
               >
                 Back
@@ -291,4 +289,4 @@ const UpdateregionalUser = () => {
   );
 };
 
-export default UpdateregionalUser;
+export default UpdatDaUser;

@@ -65,10 +65,7 @@ const CreateregionalUser = () => {
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
     phone: yup.string().required("required"),
-    //   passWord: yup
-    //     .string()
-    //     .required("Password is required")
-    //     .min(6, "Password must be at least 6 characters"),
+   
   });
   const initialValues = {
     firstName: "",
@@ -90,7 +87,7 @@ const CreateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="Create Regional Account" subtitle="Create A New Regional Account" />
+      <Header title="Create Regional Account" subtitle="Create A New Regional Account Profile" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -236,17 +233,7 @@ const CreateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
-              <InputLabel>Profile Pic</InputLabel>
-              <Stack direction="row" spacing={2}>
-                <Button
-                  variant="contained"
-                  startIcon={<DriveFolderUploadIcon />}
-                  component="label"
-                >
-                  Upload File
-                  <input type="file" hidden />
-                </Button>
-              </Stack>
+              
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
              

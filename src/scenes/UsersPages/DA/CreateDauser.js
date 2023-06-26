@@ -3,43 +3,23 @@ import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
+import { useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-import FormControl from "@mui/material/FormControl";
-import Stack from "@mui/material/Stack";
-import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import {
-  get_region,
-  update_region,
-} from "../../../config/apicalls/regionApiCall";
 import { useNavigate } from "react-router-dom";
-const UpdateregionalUser = () => {
-  const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [prevdata, setprevdata] = useState();
+import { create_da } from "../../../config/apicalls/Daapicalls";
+const CreateDaUser = () => {
+  const [arr, setArr] = useState([]);
   const navigate = useNavigate();
-  const [initialValues, setInitialValues] = useState({
-    firstName: "",
-    lastName: "",
-    middleName: "",
-    userName: "",
-    email: "",
-    region: "",
-    sex: "",
-    passWord: "",
-    phone: "",
-  });
+  const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
     open: false,
   });
-  const param = useParams();
-  const userid = param.id;
-  console.log(userid);
 
   const handleClose = () => {
     setsnak({
@@ -49,39 +29,9 @@ const UpdateregionalUser = () => {
     });
   };
 
-  useEffect(() => {
-    get_region(userid).then((res) => {
-      if (res.success && res.data) {
-        console.log(res.data);
-        setprevdata(res.data);
-        setInitialValues({
-          firstName: res.data.user.userprofile.fname,
-          lastName: res.data.user.userprofile.lname,
-          middleName: res.data.user.userprofile.Mname,
-          userName: res.data.user.username,
-          email: res.data.user.email,
-          region: res.data.Region_name,
-          sex: res.data.user.userprofile.sex,
-          passWord: "qwqwqw",
-          phone: res.data.user.userprofile.phone,
-        });
-      } else {
-        console.log(res.error);
-      }
-    });
-  }, []);
-
   const handleFormSubmit = (values) => {
     console.log("function called");
-    prevdata["user"]["email"] = values.email;
-    prevdata["Region_name"] = values.region;
-    prevdata["user"]["username"] = values.userName;
-    prevdata["user"]["userprofile"]["fname"] = values.firstName;
-    prevdata["user"]["userprofile"]["lname"] = values.lastName;
-    prevdata["user"]["userprofile"]["Mname"] = values.middleName;
-    prevdata["user"]["userprofile"]["sex"] = values.sex;
-    prevdata["user"]["userprofile"]["phone"] = values.phone;
-    update_region(userid, prevdata).then((res) => {
+    create_da(values).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -105,13 +55,23 @@ const UpdateregionalUser = () => {
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
     email: yup.string().email("invalid email").required("required"),
-    region: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
+    specialization: yup.string().required("required"),
     phone: yup.string().required("required"),
-
+    passWord:yup.string().required("required")
   });
-
+  const initialValues = {
+    firstName: "",
+    lastName: "",
+    middleName: "",
+    userName: "",
+    email: "",
+    sex: "",
+    passWord: "",
+    phone: "",
+    specialization: "",
+  };
   return (
     <Box m="20px">
       <SimpleSnackbar
@@ -120,11 +80,12 @@ const UpdateregionalUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-
-      <Header title="Update User account " subtitle="Update Regional Account" />
+      <Header
+        title="Create Developmental Agent Account"
+        subtitle="Create a New Da Account Profile"
+      />
 
       <Formik
-        enableReinitialize={true}
         onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
@@ -143,7 +104,7 @@ const UpdateregionalUser = () => {
               gap="30px"
               gridTemplateColumns="repeat(4, minmax(0, 1fr))"
               sx={{
-                "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
+                "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
               <TextField
@@ -211,19 +172,7 @@ const UpdateregionalUser = () => {
                 helperText={touched.passWord && errors.passWord}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="select Region"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
-                sx={{ gridColumn: "span 2" }}
-              />
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -255,6 +204,7 @@ const UpdateregionalUser = () => {
                   <MenuItem value={"FSex"}>Female</MenuItem>
                 </Select>
               </FormControl>
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -268,20 +218,32 @@ const UpdateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
-              
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Specialization"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.specialization}
+                name="specialization"
+                error={!!touched.specialization && !!errors.specialization}
+                helperText={touched.specialization && errors.specialization}
+                sx={{ gridColumn: "span 2" }}
+              />
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/regional");
+                  navigate("/da");
                 }}
               >
                 Back
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Update User Account
+                Create New User
               </Button>
             </Box>
           </Form>
@@ -291,4 +253,4 @@ const UpdateregionalUser = () => {
   );
 };
 
-export default UpdateregionalUser;
+export default CreateDaUser;

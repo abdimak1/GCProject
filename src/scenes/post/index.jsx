@@ -1,27 +1,28 @@
 import { Box, Button, CircularProgress, useTheme } from "@mui/material";
-import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { DataGrid,GridToolbar } from "@mui/x-data-grid";
 import { tokens } from "../../theme";
 import { useNavigate } from "react-router-dom";
 import Header from "../../components/Header";
-import AlertDialogSlide from "../global/dialogue";
-
 import { useEffect, useState } from "react";
-import {
-  accept_resource,
-  decline_resource,
-  get_received_resources,
-} from "../../config/apicalls/resourceApiCall";
-
-const RecievedResources = () => {
+import { Delete } from "@mui/icons-material";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import AlertDialogSlide from "../global/dialogue";
+import { get_resources } from "../../config/apicalls/resourceApiCall";
+import AuthContext from "../../config/context/authContext";
+import { useContext } from "react";
+import { get_all_post } from "../../config/apicalls/PostApicalls";
+const Post = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resources, setresources] = useState();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState("");
-
+  const authctx = useContext(AuthContext);
+  const handleC = () => {
+    setOpen(!open);
+  };
   useEffect(() => {
-    get_received_resources().then((res) => {
+    get_all_post().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setresources(res.data);
@@ -30,107 +31,46 @@ const RecievedResources = () => {
       }
     });
   }, []);
-  const handleC = (id) => {
-    setSelectedId(id);
-    setOpen(!open);
-  };
-
-  const acceptHandler = (recid) => {
-    accept_resource(recid).then((res) => {
-      if (res.success && res.data) {
-        console.log(res.data);
-        setresources(res.data);
-      } else {
-        console.log(res.error);
-      }
-    });
-    setOpen(false);
-  };
-
-  const declineHandler = (recid) => {
-    decline_resource(recid).then((res) => {
-      if (res.success && res.data) {
-        console.log(res.data);
-        setresources(res.data);
-      } else {
-        console.log(res.error);
-      }
-    });
-    setOpen(false);
-  };
+  // const delhandlerv =(x)=>{
+  //   console.log("deleted",x)
+  //   // api call as an argument id=x
+  //   setresources(res.data)
+  // }
 
   const columns = [
     //   { field: "id", headerName: "ID" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
+      field: "title",
+      headerName: "Title",
+      flex: 0.2,
       cellClassName: "name-column--cell",
     },
     {
-      field: "type",
-      headerName: "Type",
+      field: "discription",
+      headerName: "Discription",
       type: "number",
       headerAlign: "left",
-      flex: 1,
       align: "left",
     },
     {
-      field: "created_at",
-      headerName: "Created_at",
+      field: "thumbnail",
+      headerName: "thumbnail",
       type: "number",
       headerAlign: "left",
-      flex: 2,
+      flex: 0.4,
       align: "left",
-      // valueGetter: (params) => params.row?.user?.email,
-      // disableColumnFilter: true,
     },
-    {
-      field: "amount",
-      headerName: "Amount",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      flex: 1,
-      // valueGetter: (params) => params.row?.user?.email,
-      // disableColumnFilter: true,
-    },
-    {
-      field: "price_perKilo",
-      headerName: "Price",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
-      flex: 1,
-      // valueGetter: (params) => params.row?.user?.email,
-      // disableColumnFilter: true,
-    },
-
+    
     {
       field: "id",
+      
       headerName: "Manage",
-      flex: 2,
+      flex: 0.5,
       renderCell: ({ row: { id } }) => {
         return (
           <Box display="flex" gap="10px">
-            <Box
-              width="100%"
-              m="0 15px 0 0 "
-              p="2px"
-              display="flex"
-              justifyContent="center"
-              backgroundColor={colors.greenAccent[600]}
-              borderRadius="4px"
-            >
-              <Button
-                onClick={() => {
-                  acceptHandler(id);
-                }}
-                variant="text"
-                size="small"
-              >
-                Approve
-              </Button>
+            <Box backgroundColor={colors.greenAccent[600]} borderRadius="4px">
+              <Button variant="text">Update</Button>
             </Box>
             <Box
               width="60%"
@@ -140,14 +80,10 @@ const RecievedResources = () => {
               justifyContent="center"
               backgroundColor={colors.redAccent[500]}
               borderRadius="4px"
+              onClick={handleC}
             >
-              <Button
-                onClick={() => {
-                  handleC(id);
-                }}
-                variant="text"
-              >
-                Decline
+              <Button variant="text">
+                <Delete></Delete>
               </Button>
             </Box>
           </Box>
@@ -158,13 +94,33 @@ const RecievedResources = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} action={()=>declineHandler(selectedId)} onClose={handleC}></AlertDialogSlide>
+      <AlertDialogSlide title = "Are you sure you want to delete this resource" open={open} onClose={handleC} > </AlertDialogSlide>
+      <Header title="All Resource" subtitle="My Resources in Stock" />
+      <Box gap="20px" display="flex" justifyContent="end" mt="0px">
+        {authctx.role === "federal" && (
+           <Button
+           onClick={() => {
+             navigate("/createresource");
+           }}
+           sx={{
+             backgroundColor: colors.blueAccent[700],
+             color: colors.grey[100],
+             fontSize: "14px",
+             fontWeight: "bold",
+           }}
+         >
+           <AddOutlinedIcon sx={{ mr: "10px" }} />
+           Create Post
+         </Button>
 
-      <Header title="Recieved Resource" subtitle=" Resources You Recieve " />
-
+        )}
+       
+       
+      </Box>
       <Box
         m="40px 0 0 0"
-        height="75vh"
+        height="60vh"
+        width="100%"
         sx={{
           "& .MuiDataGrid-root": {
             border: "none",
@@ -219,4 +175,4 @@ const RecievedResources = () => {
   );
 };
 
-export default RecievedResources;
+export default Post;

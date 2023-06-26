@@ -8,14 +8,15 @@ import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import AlertDialogSlide from "../global/dialogue";
 import { get_resources } from "../../config/apicalls/resourceApiCall";
-
+import AuthContext from "../../config/context/authContext";
+import { useContext } from "react";
 const MyResources = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resources, setresources] = useState();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-
+  const authctx = useContext(AuthContext);
   const handleC = () => {
     setOpen(!open);
   };
@@ -108,23 +109,27 @@ const MyResources = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
+      <AlertDialogSlide title = "Are you sure you want to delete this resource" open={open} onClose={handleC} > </AlertDialogSlide>
       <Header title="All Resource" subtitle="My Resources in Stock" />
       <Box gap="20px" display="flex" justifyContent="end" mt="0px">
-        <Button
-          onClick={() => {
-            navigate("/createresource");
-          }}
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Create Resource
-        </Button>
+        {authctx.role === "federal" && (
+           <Button
+           onClick={() => {
+             navigate("/createresource");
+           }}
+           sx={{
+             backgroundColor: colors.blueAccent[700],
+             color: colors.grey[100],
+             fontSize: "14px",
+             fontWeight: "bold",
+           }}
+         >
+           <AddOutlinedIcon sx={{ mr: "10px" }} />
+           Create Resource
+         </Button>
+
+        )}
+       
         <Button
           onClick={() => {
             navigate("/resources/transfer");

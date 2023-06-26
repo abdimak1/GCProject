@@ -36,6 +36,15 @@ import RecievedResources from "./scenes/MyResources/RecievedResource";
 import Farmer from "./scenes/UsersPages/Farmer";
 import PrivateSector from "./scenes/UsersPages/Privatesector";
 import FarmerRegistration from "./scenes/UsersPages/Farmer/farmerregistration";
+import UpdateworedaUser from "./scenes/UsersPages/WoredaUsers/updateUser";
+import Updatefarmer from "./scenes/UsersPages/Farmer/updateUser";
+import CreatePrivateSector from "./scenes/UsersPages/Privatesector/createprivatesector";
+import UpdatePrivatesector from "./scenes/UsersPages/Privatesector/updataUsers";
+import { create_report } from "./config/apicalls/reportApicalls";
+import DaUsers from "./scenes/UsersPages/DA";
+import CreateDaUser from "./scenes/UsersPages/DA/CreateDauser";
+import UpdatDaUser from "./scenes/UsersPages/DA/updateUser";
+import Post from "./scenes/post";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -70,31 +79,52 @@ function App() {
                 <Route path="/regional" element={<Regionalusers />} />
                 <Route path="/woreda" element={<WoredaUsers />} />
                 <Route path="/zonal" element={<ZonalUsers />} />
-                <Route path="/farmer" element={<Farmer/>} />
-                <Route path="/privatesector" element={<PrivateSector/>} />
-                <Route path="/farmerRegistration" element={<FarmerRegistration/>} />
+                <Route path="/farmer" element={<Farmer />} />
+                <Route path="/privatesector" element={<PrivateSector />} />
+                <Route path = "/post" element = {<Post/>}/>
+                <Route
+                  path="/farmerRegistration"
+                  element={<FarmerRegistration />}
+                />
                 <Route path="/createreport" element={<CreateReport />} />
                 <Route path="/viewreport" element={<ViewReport />} />
-               
+                <Route path="/da" element={<DaUsers />} />
                 <Route
                   path="/updateuser/:id"
                   element={<UpdateregionalUser />}
                 />
+                <Route
+                  path="/updateworedauser/:id"
+                  element={<UpdateworedaUser />}
+                ></Route>
+
+                <Route
+                  path="/updateprivatesector/:id"
+                  element={<UpdatePrivatesector />}
+                ></Route>
+
+                <Route path="/updateda/:id" element={<UpdatDaUser />} />
 
                 <Route
                   path="/updatezoneuser/:id"
                   element={<UpdatezonalUser />}
                 />
+                <Route
+                  path="/updatefarmer/:id"
+                  element={<Updatefarmer />}
+                ></Route>
 
                 <Route
                   path="/updatekebelebusinessuser/:id"
                   element={<UpdatekebelebusinessUser />}
                 />
 
+                <Route path="/createreport" element={<create_report />} />
                 <Route
                   path="/updatekebeleuser/:id"
                   element={<UpdatekebeleadminUser />}
                 />
+                <Route path="/createda" element={<CreateDaUser />} />
                 <Route path="/kebelebusinesses" element={<KebeleBusiness />} />
                 <Route path="/resources/sent" element={<SentResource />} />
                 <Route path="/bar" element={<Bar />} />
@@ -104,19 +134,21 @@ function App() {
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}
                 />
-              
+
                 <Route
                   path="/createkebelebusinessuser"
                   element={<CreatekebelebusinessUser />}
                 />
-                <Route path = "/createresource" element = {<CreateResource/>}/>
-
+                <Route path="/createresource" element={<CreateResource />} />
+                <Route
+                  path="/createprivatesector"
+                  element={<CreatePrivateSector />}
+                />
 
                 <Route
                   path="/createregionalaccount"
                   element={<CreateregionalUser />}
                 />
-
 
                 <Route
                   path="/createworedaaccount"
@@ -129,9 +161,15 @@ function App() {
                 />
 
                 <Route path="/resources" element={<MyResources />} />
-                <Route path="/resources/transfer" element={<TransferResource/>} />
-                <Route path="/resources/sent" element={<SentResources/>} />
-                <Route path ="/resources/recieved" element = {<RecievedResources/>}/>
+                <Route
+                  path="/resources/transfer"
+                  element={<TransferResource />}
+                />
+                <Route path="/resources/sent" element={<SentResources />} />
+                <Route
+                  path="/resources/recieved"
+                  element={<RecievedResources />}
+                />
                 <Route path="*" element={<div>Page not Found!!</div>} />
               </Route>
             </Routes>

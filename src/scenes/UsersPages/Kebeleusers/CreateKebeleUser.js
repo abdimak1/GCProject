@@ -1,8 +1,10 @@
 import { Box, Button, TextField } from "@mui/material";
-import { Form,Formik } from "formik";
+import { Form, Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import { useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
@@ -27,7 +29,6 @@ const CreatekebeleUser = () => {
     });
   };
 
-
   const handleFormSubmit = (values) => {
     console.log("function called");
     create_kebele(values).then((res) => {
@@ -47,7 +48,6 @@ const CreatekebeleUser = () => {
         console.log(res.error);
       }
     });
-   
   };
 
   const checkoutSchema = yup.object().shape({
@@ -72,7 +72,7 @@ const CreatekebeleUser = () => {
     kebele: "",
     sex: "",
     passWord: "",
-    phone:"",
+    phone: "",
   };
   return (
     <Box m="20px">
@@ -82,7 +82,10 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="Create Kebele Account" subtitle="Create a New kebele Account Profile" />
+      <Header
+        title="Create Kebele Account"
+        subtitle="Create a New kebele Account Profile"
+      />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -106,8 +109,7 @@ const CreatekebeleUser = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 4" },
               }}
             >
-             
-             <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -198,21 +200,24 @@ const CreatekebeleUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
               />
-              <Select
-                fullWidth
-                variant="filled"
-                type="text"
-                onBlur={handleBlur}
-                value={values.sex}
-                label="Sex"
-                onChange={handleChange}
-                sx={{ gridColumn: "span 2" }}
-                name="sex"
-                error={!!touched.sex && !!errors.sex}
-              >
-                <MenuItem value={"MSex"}>Male</MenuItem>
-                <MenuItem value={"FSex"}>Female</MenuItem>
-              </Select>
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.sex}
+                  label="Sex"
+                  name="sex"
+                  onChange={handleChange}
+                  error={!!touched.sex && !!errors.sex}
+                >
+                  <MenuItem value={"MSex"}>Male</MenuItem>
+                  <MenuItem value={"FSex"}>Female</MenuItem>
+                </Select>
+              </FormControl>
 
               <TextField
                 fullWidth
@@ -229,18 +234,19 @@ const CreatekebeleUser = () => {
               />
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
-             <Button color="secondary" variant="contained"
-               onClick={() => {
-                 navigate("/kebeleUsers");
-               }}
-              
-             >
-               Back
-             </Button>
-             <Button type="submit" color="secondary" variant="contained">
-               Create New User
-             </Button>
-           </Box>
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  navigate("/kebeleUsers");
+                }}
+              >
+                Back
+              </Button>
+              <Button type="submit" color="secondary" variant="contained">
+                Create New User
+              </Button>
+            </Box>
           </Form>
         )}
       </Formik>

@@ -22,6 +22,9 @@ const WoredaUsers = () => {
   const handleC = () => {
     setOpen(!open);
   };
+  const editHandler = (u_id) => {
+    navigate(`/updateworedauser/${u_id}`);
+  };
 
   useEffect(() => {
     get_all_woredas().then((res) => {
@@ -35,47 +38,83 @@ const WoredaUsers = () => {
   }, []);
 
   const columns = [
-    { field: "id", headerName: "ID" },
     {
-      field: "name",
-      headerName: "Name",
-      flex: 1,
+      field: "fname",
+      headerName: "First Name",
+      flex: 0.8,
       cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.fname,
+      disableColumnFilter: true,
     },
     {
-      field: "age",
-      headerName: "Age",
-      type: "number",
-      headerAlign: "left",
-      align: "left",
+      field: "Mname",
+      headerName: "Middle Name",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.Mname,
+      disableColumnFilter: true,
     },
+    {
+      field: "lname",
+      headerName: "Last Name",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.lname,
+      disableColumnFilter: true,
+    },
+
+    {
+      field: "sex",
+      headerName: "Gender",
+      flex: 0.8,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.sex,
+      disableColumnFilter: true,
+    },
+
     {
       field: "phone",
       headerName: "Phone Number",
       flex: 1,
+      valueGetter: (params) => params.row?.user?.userprofile?.phone,
+      disableColumnFilter: true,
+    },
+    {
+      field: "woreda_name",
+      headerName: "Woreda",
+      // flex: 0.5,
+      cellClassName: "name-column--cell",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 1.5,
+      valueGetter: (params) => params.row?.user?.email,
+      disableColumnFilter: true,
     },
     {
       field: "accessLevel",
-      headerName: "Access Level",
-      flex: 1,
-      renderCell: ({ row: { access } }) => {
+      headerName: "Manage User",
+      flex: 3,
+      renderCell: (params) => {
         return (
-          <Box display="flex" p="55px">
+          <Box display="flex" p="0px">
             <Box
-              width="60%"
+              width="100%"
               m="0 15px 0 0 "
-              p="5px"
+              p="2px"
               display="flex"
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
             >
-              <Button variant="text">Update</Button>
+              <Button
+                onClick={() => editHandler(params.row.id)}
+                variant="text"
+                size="small"
+              >
+                Update
+              </Button>
             </Box>
 
             <Box
@@ -90,6 +129,17 @@ const WoredaUsers = () => {
               <Button onClick={handleC} variant="text">
                 <Delete></Delete>
               </Button>
+            </Box>
+            <Box
+              width="60%"
+              m="0 15px 0 0 "
+              pl={"10px"}
+              display="flex"
+              justifyContent="center"
+              backgroundColor={colors.greenAccent[600]}
+              borderRadius="4px"
+            >
+              <Button variant="text">Deactivate</Button>
             </Box>
           </Box>
         );
@@ -143,6 +193,9 @@ const WoredaUsers = () => {
           },
           "& .MuiCheckbox-root": {
             color: `${colors.greenAccent[200]} !important`,
+          },
+          "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+            color: `${colors.grey[100]} !important`,
           },
         }}
       >

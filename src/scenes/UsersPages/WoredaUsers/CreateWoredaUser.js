@@ -3,18 +3,19 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../../components/Header";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 import { useState } from "react";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import SimpleSnackbar from "../../global/snackbar";
-
+import { useNavigate } from "react-router-dom";
 import { create_woreda } from "../../../config/apicalls/woredaApiCalls";
 
 const CreatekebeleUser = () => {
-  
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [phonen, setphonen] = useState("");
+  const navigate = useNavigate();
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
@@ -28,7 +29,6 @@ const CreatekebeleUser = () => {
       message: "",
     });
   };
-
 
   const handleFormSubmit = (values) => {
     create_woreda(values, phonen).then((res) => {
@@ -48,9 +48,7 @@ const CreatekebeleUser = () => {
         console.log(res.error);
       }
     });
-  
   };
- 
 
   const checkoutSchema = yup.object().shape({
     firstName: yup.string().required("required"),
@@ -85,7 +83,10 @@ const CreatekebeleUser = () => {
         message={snak.message}
         onClose={handleClose}
       />
-      <Header title="Create Woreda Account" subtitle="Create a New Account Profile" />
+      <Header
+        title="Create Woreda Account"
+        subtitle="Create a New Woreda Account Profile"
+      />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -178,7 +179,7 @@ const CreatekebeleUser = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="select woreda"
+                label="Woreda Name "
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.woreda}
@@ -187,7 +188,7 @@ const CreatekebeleUser = () => {
                 helperText={touched.woreda && errors.woreda}
                 sx={{ gridColumn: "span 2" }}
               />
-             <TextField
+              <TextField
                 fullWidth
                 variant="filled"
                 type="text"
@@ -200,21 +201,24 @@ const CreatekebeleUser = () => {
                 helperText={touched.email && errors.email}
                 sx={{ gridColumn: "span 2" }}
               />
-              <Select
-                fullWidth
-                variant="filled"
-                type="text"
-                onBlur={handleBlur}
-                value={values.sex}
-                label="Sex"
-                onChange={handleChange}
-                sx={{ gridColumn: "span 2" }}
-                name="sex"
-                error={!!touched.sex && !!errors.sex}
-              >
-                <MenuItem value={"MSex"}>Male</MenuItem>
-                <MenuItem value={"FSex"}>Female</MenuItem>
-              </Select>
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-label">Sex</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.sex}
+                  label="Sex"
+                  name="sex"
+                  onChange={handleChange}
+                  error={!!touched.sex && !!errors.sex}
+                >
+                  <MenuItem value={"MSex"}>Male</MenuItem>
+                  <MenuItem value={"FSex"}>Female</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
@@ -228,13 +232,17 @@ const CreatekebeleUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
-            
-            
-             
-              
-            
             </Box>
-            <Box display="flex" justifyContent="start" mt="30px">
+            <Box gap="20px" display="flex" justifyContent="start" mt="30px">
+              <Button
+                color="secondary"
+                variant="contained"
+                onClick={() => {
+                  navigate("/woreda");
+                }}
+              >
+                Back
+              </Button>
               <Button type="submit" color="secondary" variant="contained">
                 Create New User
               </Button>

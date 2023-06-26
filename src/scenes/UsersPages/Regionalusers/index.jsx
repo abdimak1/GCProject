@@ -10,16 +10,26 @@ import { useNavigate } from "react-router-dom";
 import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import AlertDialogSlide from "../../global/dialogue";
-
+import { deactivate_user, delete_user } from "../../../config/apicalls/usersapi";
+import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 const Regionalusers = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [opendec, setOpenDec] = useState(false);
+  const [selectedId, setSelectedId] = useState("");
 
-  const handleC = () => {
+  const handleC = (id) => {
+    setSelectedId(id);
     setOpen(!open);
+  };
+
+  const handleD = (id) => {
+    setSelectedId(id);
+    setOpenDec(!opendec);
   };
 
   useEffect(() => {
@@ -33,12 +43,38 @@ const Regionalusers = () => {
     });
   }, []);
 
+  const diactivateHandler = (selectedId) => {
+    deactivate_user(selectedId).then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+    setOpenDec(false);
+  };
+
+  const deleteHandler = (selectedId) => {
+    delete_user(selectedId).then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        mockdata = mockdata.filter(obj => obj.user.id !== selectedId);
+        console.log(mockdata)
+        setMockdata(mockdata)
+      } else {
+        console.log(res.error);
+      }
+    });
+    setOpen(false);
+  };
+
   const editHandler = (u_id) => {
     navigate(`/updateuser/${u_id}`);
+    console.log(u_id);
   };
 
   const columns = [
-    { field: "id", headerName: "ID",   flex: 0.5,},
+    // { field: "id", headerName: "ID", flex: 0.5 },
     {
       field: "fname",
       headerName: "First Name",
@@ -47,6 +83,7 @@ const Regionalusers = () => {
       valueGetter: (params) => params.row?.user?.userprofile?.fname,
       disableColumnFilter: true,
     },
+
     {
       field: "Mname",
       headerName: "Middle Name",
@@ -94,15 +131,29 @@ const Regionalusers = () => {
       disableColumnFilter: true,
     },
     {
+      field: "is_active",
+      headerName: "User Status",
+      flex: 0.8,
+      cellClassName: "name-column--cell",
+      disableColumnFilter: true,
+      renderCell: (params) => {
+        if (params.row?.user?.is_active === true) {
+          return <CheckCircleOutlineIcon style={{ color: "green" }} />;
+        } else {
+          return <RemoveCircleOutlineIcon style={{ color: "red" }} />;
+        }
+      },
+    },
+    {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Manage User",
       flex: 3,
       renderCell: (params) => {
         return (
           <Box display="flex" p="0px">
             <Box
               width="100%"
-              m="0 15px 0 0 "
+              m="0 10px 0 0 "
               p="2px"
               display="flex"
               justifyContent="center"
@@ -121,24 +172,25 @@ const Regionalusers = () => {
             <Box
               width="60%"
               m="0 15px 0 0 "
-              pl={"10px"}
               display="flex"
               justifyContent="center"
               backgroundColor={colors.redAccent[500]}
               borderRadius="4px"
             >
-              <Button onClick={handleC} variant="text">
+              <Button onClick={()=>handleC(params.row.user.id)} variant="text">
                 <Delete></Delete>
               </Button>
             </Box>
             <Box
               width="60%"
-              m="0 15px 0 0 "
-              pl={"10px"}
+              m="0 10px 0 0 "
               display="flex"
               justifyContent="center"
               backgroundColor={colors.greenAccent[600]}
               borderRadius="4px"
+              onClick={() => {
+                handleD(params.row.user.id);
+              }}
             >
               <Button variant="text">Deactivate</Button>
             </Box>
@@ -150,7 +202,20 @@ const Regionalusers = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
+      <AlertDialogSlide
+        open={opendec}
+        action={() => diactivateHandler(selectedId)}
+        title="Are you sure you want to deactivate this user"
+        onClose={handleD}
+      ></AlertDialogSlide>
+
+      <AlertDialogSlide
+        open={open}
+        action={() => deleteHandler(selectedId)}
+        title="Are you sure you want to delete this user"
+        onClose={handleC}
+      ></AlertDialogSlide>
+
       <Header title="Regional users" subtitle="List of regional users" />
       <Box display="flex" justifyContent="end" mt="0px">
         <Button

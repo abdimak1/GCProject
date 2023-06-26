@@ -12,12 +12,9 @@ import SimpleSnackbar from "../../global/snackbar";
 import FormControl from "@mui/material/FormControl";
 import Stack from "@mui/material/Stack";
 import DriveFolderUploadIcon from "@mui/icons-material/DriveFolderUpload";
-import {
-  get_region,
-  update_region,
-} from "../../../config/apicalls/regionApiCall";
+import { get_farmer,update_farmer } from "../../../config/apicalls/Farmerapicalls";
 import { useNavigate } from "react-router-dom";
-const UpdateregionalUser = () => {
+const Updatefarmer = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [prevdata, setprevdata] = useState();
   const navigate = useNavigate();
@@ -25,9 +22,10 @@ const UpdateregionalUser = () => {
     firstName: "",
     lastName: "",
     middleName: "",
+    email:"",
     userName: "",
-    email: "",
-    region: "",
+    land_size: "",
+    land_map_id: "",
     sex: "",
     passWord: "",
     phone: "",
@@ -50,7 +48,7 @@ const UpdateregionalUser = () => {
   };
 
   useEffect(() => {
-    get_region(userid).then((res) => {
+    get_farmer(userid).then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setprevdata(res.data);
@@ -60,7 +58,8 @@ const UpdateregionalUser = () => {
           middleName: res.data.user.userprofile.Mname,
           userName: res.data.user.username,
           email: res.data.user.email,
-          region: res.data.Region_name,
+          land_size: res.data.land_size,
+          land_map_id: res.data.land_map_id,
           sex: res.data.user.userprofile.sex,
           passWord: "qwqwqw",
           phone: res.data.user.userprofile.phone,
@@ -74,14 +73,15 @@ const UpdateregionalUser = () => {
   const handleFormSubmit = (values) => {
     console.log("function called");
     prevdata["user"]["email"] = values.email;
-    prevdata["Region_name"] = values.region;
     prevdata["user"]["username"] = values.userName;
     prevdata["user"]["userprofile"]["fname"] = values.firstName;
     prevdata["user"]["userprofile"]["lname"] = values.lastName;
     prevdata["user"]["userprofile"]["Mname"] = values.middleName;
+    prevdata["land_map_id"] = values.land_map_id;
+    prevdata["land_size"] = values.land_size;
     prevdata["user"]["userprofile"]["sex"] = values.sex;
     prevdata["user"]["userprofile"]["phone"] = values.phone;
-    update_region(userid, prevdata).then((res) => {
+    update_farmer(userid, prevdata).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -104,12 +104,13 @@ const UpdateregionalUser = () => {
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    region: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
-    phone: yup.string().required("required"),
-
+    land_size: yup.string().required("required"),
+    passWord: yup.string().required("required"),
+    land_map_id: yup.string().required("required"),
+    phone:yup.string().required("required"),
+   
   });
 
   return (
@@ -121,7 +122,7 @@ const UpdateregionalUser = () => {
         onClose={handleClose}
       />
 
-      <Header title="Update User account " subtitle="Update Regional Account" />
+      <Header title="UPDATE USER ACCOUNT" subtitle="Update Regional Account" />
 
       <Formik
         enableReinitialize={true}
@@ -211,32 +212,7 @@ const UpdateregionalUser = () => {
                 helperText={touched.passWord && errors.passWord}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="select Region"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.region}
-                name="region"
-                error={!!touched.region && !!errors.region}
-                helperText={touched.region && errors.region}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Email"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.email}
-                name="email"
-                error={!!touched.email && !!errors.email}
-                helperText={touched.email && errors.email}
-                sx={{ gridColumn: "span 2" }}
-              />
+
               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
                 <InputLabel id="demo-simple-select-label">Sex</InputLabel>
                 <Select
@@ -255,6 +231,37 @@ const UpdateregionalUser = () => {
                   <MenuItem value={"FSex"}>Female</MenuItem>
                 </Select>
               </FormControl>
+
+              
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Land Size"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.land_size}
+                name="land_size"
+                error={!!touched.land_size && !!errors.land_size}
+                helperText={touched.land_size && errors.land_size}
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Land Map Id"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.land_map_id}
+                name="land_map_id"
+                error={!!touched.land_map_id && !!errors.land_map_id}
+                helperText={touched.land_map_id && errors.land_map_id}
+                sx={{ gridColumn: "span 2" }}
+              />
+               
+
               <TextField
                 fullWidth
                 variant="filled"
@@ -268,14 +275,24 @@ const UpdateregionalUser = () => {
                 helperText={touched.phone && errors.phone}
                 sx={{ gridColumn: "span 2" }}
               />
-              
+              <InputLabel>Profile Pic</InputLabel>
+              <Stack direction="row" spacing={2}>
+                <Button
+                  variant="contained"
+                  startIcon={<DriveFolderUploadIcon />}
+                  component="label"
+                >
+                  Upload File
+                  <input type="file" hidden />
+                </Button>
+              </Stack>
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
               <Button
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/regional");
+                  navigate("/farmer");
                 }}
               >
                 Back
@@ -291,4 +308,4 @@ const UpdateregionalUser = () => {
   );
 };
 
-export default UpdateregionalUser;
+export default Updatefarmer;

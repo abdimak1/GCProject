@@ -1,77 +1,98 @@
 import Header from "../../components/Header";
 import * as yup from "yup";
-import MenuItem from "@mui/material/MenuItem";
 import { Box, Button, TextField } from "@mui/material";
 import { Form, Formik } from "formik";
-import InputLabel from "@mui/material/InputLabel";
-import Select from "@mui/material/Select";
-import FormControl from "@mui/material/FormControl";
+import { Grid } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import SimpleSnackbar from "../global/snackbar";
 import { useState } from "react";
-import { Viewer,Worker } from "@react-pdf-viewer/core";
-import { defaultLayoutPlugin } from "@react-pdf-viewer/default-layout";
-import "@react-pdf-viewer/core/lib/styles/index.css";
-import "@react-pdf-viewer/default-layout/lib/styles/index.css";
-import { pdfjs } from 'react-pdf';
-import pdfjsWorker from 'pdfjs-dist/build/pdf.worker.entry';
-
-pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
+import InputLabel from "@mui/material/InputLabel";
+import { create_report } from "../../config/apicalls/reportApicalls";
 const CreateReport = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
-  const [pdffile, setPDFFile] = useState(null);
-  const [viewPdf, setViewPdf] = useState(null);
-  pdfjs.GlobalWorkerOptions.workerSrc = pdfjsWorker;
-  const filetype = ["application/pdf"];
-  const handlepdfchange = (e) => {
-    let selectedFile = e.target.files[0];
-    if (selectedFile) {
-      if (selectedFile && String(filetype).includes(selectedFile.type)) {
-        let reader = new FileReader();
-        reader.readAsDataURL(selectedFile);
-        reader.onload = (e) => {
-          setPDFFile(e.target.result);
-        };
-      } else {
-        setPDFFile(null);
-      }
-    } else {
-      console.log("please select file");
+  const [file, setFile] = useState(null);
+
+  const handlePdfChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleOpenPDF = () => {
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL, "_blank");
     }
   };
-  // const handlepdfSubmit = (e) => {
-  //   e.preventDefault();
-  //   if ((pdffile != null)) {
-  //     setViewPdf(pdffile);
-  //   } else {
-  //     setPDFFile(null);
-  //   }
-  // };
-  // const newPlugin = defaultLayoutPlugin();
-  // const checkoutSchema = yup.object().shape({
-  //   reported_by: yup.string().required("required"),
-  //   reported_to: yup.string().required("required"),
-  //   report_name: yup.string().required("required"),
-  //   report_file: yup.string().email("invalid email").required("required"),
-  // });
+
+  const [snak, setsnak] = useState({
+    severity: "",
+    message: "",
+    open: false,
+  });
+
+  const handleFormSubmit = (values) => {
+    const formData = new FormData();
+    formData.append("file_name", values.report_file);
+    formData.append("reported_to", values.reported_to);
+    formData.append("report_name", values.report_name);
+    console.log("function called");
+    create_report(formData).then((res) => {
+      if (res.success && res.data) {
+        setsnak({
+          severity: "success",
+          message: "successfully created!",
+          open: true,
+        });
+        console.log(res.data);
+      } else {
+        setsnak({
+          severity: "error",
+          message: " not successfully created!",
+          open: true,
+        });
+        console.log(res.error);
+      }
+    });
+  };
+
+  const checkoutSchema = yup.object().shape({
+    reported_to: yup.string().required("required"),
+    report_name: yup.string().required("required"),
+    report_file: yup.string().required("required"),
+  });
   const initialValues = {
-    reported_by: "",
     reported_to: "",
     report_name: "",
     report_file: "",
   };
+
+  const handleClose = () => {
+    setsnak({
+      open: false,
+      severity: "",
+      message: "",
+    });
+  };
+
   return (
     <Box m="20px">
-      <Header title="Create Report " subtitle="Report to Higher Hierarchy " />
-      <Formik initialValues={initialValues} validationSchema={checkoutSchema}>
-        {({
-          values,
-          errors,
-          touched,
-          handleBlur,
-          handleChange,
-          handleSubmit,
-        }) => (
-          <Form onChange={handlepdfSubmit}>
+      <SimpleSnackbar
+        open={snak.open}
+        severity={snak.severity}
+        message={snak.message}
+        onClose={handleClose}
+      />
+      <Grid align="left">
+        <Header title="Create Report " subtitle="Report to Higher Hierarchy " />
+      </Grid>
+
+      <Formik
+        onSubmit={handleFormSubmit}
+        initialValues={initialValues}
+        validationSchema={checkoutSchema}
+      >
+        {({ values, errors, touched, handleBlur, handleChange }) => (
+          <Form>
             <Box
               display="grid"
               gap="30px"
@@ -80,92 +101,65 @@ const CreateReport = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
               }}
             >
-              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-label">
-                  Reported by
-                </InputLabel>
-                <Select
-                  fullWidth
-                  labelId="demo-simple-select-label"
-                  variant="filled"
-                  type="text"
-                  onBlur={handleBlur}
-                  value={values.reported_by}
-                  label="Reportde by"
-                  name="reported_by"
-                  onChange={handleChange}
-                  error={!!touched.reported_by && !!errors.reported_by}
-                >
-                  <MenuItem value={"M"}>kebele</MenuItem>
-                </Select>
-              </FormControl>
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Reported to"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.reported_to}
+                name="reported_to"
+                error={!!touched.reported_to && !!errors.reported_to}
+                helperText={touched.reported_to && errors.reported_to}
+                sx={{ gridColumn: "span 2" }}
+              />
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Reported type"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.report_name}
+                name="report_name"
+                error={!!touched.report_name && !!errors.report_name}
+                helperText={touched.report_name && errors.report_name}
+                sx={{ gridColumn: "span 2" }}
+              />
 
-              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-label">
-                  Reported to
-                </InputLabel>
-                <Select
-                  fullWidth
-                  labelId="demo-simple-select-label"
-                  variant="filled"
-                  type="text"
-                  onBlur={handleBlur}
-                  value={values.reported_to}
-                  label="Reported to"
-                  name="reported_to"
-                  onChange={handleChange}
-                  error={!!touched.reported_to && !!errors.reported_to}
-                >
-                  <MenuItem value={"woreda"}>Woreda</MenuItem>
-                </Select>
-              </FormControl>
+              {/* <TextField
+                type="file"
+                onChange={handlePdfChange}
+                variant="outlined"
+                value={values.report_file}
+                name="report_file"
+                label="Attach a file"
+                InputLabelProps={{ shrink: true }}
+                inputProps={{ accept: ".doc, .docx, .pdf" }}
+                fullWidth
+              /> */}
+              <Box  display="flex" justifyContent="left" mt="30px">
+                <input type="file" id="pdfInput" onChange={handlePdfChange} />
 
-              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-label">
-                  Report type
-                </InputLabel>
-                <Select
-                  fullWidth
-                  labelId="demo-simple-select-label"
-                  variant="filled"
-                  type="text"
-                  onBlur={handleBlur}
-                  value={values.report_name}
-                  label="Report type"
-                  name="report_name"
-                  onChange={handleChange}
-                  error={!!touched.report_name && !!errors.report_name}
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleOpenPDF}
+                  disabled={!file}
+                  size="small"
                 >
-                  <MenuItem value={"annualreport"}>Annual</MenuItem>
-                  <MenuItem value={"monthlyreport"}>Monthly</MenuItem>
-                  <MenuItem value={"halfyearreport"}>Half year </MenuItem>
-                </Select>
-              </FormControl>
-              <Box>
-                <input type="file" onChange={handlepdfchange} />
-                <Button type="submit" color="secondary" variant="contained">
-                  view pdf
+                  Open PDF
                 </Button>
-
-                {/* <div
-                  align-items="center"
-                  display=" flex"
-                  justify-content="center"
-                  width="100%"
-                  height="500px"
-                  overflow-y="auto"
-                >
-                  
-                  <Worker >
-                    {viewPdf && (
-                      <>
-                        <Viewer fileUrl={viewPdf} workerSrc={pdfjsWorker}  pluginsArray = {Array.from(newPlugin)}/>
-                      </>
-                    )}
-                    {!viewPdf && <>No PDF</>}
-                  </Worker>
-                </div> */}
+                {file && <p>Selected file: {file.name}</p>}
               </Box>
+            </Box>
+            <Box gap="30px" display="flex" justifyContent="left" mt="30px">
+              <Button size ="large" type="submit" color="secondary" variant="contained">
+                Submit
+              </Button>
+
+              
             </Box>
           </Form>
         )}

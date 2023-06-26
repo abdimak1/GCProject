@@ -13,10 +13,9 @@ import { useNavigate } from "react-router-dom";
 import InputLabel from "@mui/material/InputLabel";
 import FormControl from "@mui/material/FormControl";
 import InputAdornment from "@mui/material/InputAdornment";
-
+import { create_farmer } from "../../../config/apicalls/Farmerapicalls";
 const FarmerRegistration = () => {
   const navigate = useNavigate();
-
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [snak, setsnak] = useState({
     severity: "",
@@ -32,44 +31,45 @@ const FarmerRegistration = () => {
     });
   };
 
-  //   const handleFormSubmit = (values) => {
-  //     console.log("function called");
-  //     create_kebele_business(values).then((res) => {
-  //       if (res.success && res.data) {
-  //         setsnak({
-  //           severity: "success",
-  //           message: "successfully created!",
-  //           open: true,
-  //         });
-  //         console.log(res.data);
-  //       } else {
-  //         setsnak({
-  //           severity: "error",
-  //           message: " not successfully created!",
-  //           open: true,
-  //         });
-  //         console.log(res.error);
-  //       }
-  //     });
-  //   };
+  const handleFormSubmit = (values) => {
+    console.log("function called");
+    create_farmer(values).then((res) => {
+      if (res.success && res.data) {
+        setsnak({
+          severity: "success",
+          message: "successfully created!",
+          open: true,
+        });
+        console.log(res.data);
+      } else {
+        setsnak({
+          severity: "error",
+          message: " not successfully created!",
+          open: true,
+        });
+        console.log(res.error);
+      }
+    });
+  };
 
   const checkoutSchema = yup.object().shape({
     firstName: yup.string().required("required"),
     lastName: yup.string().required("required"),
     middleName: yup.string().required("required"),
-    email: yup.string().email("invalid email").required("required"),
-    resource_type: yup.string().required("required"),
     userName: yup.string().required("required"),
     sex: yup.string().required("required"),
-    amount: yup.string().required("required"),
+    land_size: yup.string().required("required"),
+    passWord: yup.string().required("required"). min(8, "must be at least 8 characters"),
+    land_map_id:yup.number().required("required").typeError("must be a number"),
+    phone: yup.number().required("required").typeError("must be a number"),
   });
   const initialValues = {
     firstName: "",
     lastName: "",
     middleName: "",
     userName: "",
-    amount: "",
-    resource_type: "",
+    land_size: "",
+    land_map_id: "",
     sex: "",
     passWord: "",
     phone: "",
@@ -87,7 +87,7 @@ const FarmerRegistration = () => {
         <Header title="Registration" subtitle="Farmer registration" />
       </Grid>
       <Formik
-        // onSubmit={handleFormSubmit}
+        onSubmit={handleFormSubmit}
         initialValues={initialValues}
         validationSchema={checkoutSchema}
       >
@@ -193,33 +193,32 @@ const FarmerRegistration = () => {
                 </Select>
               </FormControl>
 
-              {/* <TextField
-                label="amount"
-                id="filled-start-adornment"
-                name="amount"
-                value={values.amount}
-                error = {!!touched.amount && !!errors.amount}
-                sx={{ gridColumn: "span 2" }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">kg</InputAdornment>
-                  ),
-                }}
-                variant="filled"
-              /> */}
               <TextField
-                label="Land Size"
-                id="filled-start-adornment"
-                name="land_size"
-                value={values.land_size}
-                error={!!touched.land_size && !!errors.land_size}
-                sx={{ gridColumn: "span 2" }}
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">Hectar</InputAdornment>
-                  ),
-                }}
+                fullWidth
                 variant="filled"
+                type="text"
+                label="Land Size"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.land_size}
+                name="land_size"
+                error={!!touched.land_size && !!errors.land_size}
+                helperText={touched.land_size && errors.land_size}
+                sx={{ gridColumn: "span 2" }}
+              />
+
+              <TextField
+                fullWidth
+                variant="filled"
+                type="text"
+                label="Land Map Id"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                value={values.land_map_id}
+                name="land_map_id"
+                error={!!touched.land_map_id && !!errors.land_map_id}
+                helperText={touched.land_map_id && errors.land_map_id}
+                sx={{ gridColumn: "span 2" }}
               />
 
               <TextField

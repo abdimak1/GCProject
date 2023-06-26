@@ -95,7 +95,7 @@ const KebeleUsers = () => {
     },
     {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Manage user",
       flex: 3,
       renderCell: (params) => {
         return (
@@ -149,7 +149,7 @@ const KebeleUsers = () => {
   ];
   return (
     <Box m="20px">
-      <Header title="Kebele users" subtitle="List of kebele users" />
+      <Header title="Kebele Users" subtitle="List of kebele users" />
       <Box display="flex" justifyContent="end" mt="20px">
         <Button
           onClick={() => {

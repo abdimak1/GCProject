@@ -11,7 +11,7 @@ import { Delete } from "@mui/icons-material";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import AlertDialogSlide from "../../global/dialogue";
 
-const PrivateSector = () => {
+const UpdatePrivatesector = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [mockdata, setMockdata] = useState();
@@ -33,69 +33,47 @@ const PrivateSector = () => {
     });
   }, []);
 
-  // const editHandler = (u_id) => {
-  //   navigate(`/updateuser/${u_id}`);
-  // };
+  const editHandler = (u_id) => {
+    navigate(`/updateprivatesector/${u_id}`);
+  };
 
   const columns = [
     { field: "id", headerName: "ID",   flex: 0.5,},
+  
     {
-      field: "fname",
-      headerName: "First Name",
-      flex: 0.8,
+      field: "organization_name",
+      headerName: "Organization Name",
+       flex: 1.1,
       cellClassName: "name-column--cell",
-      valueGetter: (params) => params.row?.user?.userprofile?.fname,
+      valueGetter: (params) => params.row?.organization_name,
       disableColumnFilter: true,
-    },
-    {
-      field: "Mname",
-      headerName: "Middle Name",
-      // flex: 0.5,
-      cellClassName: "name-column--cell",
-      valueGetter: (params) => params.row?.user?.userprofile?.Mname,
-      disableColumnFilter: true,
-    },
-    {
-      field: "lname",
-      headerName: "Last Name",
-      // flex: 0.5,
-      cellClassName: "name-column--cell",
-      valueGetter: (params) => params.row?.user?.userprofile?.lname,
-      disableColumnFilter: true,
-    },
-
-    {
-      field: "sex",
-      headerName: "Gender",
-      // flex: 0.2,
-      cellClassName: "name-column--cell",
-      valueGetter: (params) => params.row?.user?.userprofile?.sex,
-      disableColumnFilter: true,
-    },
-
-    {
-      field: "phone",
-      headerName: "Phone Number",
-      // flex: 0.5,
-      valueGetter: (params) => params.row?.user?.userprofile?.phone,
-      disableColumnFilter: true,
-    },
-    {
-      field: "Region_name",
-      headerName: "Region",
-      // flex: 0.5,
-      cellClassName: "name-column--cell",
     },
     {
       field: "email",
       headerName: "Email",
-      flex: 1,
+      flex: 1.2,
       valueGetter: (params) => params.row?.user?.email,
       disableColumnFilter: true,
     },
     {
+      field: "tin_number",
+      headerName: "Tin Number",
+      flex: 1.1,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.tin_number,
+      disableColumnFilter: true,
+    },
+    {
+      field: "phone",
+      headerName: "Phone Number",
+      flex: 1,
+      cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.user?.userprofile?.phone,
+      disableColumnFilter: true,
+    },
+    {
       field: "accessLevel",
-      headerName: "Access Level",
+      headerName: "Manage User",
       flex: 3,
       renderCell: (params) => {
         return (
@@ -110,7 +88,7 @@ const PrivateSector = () => {
               borderRadius="4px"
             >
               <Button
-                // onClick={() => editHandler(params.row.id)}
+                onClick={() => editHandler(params.row.id)}
                 variant="text"
                 size="small"
               >
@@ -151,11 +129,11 @@ const PrivateSector = () => {
   return (
     <Box m="20px">
       <AlertDialogSlide open={open} onClose={handleC}></AlertDialogSlide>
-      <Header title="Regional users" subtitle="List of regional users" />
+      <Header title="Private Sector users" subtitle="List of Private Sector Users" />
       <Box display="flex" justifyContent="end" mt="0px">
         <Button
           onClick={() => {
-            navigate("/farmerRegistration");
+            navigate("/createprivatesector");
           }}
           sx={{
             backgroundColor: colors.blueAccent[700],
@@ -165,7 +143,7 @@ const PrivateSector = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Register Farmer
+          Add Business User
         </Button>
       </Box>
       <Box
@@ -227,5 +205,5 @@ const PrivateSector = () => {
   );
 };
 
-export default  PrivateSector ;
+export default  UpdatePrivatesector ;
     
