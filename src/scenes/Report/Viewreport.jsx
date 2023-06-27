@@ -12,6 +12,16 @@ const ViewReport = () => {
   const [resources, setresources] = useState();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
+  const [file, setFile] = useState(null);
+
+  const handlePdfChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleOpenPDF = (link) => {
+    window.open("https://farmawebapp.onrender.com"+link, '_blank');
+  };
 
   const handleC = () => {
     setOpen(!open);
@@ -28,7 +38,7 @@ const ViewReport = () => {
   }, []);
 
   const columns = [
-     { field: "id",flex: 0.1, headerName: "ID" },
+    // { field: "id", flex: 0.1, headerName: "ID" },
     {
       field: "reported_to",
       headerName: "Reported to",
@@ -48,6 +58,21 @@ const ViewReport = () => {
       headerAlign: "left",
       flex: 0.2,
       align: "left",
+    },
+    {field: "id",
+      
+    headerName: "Manage",
+    flex: 0.5,
+    renderCell: (params) => {
+      return (
+        <Box display="flex" gap="10px">
+          <Box backgroundColor={colors.greenAccent[600]} borderRadius="4px">
+            <Button  onClick={()=>handleOpenPDF(params.row?.report_file)} variant="text">View</Button>
+          </Box>
+       
+        </Box>
+      );
+    },
     },
   ];
 

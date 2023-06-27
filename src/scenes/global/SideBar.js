@@ -224,15 +224,16 @@ const SideBar = () => {
                     selected={selected}
                     setSelected={setSelected}
                   />
-                  <Item
+                 
+                </>
+              )}
+               <Item
                     title="View Report "
                     to="/viewreport"
                     icon={<AssessmentIcon />}
                     selected={selected}
                     setSelected={setSelected}
                   />
-                </>
-              )}
 
               
 

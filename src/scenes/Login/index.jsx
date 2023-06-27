@@ -151,7 +151,7 @@ const Login = () => {
                     LOGIN AS REGION
                   </Button>
                   <Button
-                    onClick={() => defenseHandler("arsi", "abdiyu@123")}
+                    onClick={() => defenseHandler("eastarsi", "abdiyu@123")}
                     type="submit"
                     color="secondary"
                     variant="contained"
@@ -160,7 +160,7 @@ const Login = () => {
                     LOGIN AS ZONE
                   </Button>
                   <Button
-                    onClick={() => defenseHandler("wrd", "abdiyu@123")}
+                    onClick={() => defenseHandler("bati", "abdiyu@123")}
                     type="submit"
                     color="secondary"
                     variant="contained"
@@ -169,7 +169,7 @@ const Login = () => {
                     LOGIN AS WOREDA
                   </Button>
                   <Button
-                    onClick={() => defenseHandler("kebacc", "abdiyu@123")}
+                    onClick={() => defenseHandler("wadera", "abdiyu@123")}
                     type="submit"
                     color="secondary"
                     variant="contained"
@@ -178,7 +178,7 @@ const Login = () => {
                     LOGIN AS KEBELE ADMIN
                   </Button>
                   <Button
-                    onClick = {()=> defenseHandler("abdisahjvhjhgch","abdiyu@123")}
+                    onClick = {()=> defenseHandler("kebele01","abdiyu@123")}
                     type="submit"
                     color="secondary"
                     variant="contained"

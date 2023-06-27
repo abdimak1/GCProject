@@ -164,7 +164,7 @@ const WoredaUsers = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Add Business User
+          Add Woreda User
         </Button>
       </Box>
       <Box

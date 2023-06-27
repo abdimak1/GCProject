@@ -16,15 +16,17 @@ import { tokens } from "../../theme";
 import SimpleSnackbar from "../global/snackbar";
 import {
   create_resource,
-  get_resources,
+  get_resources_tosell,
 } from "../../config/apicalls/resourceApiCall";
 import { distribute_resource } from "../../config/apicalls/resourceApiCall";
+import { get_all_farmers } from "../../config/apicalls/Farmerapicalls";
 const Distribution = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [dropdown, setdropdown] = useState();
+  const [farmerdropdown, setfarmerdropdown] = useState();
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
@@ -40,10 +42,18 @@ const Distribution = () => {
   };
 
   useEffect(() => {
-    get_resources().then((res) => {
+    get_resources_tosell().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setdropdown(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+    get_all_farmers().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setfarmerdropdown(res.data);
       } else {
         console.log(res.error);
       }
@@ -113,7 +123,7 @@ const Distribution = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
               }}
             >
-              {/* <FormControl fullWidth>
+              <FormControl fullWidth>
                 <InputLabel id="catagory">ResourceId</InputLabel>
                 <Select
                   fullWidth
@@ -127,17 +137,38 @@ const Distribution = () => {
                 >
                   {dropdown?.map((drop) => {
                     let dropname = "loading...";
-
-                    dropname = drop?.kebele_name;
-
+                    dropname = drop?.name;
                     return (
-                      <MenuItem key={drop?.id} value={drop?.user?.id}>
+                      <MenuItem key={drop?.id} value={drop?.id}>
                         {dropname}
                       </MenuItem>
                     );
                   })}
                 </Select>
-              </FormControl> */}
+              </FormControl>
+              <FormControl fullWidth>
+                <InputLabel id="catagory">Buyer</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="category"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  onChange={handleChange}
+                  value={values.buyer || ""}
+                  name="buyer"
+                >
+                  {farmerdropdown?.map((drop) => {
+                    let dropname = "loading...";
+                    dropname = drop?.user.username;
+                    return (
+                      <MenuItem key={drop?.id} value={drop?.id}>
+                        {dropname}
+                      </MenuItem>
+                    );
+                  })}
+                </Select>
+              </FormControl>
               
               <TextField
                 fullWidth
@@ -152,19 +183,7 @@ const Distribution = () => {
                 helperText={touched.amount && errors.amount}
                 sx={{ gridColumn: "span 2" }}
               />
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Buyer"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.buyer}
-                name="buyer"
-                error={!!touched.buyer && !!errors.buyer}
-                helperText={touched.buyer && errors.buyer}
-                sx={{ gridColumn: "span 2" }}
-              />
+         
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
               <Button

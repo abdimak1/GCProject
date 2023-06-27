@@ -37,8 +37,7 @@ const CreateReport = () => {
 
   const handleFormSubmit = (values) => {
     const formData = new FormData();
-    formData.append("file_name", values.report_file);
-    formData.append("reported_to", values.reported_to);
+    formData.append("my_file",file);
     formData.append("report_name", values.report_name);
     console.log("function called");
     create_report(formData).then((res) => {
@@ -61,13 +60,10 @@ const CreateReport = () => {
   };
 
   const checkoutSchema = yup.object().shape({
-    reported_to: yup.string().required("required"),
     report_name: yup.string().required("required"),
   });
   const initialValues = {
-    reported_to: "",
     report_name: "",
-    report_file: "",
   };
 
   const handleClose = () => {
@@ -105,38 +101,8 @@ const CreateReport = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
               }}
             >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Reported to"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.reported_to}
-                name="reported_to"
-                error={!!touched.reported_to && !!errors.reported_to}
-                helperText={touched.reported_to && errors.reported_to}
-                sx={{ gridColumn: "span 2" }}
-              />
-              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-label">Reported to</InputLabel>
-                <Select
-                  fullWidth
-                  labelId="demo-simple-select-label"
-                  variant="filled"
-                  type="text"
-                  onBlur={handleBlur}
-                  value={values.reported_to}
-                  label="Reported to"
-                  name="reported_to"
-                  onChange={handleChange}
-                  error={!!touched.reported_to && !!errors.reported_to}
-                >
-                  <MenuItem value={"Fertlizer"}>Fertlizer</MenuItem>
-                  
-                  
-                </Select>
-              </FormControl>
+             
+            
               <TextField
                 fullWidth
                 variant="filled"

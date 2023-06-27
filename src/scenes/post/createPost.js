@@ -4,8 +4,8 @@ import * as yup from "yup";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Header from "../../components/Header";
 import { useState } from "react";
-import InputAdornment from '@mui/material/InputAdornment';
-import ImageIcon from '@mui/icons-material/Image';
+import InputAdornment from "@mui/material/InputAdornment";
+import ImageIcon from "@mui/icons-material/Image";
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
@@ -17,6 +17,18 @@ const Createpost = () => {
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [file, setFile] = useState(null);
+
+  const handlePdfChange = (event) => {
+    const selectedFile = event.target.files[0];
+    setFile(selectedFile);
+  };
+
+  const handleOpenPDF = () => {
+    if (file) {
+      const fileURL = URL.createObjectURL(file);
+      window.open(fileURL, "_blank");
+    }
+  };
 
   const handleimageChange = (event) => {
     const selectedFile = event.target.files[0];
@@ -40,9 +52,9 @@ const Createpost = () => {
     const formData = new FormData();
     formData.append("title", values.title);
     formData.append("discription", values.discription);
-    formData.append("thumbnail", values.thumbnail);
-    console.log("function called",formData);
-    
+    formData.append("thumbnail", file);
+    console.log("function called", formData.thumbnail);
+    console.log(file);
     create_post(formData).then((res) => {
       if (res.success && res.data) {
         setsnak({
@@ -131,18 +143,21 @@ const Createpost = () => {
                 helperText={touched.discription && errors.discription}
                 sx={{ gridColumn: "span 2" }}
               />
-               
-              <TextField
-                type="file"
-                onChange={handleimageChange}
-                variant="outlined"
-                value={values.thumbnail}
-                name="thumbnail"
-                label="Attach a file"
-                InputLabelProps={{ shrink: true }}
-                inputProps={{ accept: ".jpg, .png" }}
-                fullWidth
-              />
+
+              <Box display="flex" justifyContent="left" mt="30px">
+                <input type="file" id="pdfInput" onChange={handlePdfChange} />
+
+                <Button
+                  color="secondary"
+                  variant="contained"
+                  onClick={handleOpenPDF}
+                  disabled={!file}
+                  size="small"
+                >
+                  Open PDF
+                </Button>
+                {file && <p>Selected file: {file.name}</p>}
+              </Box>
             </Box>
 
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">

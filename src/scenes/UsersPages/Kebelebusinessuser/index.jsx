@@ -161,7 +161,7 @@ const KebeleBusiness = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Add Business User
+          Add kebelebusiness User
         </Button>
       </Box>
       <Box

@@ -143,7 +143,7 @@ const UpdatePrivatesector = () => {
           }}
         >
           <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Add Business User
+          Add Privatesector User
         </Button>
       </Box>
       <Box

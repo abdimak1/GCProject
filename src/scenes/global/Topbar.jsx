@@ -43,9 +43,7 @@ const Topbar = () => {
             <LightModeOutlinedIcon />
           )}
         </IconButton>
-        <IconButton>
-          <NotificationsOutlinedIcon />
-        </IconButton>
+       
         <div className="personlogo">
           <IconButton size="small" onClick={handleMenu}>
             <PersonOutlinedIcon />
