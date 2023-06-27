@@ -85,9 +85,7 @@ const MyResources = () => {
       renderCell: ({ row: { id } }) => {
         return (
           <Box display="flex" gap="10px">
-            <Box backgroundColor={colors.greenAccent[600]} borderRadius="4px">
-              <Button variant="text">Update</Button>
-            </Box>
+            
             <Box
               width="60%"
               m="0 15px 0 0 "
