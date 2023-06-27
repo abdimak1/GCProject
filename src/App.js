@@ -46,6 +46,8 @@ import CreateDaUser from "./scenes/UsersPages/DA/CreateDauser";
 import UpdatDaUser from "./scenes/UsersPages/DA/updateUser";
 import Post from "./scenes/post";
 import Createpost from "./scenes/post/createPost";
+import Distribution from "./scenes/MyResources/Distribution";
+import Transaction from "./scenes/UsersPages/Kebeleusers/transaction";
 function App() {
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
@@ -83,6 +85,7 @@ function App() {
                 <Route path="/farmer" element={<Farmer />} />
                 <Route path="/privatesector" element={<PrivateSector />} />
                 <Route path = "/post" element = {<Post/>}/>
+                <Route path ="/transaction" element ={<Transaction/>}/>
                 <Route
                   path="/farmerRegistration"
                   element={<FarmerRegistration />}
@@ -130,7 +133,7 @@ function App() {
                 <Route path="/resources/sent" element={<SentResource />} />
                 <Route path="/bar" element={<Bar />} />
                 <Route path="/line" element={<Line />} />
-
+                <Route path = "/distribute" element = {<Distribution/>}/>
                 <Route
                   path="/createkebeleaccount"
                   element={<CreatekebeleUser />}

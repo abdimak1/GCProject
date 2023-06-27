@@ -15,6 +15,7 @@ import AuthContext from "../../config/context/authContext";
 import AssessmentIcon from "@mui/icons-material/Assessment";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -203,34 +204,38 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
-              {/* {authctx.role === "kebeleadmin" && (
-               
-              )} */}
 
-              <Typography
-                variant="h6"
-                color="#a3a3a3"
-                sx={{ m: "15px 0 5px 20px" }}
-              >
-                Report
-              </Typography>
-              {authctx.role !== "federal" && (
-                <Item
-                  title="Create Report "
-                  to="/createreport"
-                  icon={<AssessmentIcon />}
-                  selected={selected}
-                  setSelected={setSelected}
-                />
+              {authctx.role !== "kebelebusiness" && (
+                <Typography
+                  variant="h6"
+                  color="#a3a3a3"
+                  sx={{ m: "15px 0 5px 20px" }}
+                >
+                  Report
+                </Typography>
               )}
 
-              <Item
-                title="View Report "
-                to="/viewreport"
-                icon={<AssessmentIcon />}
-                selected={selected}
-                setSelected={setSelected}
-              />
+              {(authctx.role !== "federal" && authctx.role !== "kebelebusiness")  && (
+                <>
+                  <Item
+                    title="Create Report "
+                    to="/createreport"
+                    icon={<AssessmentIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                  <Item
+                    title="View Report "
+                    to="/viewreport"
+                    icon={<AssessmentIcon />}
+                    selected={selected}
+                    setSelected={setSelected}
+                  />
+                </>
+              )}
+
+              
+
               {authctx.role === "federal" && (
                 <Typography
                   variant="h6"
@@ -250,7 +255,7 @@ const SideBar = () => {
                 />
               )}
 
-              {authctx.role === "kebelebusiness" && (
+              {authctx.role === "kebelebusiness" && "kebeleadmin" && (
                 <Typography
                   variant="h6"
                   color="#a3a3a3"
@@ -268,6 +273,16 @@ const SideBar = () => {
                   setSelected={setSelected}
                 />
               )}
+               {authctx.role === "kebeleadmin" && (
+                <Item
+                  title="Transaction "
+                  to="/transaction"
+                  icon={<AttachMoneyIcon />}
+                  selected={selected}
+                  setSelected={setSelected}
+                />
+              )}
+
               <Typography
                 variant="h6"
                 color="#a3a3a3"

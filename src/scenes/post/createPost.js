@@ -41,9 +41,9 @@ const Createpost = () => {
     formData.append("title", values.title);
     formData.append("discription", values.discription);
     formData.append("thumbnail", values.thumbnail);
-    console.log("function called");
+    console.log("function called",formData);
     
-    create_post(values).then((res) => {
+    create_post(formData).then((res) => {
       if (res.success && res.data) {
         setsnak({
           severity: "success",
@@ -65,7 +65,6 @@ const Createpost = () => {
   const checkoutSchema = yup.object().shape({
     title: yup.string().required("required"),
     discription: yup.string().required("required"),
-    thumbnail: yup.string().required("required"),
   });
   const initialValues = {
     title: "",
@@ -81,7 +80,7 @@ const Createpost = () => {
         onClose={handleClose}
       />
 
-      <Header title="Create Resource" subtitle="Create new resource" />
+      <Header title="Create Post" subtitle="Create new post" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -109,7 +108,7 @@ const Createpost = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Title "
+                label="Title"
                 onBlur={handleBlur}
                 onChange={handleChange}
                 value={values.title}
@@ -151,7 +150,7 @@ const Createpost = () => {
                 color="secondary"
                 variant="contained"
                 onClick={() => {
-                  navigate("/resources");
+                  navigate("/post");
                 }}
               >
                 Back

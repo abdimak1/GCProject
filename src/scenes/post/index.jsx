@@ -10,7 +10,7 @@ import AlertDialogSlide from "../global/dialogue";
 import { get_resources } from "../../config/apicalls/resourceApiCall";
 import AuthContext from "../../config/context/authContext";
 import { useContext } from "react";
-import { get_all_post } from "../../config/apicalls/PostApicalls";
+import { delete_post, get_all_post } from "../../config/apicalls/PostApicalls";
 const Post = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
@@ -18,9 +18,16 @@ const Post = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const authctx = useContext(AuthContext);
+  const [selectedId, setSelectedId] = useState("");
+
+  const handleDelete = (id) => {
+    setSelectedId(id);
+    setOpen(!open);
+  };
   const handleC = () => {
     setOpen(!open);
   };
+
   useEffect(() => {
     get_all_post().then((res) => {
       if (res.success && res.data) {
@@ -31,11 +38,18 @@ const Post = () => {
       }
     });
   }, []);
-  // const delhandlerv =(x)=>{
-  //   console.log("deleted",x)
-  //   // api call as an argument id=x
-  //   setresources(res.data)
-  // }
+ 
+  const deleteHandler = (selectedId) => {
+    delete_post(selectedId).then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);   
+      } else {
+        console.log(res.error);
+      }
+    });
+    setOpen(false);
+  };
+
 
   const columns = [
     //   { field: "id", headerName: "ID" },
@@ -43,31 +57,31 @@ const Post = () => {
       field: "title",
       headerName: "Title",
       headerAlign: "left",
-      flex: 0.2,
+      flex: 0.5,
       cellClassName: "name-column--cell",
+      valueGetter: (params) => params.row?.title,
+      disableColumnFilter: true,
     },
     {
       field: "discription",
       headerName: "Discription",
-
+      flex: 0.5,
       headerAlign: "left",
       align: "left",
     },
     {
       field: "thumbnail",
       headerName: "thumbnail",
-   
       headerAlign: "left",
-      flex: 0.4,
+      flex: 0.8,
       align: "left",
     },
     
     {
       field: "id",
-      
       headerName: "Manage",
       flex: 0.5,
-      renderCell: ({ row: { id } }) => {
+      renderCell: (params) => {
         return (
           <Box display="flex" gap="10px">
             
@@ -81,7 +95,7 @@ const Post = () => {
               borderRadius="4px"
               onClick={handleC}
             >
-              <Button variant="text">
+              <Button onClick={()=>handleDelete(params.row.id)} variant="text">
                 <Delete></Delete>
               </Button>
             </Box>
@@ -93,8 +107,8 @@ const Post = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide title = "Are you sure you want to delete this resource" open={open} onClose={handleC} > </AlertDialogSlide>
-      <Header title="All Resource" subtitle="My Resources in Stock" />
+      <AlertDialogSlide  onClose={handleDelete} action={() => deleteHandler(selectedId)} title = "Are you sure you want to delete this resource" open={open}  > </AlertDialogSlide>
+      <Header title="All Post" subtitle="My Post" />
       <Box gap="20px" display="flex" justifyContent="end" mt="0px">
         {authctx.role === "federal" && (
            <Button

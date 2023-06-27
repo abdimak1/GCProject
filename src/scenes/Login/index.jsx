@@ -142,7 +142,7 @@ const Login = () => {
                     LOGIN AS FEDRAL
                   </Button>
                   <Button
-                    onClick={() => defenseHandler("reg1", "abdiyu@123")}
+                    onClick={() => defenseHandler("oromia", "abdiyu@123")}
                     type="submit"
                     color="secondary"
                     variant="contained"

@@ -1,28 +1,23 @@
 import { Box, Button, CircularProgress, useTheme } from "@mui/material";
 import { DataGrid,GridToolbar } from "@mui/x-data-grid";
-import { tokens } from "../../theme";
+import { tokens } from "../../../theme";
 import { useNavigate } from "react-router-dom";
-import Header from "../../components/Header";
+import Header from "../../../components/Header";
 import { useEffect, useState } from "react";
 import { Delete } from "@mui/icons-material";
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import AlertDialogSlide from "../global/dialogue";
-import { get_resources } from "../../config/apicalls/resourceApiCall";
-import AuthContext from "../../config/context/authContext";
-import { useContext } from "react";
-
-const MyResources = () => {
+import { get_Transaction } from "../../../config/apicalls/resourceApiCall";
+const Transaction = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [resources, setresources] = useState();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
-  const authctx = useContext(AuthContext);
+
   const handleC = () => {
     setOpen(!open);
   };
   useEffect(() => {
-    get_resources().then((res) => {
+    get_Transaction().then((res) => {
       if (res.success && res.data) {
         console.log(res.data);
         setresources(res.data);
@@ -31,12 +26,7 @@ const MyResources = () => {
       }
     });
   }, []);
-  // const delhandlerv =(x)=>{
-  //   console.log("deleted",x)
-  //   // api call as an argument id=x
-  //   setresources(res.data)
-  // }
-
+  
   const columns = [
     //   { field: "id", headerName: "ID" },
     {
@@ -110,42 +100,8 @@ const MyResources = () => {
 
   return (
     <Box m="20px">
-      <AlertDialogSlide title = "Are you sure you want to delete this resource" open={open} onClose={handleC} > </AlertDialogSlide>
-      <Header title="All Resource" subtitle="My Resources in Stock" />
-      <Box gap="20px" display="flex" justifyContent="end" mt="0px">
-        {authctx.role === "federal" && (
-           <Button
-           onClick={() => {
-             navigate("/createresource");
-           }}
-           sx={{
-             backgroundColor: colors.blueAccent[700],
-             color: colors.grey[100],
-             fontSize: "14px",
-             fontWeight: "bold",
-           }}
-         >
-           <AddOutlinedIcon sx={{ mr: "10px" }} />
-           Create Resource
-         </Button>
-
-        )}
-       
-        <Button
-          onClick={() => {
-            navigate("/resources/transfer");
-          }}
-          sx={{
-            backgroundColor: colors.blueAccent[700],
-            color: colors.grey[100],
-            fontSize: "14px",
-            fontWeight: "bold",
-          }}
-        >
-          <AddOutlinedIcon sx={{ mr: "10px" }} />
-          Transfer Resource
-        </Button>
-      </Box>
+      <Header title="All Transaction" subtitle="Transaction done by kebele business" />
+      
       <Box
         m="40px 0 0 0"
         height="60vh"
@@ -204,4 +160,4 @@ const MyResources = () => {
   );
 };
 
-export default MyResources;
+export default Transaction;

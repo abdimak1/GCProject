@@ -8,18 +8,23 @@ import InputLabel from "@mui/material/InputLabel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
+import { useEffect } from "react";
 
 import { useNavigate } from "react-router-dom";
 import { useTheme } from "@mui/material";
 import { tokens } from "../../theme";
 import SimpleSnackbar from "../global/snackbar";
-import { create_resource } from "../../config/apicalls/resourceApiCall";
-
-const CreateResource = () => {
+import {
+  create_resource,
+  get_resources,
+} from "../../config/apicalls/resourceApiCall";
+import { distribute_resource } from "../../config/apicalls/resourceApiCall";
+const Distribution = () => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const navigate = useNavigate();
   const isNonMobile = useMediaQuery("(min-width:600px)");
+  const [dropdown, setdropdown] = useState();
   const [snak, setsnak] = useState({
     severity: "",
     message: "",
@@ -33,40 +38,47 @@ const CreateResource = () => {
       message: "",
     });
   };
+
+  useEffect(() => {
+    get_resources().then((res) => {
+      if (res.success && res.data) {
+        console.log(res.data);
+        setdropdown(res.data);
+      } else {
+        console.log(res.error);
+      }
+    });
+  }, []);
   const handleFormSubmit = (values) => {
-      console.log("function called");
-      create_resource(values).then((res) => {
-        if (res.success && res.data) {
-          setsnak({
-            severity: "success",
-            message: "successfully created!",
-            open: true,
-          });
-          console.log(res.data);
-        } else {
-          setsnak({
-            severity: "error",
-            message: " not successfully created!",
-            open: true,
-          });
-          console.log(res.error);
-        }
-      });
-    };
+    console.log("function called");
+    distribute_resource(values).then((res) => {
+      if (res.success && res.data) {
+        setsnak({
+          severity: "success",
+          message: "successfully created!",
+          open: true,
+        });
+        console.log(res.data);
+      } else {
+        setsnak({
+          severity: "error",
+          message: " not successfully created!",
+          open: true,
+        });
+        console.log(res.error);
+      }
+    });
+  };
 
   const checkoutSchema = yup.object().shape({
-    Name: yup.string().required("required"),
-    type: yup.string().required("required"),
+    resource_id: yup.string().required("required"),
     amount: yup.string().required("required"),
-    price_perkilo: yup.string().required("required"),
-    
+    buyer: yup.string().required("required"),
   });
   const initialValues = {
-    Name: "",
-    type: "",
+    resource_id: "",
     amount: "",
-    price_perkilo: "",
-    
+    buyer: "",
   };
   return (
     <Box m="20px">
@@ -77,7 +89,7 @@ const CreateResource = () => {
         onClose={handleClose}
       />
 
-      <Header title="Create Resource" subtitle="Create new resource" />
+      <Header title="Distribute Resource" subtitle="distribute new resource" />
 
       <Formik
         onSubmit={handleFormSubmit}
@@ -101,38 +113,32 @@ const CreateResource = () => {
                 "& > div": { gridColumn: isNonMobile ? undefined : "span 2" },
               }}
             >
-              <TextField
-                fullWidth
-                variant="filled"
-                type="text"
-                label="Resource Name"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.Name}
-                name="Name"
-                error={!!touched.Name && !!errors.Name}
-                helperText={touched.Name && errors.Name}
-                sx={{ gridColumn: "span 2" }}
-              />
-               <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
-                <InputLabel id="demo-simple-select-label">Resource type</InputLabel>
+              {/* <FormControl fullWidth>
+                <InputLabel id="catagory">ResourceId</InputLabel>
                 <Select
                   fullWidth
-                  labelId="demo-simple-select-label"
+                  labelId="category"
                   variant="filled"
                   type="text"
                   onBlur={handleBlur}
-                  value={values.type}
-                  label="Resource type"
-                  name="type"
                   onChange={handleChange}
-                  error={!!touched.type && !!errors.type}
+                  value={values.resource_id || ""}
+                  name="resource_id"
                 >
-                  <MenuItem value={"Fertlizer"}>Fertlizer</MenuItem>
-                  <MenuItem value={"betterseed"}>Better Seed</MenuItem>
-                  
+                  {dropdown?.map((drop) => {
+                    let dropname = "loading...";
+
+                    dropname = drop?.kebele_name;
+
+                    return (
+                      <MenuItem key={drop?.id} value={drop?.user?.id}>
+                        {dropname}
+                      </MenuItem>
+                    );
+                  })}
                 </Select>
-              </FormControl>
+              </FormControl> */}
+              
               <TextField
                 fullWidth
                 variant="filled"
@@ -150,17 +156,15 @@ const CreateResource = () => {
                 fullWidth
                 variant="filled"
                 type="text"
-                label="Price Per Kilo"
+                label="Buyer"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                value={values.price_perkilo}
-                name="price_perkilo"
-                error={!!touched.price_perkilo && !!errors.price_perkilo}
-                helperText={touched.price_perkilo && errors.price_perkilo}
+                value={values.buyer}
+                name="buyer"
+                error={!!touched.buyer && !!errors.buyer}
+                helperText={touched.buyer && errors.buyer}
                 sx={{ gridColumn: "span 2" }}
               />
-            
-             
             </Box>
             <Box gap="20px" display="flex" justifyContent="start" mt="30px">
               <Button
@@ -173,7 +177,7 @@ const CreateResource = () => {
                 Back
               </Button>
               <Button type="submit" color="secondary" variant="contained">
-                Create New Resource
+                Distribute New Resource
               </Button>
             </Box>
           </Form>
@@ -182,4 +186,4 @@ const CreateResource = () => {
     </Box>
   );
 };
-export default CreateResource;
+export default Distribution;

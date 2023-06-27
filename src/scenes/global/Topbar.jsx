@@ -66,7 +66,7 @@ const Topbar = () => {
             onClose={handleClose}
           >
             <MenuItem onClick={logouthandler}>logout</MenuItem>
-            <MenuItem onClick={handleClose}>My account</MenuItem>
+           
           </Menu>
         </div>
       </Box>

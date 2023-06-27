@@ -18,15 +18,10 @@ export const get_all_post= async () => {
 
 
 
-export const create_post = async (val) => {
-  console.log(val);
+export const create_post = async (formData) => {
+
   try {
-    const response = await api.post("/farmer/create", {
-        title: val.title,
-        discription: val.discription,
-        thumbnail: val.thumbnail,
-      
-    });
+    const response = await api.post("/posts/create", formData);
 
     return { success: true, data: response.data };
   } catch (err) {
@@ -39,4 +34,17 @@ export const create_post = async (val) => {
   }
 };
 
+export const delete_post = async (id) => {
+    try {
+      const response = await api.delete(`/posts/${id}/delete`);
+      return { success: true, data: response.data };
+    } catch (err) {
+      if (err.response) {
+        console.log(err.response.data);
+        return { success: false, data: null, error: err.response.data.message };
+      } else {
+        console.log(`Error: ${err.message}`);
+      }
+    }
+  };
 

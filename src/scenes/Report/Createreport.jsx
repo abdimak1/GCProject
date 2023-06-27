@@ -6,8 +6,13 @@ import { Grid } from "@mui/material";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SimpleSnackbar from "../global/snackbar";
 import { useState } from "react";
-import InputLabel from "@mui/material/InputLabel";
 import { create_report } from "../../config/apicalls/reportApicalls";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+
+
 const CreateReport = () => {
   const isNonMobile = useMediaQuery("(min-width:600px)");
   const [file, setFile] = useState(null);
@@ -58,7 +63,6 @@ const CreateReport = () => {
   const checkoutSchema = yup.object().shape({
     reported_to: yup.string().required("required"),
     report_name: yup.string().required("required"),
-    report_file: yup.string().required("required"),
   });
   const initialValues = {
     reported_to: "",
@@ -114,6 +118,25 @@ const CreateReport = () => {
                 helperText={touched.reported_to && errors.reported_to}
                 sx={{ gridColumn: "span 2" }}
               />
+              <FormControl fullWidth sx={{ gridColumn: "span 2" }}>
+                <InputLabel id="demo-simple-select-label">Reported to</InputLabel>
+                <Select
+                  fullWidth
+                  labelId="demo-simple-select-label"
+                  variant="filled"
+                  type="text"
+                  onBlur={handleBlur}
+                  value={values.reported_to}
+                  label="Reported to"
+                  name="reported_to"
+                  onChange={handleChange}
+                  error={!!touched.reported_to && !!errors.reported_to}
+                >
+                  <MenuItem value={"Fertlizer"}>Fertlizer</MenuItem>
+                  
+                  
+                </Select>
+              </FormControl>
               <TextField
                 fullWidth
                 variant="filled"
